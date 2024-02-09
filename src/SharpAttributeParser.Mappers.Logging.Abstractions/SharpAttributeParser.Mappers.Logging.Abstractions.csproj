@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <RootNamespace>SharpAttributeParser.Mappers.Logging</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Title>SharpAttributeParser.Mappers.Logging.Abstractions</Title>
+        <Description>
+            Provides abstractions related to logging for 'SharpAttributeParser.Mappers'.
+        </Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SharpAttributeParser.Mappers.Logging.Core\SharpAttributeParser.Mappers.Logging.Core.csproj" />
+    </ItemGroup>
+
+</Project>

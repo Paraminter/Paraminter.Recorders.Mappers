@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <RootNamespace>SharpAttributeParser.Mappers</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Title>SharpAttributeParser.Mappers.DependencyInjection</Title>
+        <Description>
+            Allows the services provided by 'SharpAttributeParser.Mappers' to be registered with DI-containers.
+        </Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SharpAttributeParser.Mappers.Abstractions\SharpAttributeParser.Mappers.Abstractions.csproj" />
+      <ProjectReference Include="..\SharpAttributeParser.Mappers.Logging.DependencyInjection\SharpAttributeParser.Mappers.Logging.DependencyInjection.csproj" />
+      <ProjectReference Include="..\SharpAttributeParser.Mappers\SharpAttributeParser.Mappers.csproj" />
+    </ItemGroup>
+
+</Project>
