@@ -8,5 +8,5 @@ public interface IRecorderFactory
     /// <param name="mapper">Maps parameters of the attribute to recorders, responsible for recording arguments of that parameter.</param>
     /// <param name="dataRecord">The record to which arguments are recorded by the created recorder.</param>
     /// <returns>The created recorder.</returns>
-    public abstract IRecorder<TRecord> Create<TRecord>(IMapper<TRecord> mapper, TRecord dataRecord);
+    public abstract IRecorder Create<TRecord>(IMapper<TRecord> mapper, TRecord dataRecord);
 }

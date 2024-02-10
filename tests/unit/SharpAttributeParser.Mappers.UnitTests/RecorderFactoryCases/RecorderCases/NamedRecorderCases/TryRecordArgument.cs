@@ -47,7 +47,7 @@ public sealed class TryRecordArgument
 
         context.MapperMock.Verify((mapper) => mapper.TryMapNamedParameter(parameterName, context.DataRecordMock.Object), Times.Once);
 
-        context.LoggerFactoryMock.Verify((factory) => factory.Create<IRecorder<object>>().NamedArgument.FailedToMapNamedParameterToRecorder(), Times.Once);
+        context.LoggerFactoryMock.Verify((factory) => factory.Create<IRecorder>().NamedArgument.FailedToMapNamedParameterToRecorder(), Times.Once);
     }
 
     [Fact]
