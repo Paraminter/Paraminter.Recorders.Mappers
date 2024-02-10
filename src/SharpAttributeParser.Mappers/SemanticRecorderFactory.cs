@@ -18,7 +18,7 @@ public sealed class SemanticRecorderFactory : ISemanticRecorderFactory
         LoggerFactory = loggerFactory ?? NullSemanticRecorderLoggerFactory.Instance;
     }
 
-    ISemanticRecorder<TRecord> ISemanticRecorderFactory.Create<TRecord>(ISemanticMapper<TRecord> mapper, TRecord dataRecord)
+    ISemanticRecorder ISemanticRecorderFactory.Create<TRecord>(ISemanticMapper<TRecord> mapper, TRecord dataRecord)
     {
         if (mapper is null)
         {
@@ -30,37 +30,19 @@ public sealed class SemanticRecorderFactory : ISemanticRecorderFactory
             throw new ArgumentNullException(nameof(dataRecord));
         }
 
-        var recorderLogger = LoggerFactory.Create<ISemanticRecorder<TRecord>>();
+        var recorderLogger = LoggerFactory.Create<ISemanticRecorder>();
 
-        return new Recorder<TRecord>(new Mapper<TRecord>(mapper), dataRecord, recorderLogger);
+        return new Recorder<TRecord>(mapper, dataRecord, recorderLogger);
     }
 
-    private sealed class Mapper<TRecord> : ISemanticMapper<TRecord>
+    private sealed class Recorder<TRecord> : ISemanticRecorder
     {
-        private readonly ISemanticMapper<TRecord> WrappedMapper;
-
-        public Mapper(ISemanticMapper<TRecord> wrappedMapper)
-        {
-            WrappedMapper = wrappedMapper;
-        }
-
-        IMappedSemanticTypeRecorder? ISemanticMapper<TRecord>.TryMapTypeParameter(ITypeParameterSymbol parameter, TRecord dataRecord) => WrappedMapper.TryMapTypeParameter(parameter, dataRecord);
-        IMappedSemanticConstructorRecorder? ISemanticMapper<TRecord>.TryMapConstructorParameter(IParameterSymbol parameter, TRecord dataRecord) => WrappedMapper.TryMapConstructorParameter(parameter, dataRecord);
-        IMappedSemanticNamedRecorder? ISemanticMapper<TRecord>.TryMapNamedParameter(string parameterName, TRecord dataRecord) => WrappedMapper.TryMapNamedParameter(parameterName, dataRecord);
-    }
-
-    private sealed class Recorder<TRecord> : ISemanticRecorder<TRecord>
-    {
-        private readonly TRecord Record;
-
         private readonly ISemanticTypeRecorder Type;
         private readonly ISemanticConstructorRecorder Constructor;
         private readonly ISemanticNamedRecorder Named;
 
         public Recorder(ISemanticMapper<TRecord> argumentRecorderMapper, TRecord record, ISemanticRecorderLogger logger)
         {
-            Record = record;
-
             Type = new TypeRecorder(argumentRecorderMapper, record, logger);
             Constructor = new ConstructorRecorder(argumentRecorderMapper, record, logger);
             Named = new NamedRecorder(argumentRecorderMapper, record, logger);
@@ -69,8 +51,6 @@ public sealed class SemanticRecorderFactory : ISemanticRecorderFactory
         ISemanticTypeRecorder ISemanticRecorder.Type => Type;
         ISemanticConstructorRecorder ISemanticRecorder.Constructor => Constructor;
         ISemanticNamedRecorder ISemanticRecorder.Named => Named;
-
-        TRecord ISemanticRecorder<TRecord>.BuildRecord() => Record;
 
         private sealed class TypeRecorder : ISemanticTypeRecorder
         {
@@ -115,14 +95,14 @@ public sealed class SemanticRecorderFactory : ISemanticRecorderFactory
         private sealed class ConstructorRecorder : ISemanticConstructorRecorder
         {
             private readonly ISemanticMapper<TRecord> RecorderMapper;
-            private readonly TRecord RecordBuilder;
+            private readonly TRecord Record;
 
             private readonly ISemanticRecorderLogger Logger;
 
-            public ConstructorRecorder(ISemanticMapper<TRecord> argumentRecorderMapper, TRecord recordBuilder, ISemanticRecorderLogger logger)
+            public ConstructorRecorder(ISemanticMapper<TRecord> argumentRecorderMapper, TRecord record, ISemanticRecorderLogger logger)
             {
                 RecorderMapper = argumentRecorderMapper;
-                RecordBuilder = recordBuilder;
+                Record = record;
 
                 Logger = logger;
             }
@@ -136,7 +116,7 @@ public sealed class SemanticRecorderFactory : ISemanticRecorderFactory
 
                 using var _ = Logger.ConstructorArgument.BeginScopeRecordingConstructorArgument(parameter, argument);
 
-                if (RecorderMapper.TryMapConstructorParameter(parameter, RecordBuilder) is not IMappedSemanticConstructorRecorder argumentRecorder)
+                if (RecorderMapper.TryMapConstructorParameter(parameter, Record) is not IMappedSemanticConstructorRecorder argumentRecorder)
                 {
                     Logger.ConstructorArgument.FailedToMapConstructorParameterToRecorder();
 
@@ -150,14 +130,14 @@ public sealed class SemanticRecorderFactory : ISemanticRecorderFactory
         private sealed class NamedRecorder : ISemanticNamedRecorder
         {
             private readonly ISemanticMapper<TRecord> RecorderMapper;
-            private readonly TRecord RecordBuilder;
+            private readonly TRecord Record;
 
             private readonly ISemanticRecorderLogger Logger;
 
-            public NamedRecorder(ISemanticMapper<TRecord> argumentRecorderMapper, TRecord recordBuilder, ISemanticRecorderLogger logger)
+            public NamedRecorder(ISemanticMapper<TRecord> argumentRecorderMapper, TRecord record, ISemanticRecorderLogger logger)
             {
                 RecorderMapper = argumentRecorderMapper;
-                RecordBuilder = recordBuilder;
+                Record = record;
 
                 Logger = logger;
             }
@@ -171,7 +151,7 @@ public sealed class SemanticRecorderFactory : ISemanticRecorderFactory
 
                 using var _ = Logger.NamedArgument.BeginScopeRecordingNamedArgument(parameterName, argument);
 
-                if (RecorderMapper.TryMapNamedParameter(parameterName, RecordBuilder) is not IMappedSemanticNamedRecorder argumentRecorder)
+                if (RecorderMapper.TryMapNamedParameter(parameterName, Record) is not IMappedSemanticNamedRecorder argumentRecorder)
                 {
                     Logger.NamedArgument.FailedToMapNamedParameterToRecorder();
 

@@ -8,5 +8,5 @@ public interface ISyntacticRecorderFactory
     /// <param name="mapper">Maps parameters of the attribute to recorders, responsible for recording syntactic information about arguments of that parameter.</param>
     /// <param name="dataRecord">The record to which syntactic information about arguments is recorded by the created recorder.</param>
     /// <returns>The created recorder.</returns>
-    public abstract ISyntacticRecorder<TRecord> Create<TRecord>(ISyntacticMapper<TRecord> mapper, TRecord dataRecord);
+    public abstract ISyntacticRecorder Create<TRecord>(ISyntacticMapper<TRecord> mapper, TRecord dataRecord);
 }

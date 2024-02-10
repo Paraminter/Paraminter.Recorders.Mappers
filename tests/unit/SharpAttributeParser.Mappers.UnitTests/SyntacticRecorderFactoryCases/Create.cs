@@ -10,7 +10,7 @@ using Xunit;
 
 public sealed class Create
 {
-    private static ISyntacticRecorder<TRecord> Target<TRecord>(ISyntacticRecorderFactory factory, ISyntacticMapper<TRecord> mapper, TRecord dataRecord) => factory.Create(mapper, dataRecord);
+    private static ISyntacticRecorder Target<TRecord>(ISyntacticRecorderFactory factory, ISyntacticMapper<TRecord> mapper, TRecord dataRecord) => factory.Create(mapper, dataRecord);
 
     [Fact]
     public void NullMapper_ArgumentNullException()
@@ -55,12 +55,8 @@ public sealed class Create
         recorder.Constructor.TryRecordArgument(constructorParameter, constructorSyntax);
         recorder.Named.TryRecordArgument(namedParameterName, namedSyntax);
 
-        var builtDataRecord = recorder.BuildRecord();
-
         mapperMock.Verify((mapper) => mapper.TryMapTypeParameter(typeParameter, dataRecord)!.TryRecordArgument(typeSyntax), Times.Once);
         mapperMock.Verify((mapper) => mapper.TryMapConstructorParameter(constructorParameter, dataRecord)!.TryRecordArgument(constructorSyntax), Times.Once);
         mapperMock.Verify((mapper) => mapper.TryMapNamedParameter(namedParameterName, dataRecord)!.TryRecordArgument(namedSyntax), Times.Once);
-
-        Assert.Same(dataRecord, builtDataRecord);
     }
 }

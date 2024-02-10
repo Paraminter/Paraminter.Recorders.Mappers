@@ -49,7 +49,7 @@ public sealed class TryRecordParamsArgument
 
         context.MapperMock.Verify((mapper) => mapper.TryMapConstructorParameter(parameter, context.DataRecordMock.Object), Times.Once);
 
-        context.LoggerFactoryMock.Verify((factory) => factory.Create<ISyntacticRecorder<object>>().ConstructorArgument.FailedToMapConstructorParameterToRecorder(), Times.Once);
+        context.LoggerFactoryMock.Verify((factory) => factory.Create<ISyntacticRecorder>().ConstructorArgument.FailedToMapConstructorParameterToRecorder(), Times.Once);
     }
 
     [Fact]
