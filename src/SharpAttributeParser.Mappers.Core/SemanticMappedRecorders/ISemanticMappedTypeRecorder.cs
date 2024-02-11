@@ -1,4 +1,4 @@
-﻿namespace SharpAttributeParser.Mappers;
+﻿namespace SharpAttributeParser.Mappers.SemanticMappedRecorders;
 
 using Microsoft.CodeAnalysis;
 

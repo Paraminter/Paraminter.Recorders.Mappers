@@ -1,4 +1,4 @@
-﻿namespace SharpAttributeParser.Mappers;
+﻿namespace SharpAttributeParser.Mappers.SemanticMappedRecorders;
 
 /// <summary>Records the arguments of some named parameter.</summary>
 public interface ISemanticMappedNamedRecorder

@@ -3,36 +3,34 @@
 using Moq;
 
 using SharpAttributeParser.Mappers.Logging;
+using SharpAttributeParser.RecorderComponents;
 
-internal sealed class RecorderContext<TRecord> where TRecord : class
+internal sealed class RecorderContext
 {
-    public static RecorderContext<TRecord> Create()
+    public static RecorderContext Create()
     {
         Mock<IRecorderLoggerFactory> loggerFactoryMock = new() { DefaultValue = DefaultValue.Mock };
 
         RecorderFactory factory = new(loggerFactoryMock.Object);
 
-        Mock<IMapper<TRecord>> mapperMock = new();
-        Mock<TRecord> dataRecordMock = new();
+        Mock<IMapper> mapperMock = new();
 
-        var recorder = ((IRecorderFactory)factory).Create(mapperMock.Object, dataRecordMock.Object).Type;
+        var recorder = ((IRecorderFactory)factory).Create(mapperMock.Object).Type;
 
-        return new(recorder, mapperMock, dataRecordMock, loggerFactoryMock);
+        return new(recorder, mapperMock, loggerFactoryMock);
     }
 
     public ITypeRecorder Recorder { get; }
 
-    public Mock<IMapper<TRecord>> MapperMock { get; }
-    public Mock<TRecord> DataRecordMock { get; }
+    public Mock<IMapper> MapperMock { get; }
 
     public Mock<IRecorderLoggerFactory> LoggerFactoryMock { get; }
 
-    private RecorderContext(ITypeRecorder recorder, Mock<IMapper<TRecord>> mapperMock, Mock<TRecord> dataRecordMock, Mock<IRecorderLoggerFactory> loggerFactoryMock)
+    private RecorderContext(ITypeRecorder recorder, Mock<IMapper> mapperMock, Mock<IRecorderLoggerFactory> loggerFactoryMock)
     {
         Recorder = recorder;
 
         MapperMock = mapperMock;
-        DataRecordMock = dataRecordMock;
 
         LoggerFactoryMock = loggerFactoryMock;
     }

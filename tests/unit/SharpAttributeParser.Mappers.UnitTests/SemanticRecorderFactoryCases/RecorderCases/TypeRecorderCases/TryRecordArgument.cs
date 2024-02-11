@@ -4,6 +4,9 @@ using Microsoft.CodeAnalysis;
 
 using Moq;
 
+using SharpAttributeParser.Mappers.SemanticMappedRecorders;
+using SharpAttributeParser.SemanticRecorderComponents;
+
 using System;
 
 using Xunit;
@@ -12,12 +15,12 @@ public sealed class TryRecordArgument
 {
     private static bool Target(ISemanticTypeRecorder recorder, ITypeParameterSymbol parameter, ITypeSymbol argument) => recorder.TryRecordArgument(parameter, argument);
 
+    private readonly RecorderContext Context = RecorderContext.Create();
+
     [Fact]
     public void NullParameter_ArgumentNullException()
     {
-        var context = RecorderContext<object>.Create();
-
-        var exception = Record.Exception(() => Target(context.Recorder, null!, Mock.Of<ITypeSymbol>()));
+        var exception = Record.Exception(() => Target(Context.Recorder, null!, Mock.Of<ITypeSymbol>()));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -25,9 +28,7 @@ public sealed class TryRecordArgument
     [Fact]
     public void NullArgument_ArgumentNullException()
     {
-        var context = RecorderContext<object>.Create();
-
-        var exception = Record.Exception(() => Target(context.Recorder, Mock.Of<ITypeParameterSymbol>(), null!));
+        var exception = Record.Exception(() => Target(Context.Recorder, Mock.Of<ITypeParameterSymbol>(), null!));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -37,17 +38,15 @@ public sealed class TryRecordArgument
     {
         var parameter = Mock.Of<ITypeParameterSymbol>();
 
-        var context = RecorderContext<object>.Create();
+        Context.MapperMock.Setup(static (mapper) => mapper.Type.TryMapParameter(It.IsAny<ITypeParameterSymbol>())).Returns((ISemanticMappedTypeRecorder?)null);
 
-        context.MapperMock.Setup(static (mapper) => mapper.Type.TryMapParameter(It.IsAny<ITypeParameterSymbol>(), It.IsAny<object>())).Returns((ISemanticMappedTypeRecorder?)null);
-
-        var outcome = Target(context.Recorder, parameter, Mock.Of<ITypeSymbol>());
+        var outcome = Target(Context.Recorder, parameter, Mock.Of<ITypeSymbol>());
 
         Assert.False(outcome);
 
-        context.MapperMock.Verify((mapper) => mapper.Type.TryMapParameter(parameter, context.DataRecordMock.Object), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Type.TryMapParameter(parameter), Times.Once);
 
-        context.LoggerFactoryMock.Verify((factory) => factory.Create<ISemanticRecorder>().TypeArgument.FailedToMapTypeParameterToRecorder(), Times.Once);
+        Context.LoggerFactoryMock.Verify((factory) => factory.Create<ISemanticRecorder>().TypeArgument.FailedToMapTypeParameterToRecorder(), Times.Once);
     }
 
     [Fact]
@@ -57,19 +56,17 @@ public sealed class TryRecordArgument
     public void FalseReturningRecorder_ReturnsFalse() => ValidRecorder_PropagatesReturnValue(false);
 
     [AssertionMethod]
-    private static void ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
+    private void ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
     {
         var parameter = Mock.Of<ITypeParameterSymbol>();
         var argument = Mock.Of<ITypeSymbol>();
 
-        var context = RecorderContext<object>.Create();
+        Context.MapperMock.Setup(static (mapper) => mapper.Type.TryMapParameter(It.IsAny<ITypeParameterSymbol>())!.TryRecordArgument(It.IsAny<ITypeSymbol>())).Returns(recorderReturnValue);
 
-        context.MapperMock.Setup(static (mapper) => mapper.Type.TryMapParameter(It.IsAny<ITypeParameterSymbol>(), It.IsAny<object>())!.TryRecordArgument(It.IsAny<ITypeSymbol>())).Returns(recorderReturnValue);
-
-        var outcome = Target(context.Recorder, parameter, argument);
+        var outcome = Target(Context.Recorder, parameter, argument);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        context.MapperMock.Verify((mapper) => mapper.Type.TryMapParameter(parameter, context.DataRecordMock.Object)!.TryRecordArgument(argument), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Type.TryMapParameter(parameter)!.TryRecordArgument(argument), Times.Once);
     }
 }

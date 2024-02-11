@@ -1,4 +1,6 @@
-﻿namespace SharpAttributeParser.Mappers;
+﻿namespace SharpAttributeParser.Mappers.SyntacticMappedRecorders;
+
+using SharpAttributeParser.Mappers.SyntacticMappedRecorders.SyntacticMappedConstructorRecorders;
 
 /// <summary>Records syntactic information about the arguments of some constructor parameter.</summary>
 public interface ISyntacticMappedConstructorRecorder

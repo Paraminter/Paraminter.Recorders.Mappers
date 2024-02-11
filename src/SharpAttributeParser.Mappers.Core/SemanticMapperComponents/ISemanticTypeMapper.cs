@@ -1,14 +1,14 @@
-﻿namespace SharpAttributeParser.Mappers;
+﻿namespace SharpAttributeParser.Mappers.SemanticMapperComponents;
 
 using Microsoft.CodeAnalysis;
 
+using SharpAttributeParser.Mappers.SemanticMappedRecorders;
+
 /// <summary>Maps attribute type parameters to recorders, responsible for recording arguments of that parameter.</summary>
-/// <typeparam name="TRecord">The type to which arguments are recorded.</typeparam>
-public interface ITypeMapper<in TRecord>
+public interface ISemanticTypeMapper
 {
     /// <summary>Attempts to map a type parameter to a recorder.</summary>
     /// <param name="parameter">The type parameter.</param>
-    /// <param name="dataRecord">The record to which arguments are recorded by the mapped recorder.</param>
     /// <returns>The mapped recorder, or <see langword="null"/> if the attempt was unsuccessful.</returns>
-    public abstract IMappedTypeRecorder? TryMapParameter(ITypeParameterSymbol parameter, TRecord dataRecord);
+    public abstract ISemanticMappedTypeRecorder? TryMapParameter(ITypeParameterSymbol parameter);
 }

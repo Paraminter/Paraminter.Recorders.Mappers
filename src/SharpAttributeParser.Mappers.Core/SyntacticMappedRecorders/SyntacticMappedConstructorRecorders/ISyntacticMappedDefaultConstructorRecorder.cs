@@ -1,4 +1,4 @@
-﻿namespace SharpAttributeParser.Mappers;
+﻿namespace SharpAttributeParser.Mappers.SyntacticMappedRecorders.SyntacticMappedConstructorRecorders;
 
 /// <summary>Records syntactic information about the unspecified arguments of some optional constructor parameter.</summary>
 public interface ISyntacticMappedDefaultConstructorRecorder

@@ -10,24 +10,14 @@ using Xunit;
 
 public sealed class Create
 {
-    private static IRecorder Target<TRecord>(IRecorderFactory factory, IMapper<TRecord> mapper, TRecord dataRecord) => factory.Create(mapper, dataRecord);
+    private static IRecorder Target(IRecorderFactory factory, IMapper mapper) => factory.Create(mapper);
+
+    private readonly FactoryContext Context = FactoryContext.Create();
 
     [Fact]
     public void NullMapper_ArgumentNullException()
     {
-        var context = FactoryContext.Create();
-
-        var exception = Record.Exception(() => Target(context.Factory, null!, Mock.Of<object>()));
-
-        Assert.IsType<ArgumentNullException>(exception);
-    }
-
-    [Fact]
-    public void NullRecord_ArgumentNullException()
-    {
-        var context = FactoryContext.Create();
-
-        var exception = Record.Exception(() => Target(context.Factory, Mock.Of<IMapper<object>>(), null!));
+        var exception = Record.Exception(() => Target(Context.Factory, null!));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -47,20 +37,16 @@ public sealed class Create
         var constructorSyntax = ExpressionSyntaxFactory.Create();
         var namedSyntax = ExpressionSyntaxFactory.Create();
 
-        var dataRecord = Mock.Of<object>();
+        Mock<IMapper> mapperMock = new() { DefaultValue = DefaultValue.Mock };
 
-        Mock<IMapper<object>> mapperMock = new() { DefaultValue = DefaultValue.Mock };
-
-        var context = FactoryContext.Create();
-
-        var recorder = Target(context.Factory, mapperMock.Object, dataRecord);
+        var recorder = Target(Context.Factory, mapperMock.Object);
 
         recorder.Type.TryRecordArgument(typeParameter, typeArgument, typeSyntax);
         recorder.Constructor.Normal.TryRecordArgument(constructorParameter, constructorArgument, constructorSyntax);
         recorder.Named.TryRecordArgument(namedParameterName, namedArgument, namedSyntax);
 
-        mapperMock.Verify((mapper) => mapper.Type.TryMapParameter(typeParameter, dataRecord)!.TryRecordArgument(typeArgument, typeSyntax), Times.Once);
-        mapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(constructorParameter, dataRecord)!.Normal.TryRecordArgument(constructorArgument, constructorSyntax), Times.Once);
-        mapperMock.Verify((mapper) => mapper.Named.TryMapParameter(namedParameterName, dataRecord)!.TryRecordArgument(namedArgument, namedSyntax), Times.Once);
+        mapperMock.Verify((mapper) => mapper.Type.TryMapParameter(typeParameter)!.TryRecordArgument(typeArgument, typeSyntax), Times.Once);
+        mapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(constructorParameter)!.Normal.TryRecordArgument(constructorArgument, constructorSyntax), Times.Once);
+        mapperMock.Verify((mapper) => mapper.Named.TryMapParameter(namedParameterName)!.TryRecordArgument(namedArgument, namedSyntax), Times.Once);
     }
 }

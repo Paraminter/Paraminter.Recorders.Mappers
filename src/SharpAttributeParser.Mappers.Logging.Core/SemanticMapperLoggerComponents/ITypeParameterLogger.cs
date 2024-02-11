@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 
 using System;
 
-/// <summary>Handles logging for <see cref="ISemanticMapper{TRecord}"/> when related to type parameters.</summary>
+/// <summary>Handles logging for <see cref="ISemanticMapper"/> when related to type parameters.</summary>
 public interface ITypeParameterLogger
 {
     /// <summary>Begins a log scope describing an attempt to map a type parameter to a recorder.</summary>

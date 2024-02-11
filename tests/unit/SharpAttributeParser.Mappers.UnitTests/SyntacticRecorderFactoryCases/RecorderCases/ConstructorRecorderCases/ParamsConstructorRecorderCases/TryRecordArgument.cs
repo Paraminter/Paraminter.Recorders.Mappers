@@ -5,6 +5,9 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Moq;
 
+using SharpAttributeParser.Mappers.SyntacticMappedRecorders;
+using SharpAttributeParser.SyntacticRecorderComponents.SyntacticConstructorRecorderComponents;
+
 using System;
 using System.Collections.Generic;
 
@@ -14,12 +17,12 @@ public sealed class TryRecordArgument
 {
     private static bool Target(ISyntacticParamsConstructorRecorder recorder, IParameterSymbol parameter, IReadOnlyList<ExpressionSyntax> elementSyntax) => recorder.TryRecordArgument(parameter, elementSyntax);
 
+    private readonly RecorderContext Context = RecorderContext.Create();
+
     [Fact]
     public void NullParameter_ArgumentNullException()
     {
-        var context = RecorderContext<object>.Create();
-
-        var exception = Record.Exception(() => Target(context.Recorder, null!, Mock.Of<IReadOnlyList<ExpressionSyntax>>()));
+        var exception = Record.Exception(() => Target(Context.Recorder, null!, Mock.Of<IReadOnlyList<ExpressionSyntax>>()));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -27,9 +30,7 @@ public sealed class TryRecordArgument
     [Fact]
     public void NullElementSyntax_ArgumentNullException()
     {
-        var context = RecorderContext<object>.Create();
-
-        var exception = Record.Exception(() => Target(context.Recorder, Mock.Of<IParameterSymbol>(), null!));
+        var exception = Record.Exception(() => Target(Context.Recorder, Mock.Of<IParameterSymbol>(), null!));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -39,17 +40,15 @@ public sealed class TryRecordArgument
     {
         var parameter = Mock.Of<IParameterSymbol>();
 
-        var context = RecorderContext<object>.Create();
+        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.TryMapParameter(It.IsAny<IParameterSymbol>())).Returns((ISyntacticMappedConstructorRecorder?)null);
 
-        context.MapperMock.Setup(static (mapper) => mapper.Constructor.TryMapParameter(It.IsAny<IParameterSymbol>(), It.IsAny<object>())).Returns((ISyntacticMappedConstructorRecorder?)null);
-
-        var outcome = Target(context.Recorder, parameter, Mock.Of<IReadOnlyList<ExpressionSyntax>>());
+        var outcome = Target(Context.Recorder, parameter, Mock.Of<IReadOnlyList<ExpressionSyntax>>());
 
         Assert.False(outcome);
 
-        context.MapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(parameter, context.DataRecordMock.Object), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(parameter), Times.Once);
 
-        context.LoggerFactoryMock.Verify((factory) => factory.Create<ISyntacticRecorder>().ConstructorArgument.FailedToMapConstructorParameterToRecorder(), Times.Once);
+        Context.LoggerFactoryMock.Verify((factory) => factory.Create<ISyntacticRecorder>().ConstructorArgument.FailedToMapConstructorParameterToRecorder(), Times.Once);
     }
 
     [Fact]
@@ -59,19 +58,17 @@ public sealed class TryRecordArgument
     public void FalseReturningRecorder_ReturnsFalse() => ValidRecorder_PropagatesReturnValue(false);
 
     [AssertionMethod]
-    private static void ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
+    private void ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
     {
         var parameter = Mock.Of<IParameterSymbol>();
         var elementSyntax = Mock.Of<IReadOnlyList<ExpressionSyntax>>();
 
-        var context = RecorderContext<object>.Create();
+        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.TryMapParameter(It.IsAny<IParameterSymbol>())!.Params.TryRecordArgument(It.IsAny<IReadOnlyList<ExpressionSyntax>>())).Returns(recorderReturnValue);
 
-        context.MapperMock.Setup(static (mapper) => mapper.Constructor.TryMapParameter(It.IsAny<IParameterSymbol>(), It.IsAny<object>())!.Params.TryRecordArgument(It.IsAny<IReadOnlyList<ExpressionSyntax>>())).Returns(recorderReturnValue);
-
-        var outcome = Target(context.Recorder, parameter, elementSyntax);
+        var outcome = Target(Context.Recorder, parameter, elementSyntax);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        context.MapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(parameter, context.DataRecordMock.Object)!.Params.TryRecordArgument(elementSyntax), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(parameter)!.Params.TryRecordArgument(elementSyntax), Times.Once);
     }
 }

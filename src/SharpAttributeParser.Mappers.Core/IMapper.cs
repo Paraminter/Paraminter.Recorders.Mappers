@@ -1,15 +1,16 @@
 ﻿namespace SharpAttributeParser.Mappers;
 
+using SharpAttributeParser.Mappers.MapperComponents;
+
 /// <summary>Maps attribute parameters to recorders, responsible for recording arguments of that parameter.</summary>
-/// <typeparam name="TRecord">The type to which arguments are recorded.</typeparam>
-public interface IMapper<in TRecord>
+public interface IMapper
 {
     /// <summary>Maps attribute type parameters to recorders.</summary>
-    public abstract ITypeMapper<TRecord> Type { get; }
+    public abstract ITypeMapper Type { get; }
 
     /// <summary>Maps attribute constructor parameters to recorders.</summary>
-    public abstract IConstructorMapper<TRecord> Constructor { get; }
+    public abstract IConstructorMapper Constructor { get; }
 
     /// <summary>Maps named attribute parameters to recorders.</summary>
-    public abstract INamedMapper<TRecord> Named { get; }
+    public abstract INamedMapper Named { get; }
 }

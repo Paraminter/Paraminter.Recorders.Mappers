@@ -1,15 +1,16 @@
 ﻿namespace SharpAttributeParser.Mappers;
 
+using SharpAttributeParser.Mappers.SemanticMapperComponents;
+
 /// <summary>Maps attribute parameters to recorders, responsible for recording arguments of that parameter.</summary>
-/// <typeparam name="TRecord">The type to which arguments are recorded.</typeparam>
-public interface ISemanticMapper<in TRecord>
+public interface ISemanticMapper
 {
     /// <summary>Maps attribute type parameters to recorders.</summary>
-    public abstract ISemanticTypeMapper<TRecord> Type { get; }
+    public abstract ISemanticTypeMapper Type { get; }
 
     /// <summary>Maps attribute constructor parameters to recorders.</summary>
-    public abstract ISemanticConstructorMapper<TRecord> Constructor { get; }
+    public abstract ISemanticConstructorMapper Constructor { get; }
 
     /// <summary>Maps named attribute parameters to recorders.</summary>
-    public abstract ISemanticNamedMapper<TRecord> Named { get; }
+    public abstract ISemanticNamedMapper Named { get; }
 }

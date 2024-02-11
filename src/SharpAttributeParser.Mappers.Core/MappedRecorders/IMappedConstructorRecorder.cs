@@ -1,4 +1,6 @@
-﻿namespace SharpAttributeParser.Mappers;
+﻿namespace SharpAttributeParser.Mappers.MappedRecorders;
+
+using SharpAttributeParser.Mappers.MappedRecorders.MappedConstructorRecorders;
 
 /// <summary>Records the arguments of some constructor parameter.</summary>
 public interface IMappedConstructorRecorder

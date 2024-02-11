@@ -14,7 +14,7 @@ public sealed class SemanticMapperLogger<TCategoryName> : ISemanticMapperLogger<
     private readonly IConstructorParameterLogger ConstructorParameter;
     private readonly INamedParameterLogger NamedParameter;
 
-    /// <summary>Instantiates a <see cref="SemanticMapperLogger{TCategoryName}"/>, handling logging for <see cref="ISemanticMapper{TRecord}"/>.</summary>
+    /// <summary>Instantiates a <see cref="SemanticMapperLogger{TCategoryName}"/>, handling logging for <see cref="ISemanticMapper"/>.</summary>
     /// <param name="logger">The logger used to log messages.</param>
     public SemanticMapperLogger(ILogger<TCategoryName> logger)
     {
