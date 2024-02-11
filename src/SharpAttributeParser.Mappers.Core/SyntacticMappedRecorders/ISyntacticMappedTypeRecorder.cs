@@ -1,9 +1,9 @@
-﻿namespace SharpAttributeParser.Mappers;
+﻿namespace SharpAttributeParser.Mappers.SyntacticMappedRecorders;
 
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 /// <summary>Records syntactic information about the arguments of some type parameter.</summary>
-public interface IMappedSyntacticTypeRecorder
+public interface ISyntacticMappedTypeRecorder
 {
     /// <summary>Attempts to record syntactic information about an argument of some type parameter.</summary>
     /// <param name="syntax">The syntactic description of the argument.</param>

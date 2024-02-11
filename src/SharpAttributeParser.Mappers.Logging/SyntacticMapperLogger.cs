@@ -14,7 +14,7 @@ public sealed class SyntacticMapperLogger<TCategoryName> : ISyntacticMapperLogge
     private readonly IConstructorParameterLogger ConstructorParameter;
     private readonly INamedParameterLogger NamedParameter;
 
-    /// <summary>Instantiates a <see cref="SyntacticMapperLogger{TCategoryName}"/>, handling logging for <see cref="ISyntacticMapper{TRecord}"/>.</summary>
+    /// <summary>Instantiates a <see cref="SyntacticMapperLogger{TCategoryName}"/>, handling logging for <see cref="ISyntacticMapper"/>.</summary>
     /// <param name="logger">The logger used to log messages.</param>
     public SyntacticMapperLogger(ILogger<TCategoryName> logger)
     {

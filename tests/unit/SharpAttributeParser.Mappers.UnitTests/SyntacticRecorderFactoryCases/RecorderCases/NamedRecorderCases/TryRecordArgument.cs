@@ -4,6 +4,9 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Moq;
 
+using SharpAttributeParser.Mappers.SyntacticMappedRecorders;
+using SharpAttributeParser.SyntacticRecorderComponents;
+
 using System;
 
 using Xunit;
@@ -12,12 +15,12 @@ public sealed class TryRecordArgument
 {
     private static bool Target(ISyntacticNamedRecorder recorder, string parameterName, ExpressionSyntax syntax) => recorder.TryRecordArgument(parameterName, syntax);
 
+    private readonly RecorderContext Context = RecorderContext.Create();
+
     [Fact]
     public void NullParameterName_ArgumentNullException()
     {
-        var context = RecorderContext<object>.Create();
-
-        var exception = Record.Exception(() => Target(context.Recorder, null!, ExpressionSyntaxFactory.Create()));
+        var exception = Record.Exception(() => Target(Context.Recorder, null!, ExpressionSyntaxFactory.Create()));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -25,9 +28,7 @@ public sealed class TryRecordArgument
     [Fact]
     public void NullSyntax_ArgumentNullException()
     {
-        var context = RecorderContext<object>.Create();
-
-        var exception = Record.Exception(() => Target(context.Recorder, string.Empty, null!));
+        var exception = Record.Exception(() => Target(Context.Recorder, string.Empty, null!));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -37,17 +38,15 @@ public sealed class TryRecordArgument
     {
         var parameterName = string.Empty;
 
-        var context = RecorderContext<object>.Create();
+        Context.MapperMock.Setup(static (mapper) => mapper.Named.TryMapParameter(It.IsAny<string>())).Returns((ISyntacticMappedNamedRecorder?)null);
 
-        context.MapperMock.Setup(static (mapper) => mapper.TryMapNamedParameter(It.IsAny<string>(), It.IsAny<object>())).Returns((IMappedSyntacticNamedRecorder?)null);
-
-        var outcome = Target(context.Recorder, parameterName, ExpressionSyntaxFactory.Create());
+        var outcome = Target(Context.Recorder, parameterName, ExpressionSyntaxFactory.Create());
 
         Assert.False(outcome);
 
-        context.MapperMock.Verify((mapper) => mapper.TryMapNamedParameter(parameterName, context.DataRecordMock.Object), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Named.TryMapParameter(parameterName), Times.Once);
 
-        context.LoggerFactoryMock.Verify((factory) => factory.Create<ISyntacticRecorder>().NamedArgument.FailedToMapNamedParameterToRecorder(), Times.Once);
+        Context.LoggerFactoryMock.Verify((factory) => factory.Create<ISyntacticRecorder>().NamedArgument.FailedToMapNamedParameterToRecorder(), Times.Once);
     }
 
     [Fact]
@@ -57,19 +56,17 @@ public sealed class TryRecordArgument
     public void FalseReturningRecorder_ReturnsFalse() => ValidRecorder_PropagatesReturnValue(false);
 
     [AssertionMethod]
-    private static void ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
+    private void ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
     {
         var parameterName = string.Empty;
         var syntax = ExpressionSyntaxFactory.Create();
 
-        var context = RecorderContext<object>.Create();
+        Context.MapperMock.Setup(static (mapper) => mapper.Named.TryMapParameter(It.IsAny<string>())!.TryRecordArgument(It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
 
-        context.MapperMock.Setup(static (mapper) => mapper.TryMapNamedParameter(It.IsAny<string>(), It.IsAny<object>())!.TryRecordArgument(It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
-
-        var outcome = Target(context.Recorder, parameterName, syntax);
+        var outcome = Target(Context.Recorder, parameterName, syntax);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        context.MapperMock.Verify((mapper) => mapper.TryMapNamedParameter(parameterName, context.DataRecordMock.Object)!.TryRecordArgument(syntax), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Named.TryMapParameter(parameterName)!.TryRecordArgument(syntax), Times.Once);
     }
 }

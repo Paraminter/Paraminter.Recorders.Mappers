@@ -1,7 +1,7 @@
-﻿namespace SharpAttributeParser.Mappers;
+﻿namespace SharpAttributeParser.Mappers.SemanticMappedRecorders;
 
 /// <summary>Records the arguments of some constructor parameter.</summary>
-public interface IMappedSemanticConstructorRecorder
+public interface ISemanticMappedConstructorRecorder
 {
     /// <summary>Attempts to record an argument of some constructor parameter.</summary>
     /// <param name="argument">The argument of the constructor parameter.</param>

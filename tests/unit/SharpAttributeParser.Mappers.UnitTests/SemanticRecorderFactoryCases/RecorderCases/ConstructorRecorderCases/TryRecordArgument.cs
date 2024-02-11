@@ -4,6 +4,9 @@ using Microsoft.CodeAnalysis;
 
 using Moq;
 
+using SharpAttributeParser.Mappers.SemanticMappedRecorders;
+using SharpAttributeParser.SemanticRecorderComponents;
+
 using System;
 
 using Xunit;
@@ -12,12 +15,12 @@ public sealed class TryRecordArgument
 {
     private static bool Target(ISemanticConstructorRecorder recorder, IParameterSymbol parameter, object? argument) => recorder.TryRecordArgument(parameter, argument);
 
+    private readonly RecorderContext Context = RecorderContext.Create();
+
     [Fact]
     public void NullParameter_ArgumentNullException()
     {
-        var context = RecorderContext<object>.Create();
-
-        var exception = Record.Exception(() => Target(context.Recorder, null!, Mock.Of<ITypeSymbol>()));
+        var exception = Record.Exception(() => Target(Context.Recorder, null!, Mock.Of<ITypeSymbol>()));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -27,17 +30,15 @@ public sealed class TryRecordArgument
     {
         var parameter = Mock.Of<IParameterSymbol>();
 
-        var context = RecorderContext<object>.Create();
+        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.TryMapParameter(It.IsAny<IParameterSymbol>())).Returns((ISemanticMappedConstructorRecorder?)null);
 
-        context.MapperMock.Setup(static (mapper) => mapper.TryMapConstructorParameter(It.IsAny<IParameterSymbol>(), It.IsAny<object>())).Returns((IMappedSemanticConstructorRecorder?)null);
-
-        var outcome = Target(context.Recorder, parameter, Mock.Of<object>());
+        var outcome = Target(Context.Recorder, parameter, Mock.Of<object>());
 
         Assert.False(outcome);
 
-        context.MapperMock.Verify((mapper) => mapper.TryMapConstructorParameter(parameter, context.DataRecordMock.Object), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(parameter), Times.Once);
 
-        context.LoggerFactoryMock.Verify((factory) => factory.Create<ISemanticRecorder>().ConstructorArgument.FailedToMapConstructorParameterToRecorder(), Times.Once);
+        Context.LoggerFactoryMock.Verify((factory) => factory.Create<ISemanticRecorder>().ConstructorArgument.FailedToMapConstructorParameterToRecorder(), Times.Once);
     }
 
     [Fact]
@@ -47,19 +48,17 @@ public sealed class TryRecordArgument
     public void FalseReturningRecorder_ReturnsFalse() => ValidRecorder_PropagatesReturnValue(false);
 
     [AssertionMethod]
-    private static void ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
+    private void ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
     {
         var parameter = Mock.Of<IParameterSymbol>();
         var argument = Mock.Of<object>();
 
-        var context = RecorderContext<object>.Create();
+        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.TryMapParameter(It.IsAny<IParameterSymbol>())!.TryRecordArgument(It.IsAny<object?>())).Returns(recorderReturnValue);
 
-        context.MapperMock.Setup(static (mapper) => mapper.TryMapConstructorParameter(It.IsAny<IParameterSymbol>(), It.IsAny<object>())!.TryRecordArgument(It.IsAny<object?>())).Returns(recorderReturnValue);
-
-        var outcome = Target(context.Recorder, parameter, argument);
+        var outcome = Target(Context.Recorder, parameter, argument);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        context.MapperMock.Verify((mapper) => mapper.TryMapConstructorParameter(parameter, context.DataRecordMock.Object)!.TryRecordArgument(argument), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(parameter)!.TryRecordArgument(argument), Times.Once);
     }
 }

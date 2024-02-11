@@ -1,26 +1,16 @@
 ﻿namespace SharpAttributeParser.Mappers;
 
-using Microsoft.CodeAnalysis;
+using SharpAttributeParser.Mappers.MapperComponents;
 
-/// <summary>Maps attribute parameters to recorders, responsible for recording arguments, and syntactic information about the arguments, of that parameter.</summary>
-/// <typeparam name="TRecord">The type to which arguments are recorded.</typeparam>
-public interface IMapper<in TRecord>
+/// <summary>Maps attribute parameters to recorders, responsible for recording arguments of that parameter.</summary>
+public interface IMapper
 {
-    /// <summary>Attempts to map a type parameter to a recorder.</summary>
-    /// <param name="parameter">The type parameter.</param>
-    /// <param name="dataRecord">The record to which arguments are recorded by the mapped recorder.</param>
-    /// <returns>The mapped recorder, or <see langword="null"/> if the attempt was unsuccessful.</returns>
-    public abstract IMappedTypeRecorder? TryMapTypeParameter(ITypeParameterSymbol parameter, TRecord dataRecord);
+    /// <summary>Maps attribute type parameters to recorders.</summary>
+    public abstract ITypeMapper Type { get; }
 
-    /// <summary>Attempts to map a constructor parameter to a recorder.</summary>
-    /// <param name="parameter">The constructor parameter.</param>
-    /// <param name="dataRecord">The record to which arguments are recorded by the mapped recorder.</param>
-    /// <returns>The mapped recorder, or <see langword="null"/> if the attempt was unsuccessful.</returns>
-    public abstract IMappedConstructorRecorder? TryMapConstructorParameter(IParameterSymbol parameter, TRecord dataRecord);
+    /// <summary>Maps attribute constructor parameters to recorders.</summary>
+    public abstract IConstructorMapper Constructor { get; }
 
-    /// <summary>Attempts to map a named parameter to a recorder.</summary>
-    /// <param name="parameterName">The name of the named parameter.</param>
-    /// <param name="dataRecord">The record to which arguments are recorded by the mapped recorder.</param>
-    /// <returns>The mapped recorder, or <see langword="null"/> if the attempt was unsuccessful.</returns>
-    public abstract IMappedNamedRecorder? TryMapNamedParameter(string parameterName, TRecord dataRecord);
+    /// <summary>Maps named attribute parameters to recorders.</summary>
+    public abstract INamedMapper Named { get; }
 }

@@ -2,7 +2,7 @@
 
 using System;
 
-/// <summary>Handles logging for <see cref="IMapper{TRecord}"/> when related to named parameters.</summary>
+/// <summary>Handles logging for <see cref="IMapper"/> when related to named parameters.</summary>
 public interface INamedParameterLogger
 {
     /// <summary>Begins a log scope describing an attempt to map a named parameter to a recorder.</summary>

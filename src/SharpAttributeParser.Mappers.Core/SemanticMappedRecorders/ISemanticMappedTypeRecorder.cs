@@ -1,9 +1,9 @@
-﻿namespace SharpAttributeParser.Mappers;
+﻿namespace SharpAttributeParser.Mappers.SemanticMappedRecorders;
 
 using Microsoft.CodeAnalysis;
 
 /// <summary>Records the arguments of some type parameter.</summary>
-public interface IMappedSemanticTypeRecorder
+public interface ISemanticMappedTypeRecorder
 {
     /// <summary>Attempts to record an argument of some type parameter.</summary>
     /// <param name="argument">The argument of the type parameter.</param>
