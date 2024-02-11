@@ -52,11 +52,11 @@ public sealed class Create
         var recorder = Target(context.Factory, mapperMock.Object, dataRecord);
 
         recorder.Type.TryRecordArgument(typeParameter, typeSyntax);
-        recorder.Constructor.TryRecordArgument(constructorParameter, constructorSyntax);
+        recorder.Constructor.Normal.TryRecordArgument(constructorParameter, constructorSyntax);
         recorder.Named.TryRecordArgument(namedParameterName, namedSyntax);
 
-        mapperMock.Verify((mapper) => mapper.TryMapTypeParameter(typeParameter, dataRecord)!.TryRecordArgument(typeSyntax), Times.Once);
-        mapperMock.Verify((mapper) => mapper.TryMapConstructorParameter(constructorParameter, dataRecord)!.TryRecordArgument(constructorSyntax), Times.Once);
-        mapperMock.Verify((mapper) => mapper.TryMapNamedParameter(namedParameterName, dataRecord)!.TryRecordArgument(namedSyntax), Times.Once);
+        mapperMock.Verify((mapper) => mapper.Type.TryMapParameter(typeParameter, dataRecord)!.TryRecordArgument(typeSyntax), Times.Once);
+        mapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(constructorParameter, dataRecord)!.Normal.TryRecordArgument(constructorSyntax), Times.Once);
+        mapperMock.Verify((mapper) => mapper.Named.TryMapParameter(namedParameterName, dataRecord)!.TryRecordArgument(namedSyntax), Times.Once);
     }
 }

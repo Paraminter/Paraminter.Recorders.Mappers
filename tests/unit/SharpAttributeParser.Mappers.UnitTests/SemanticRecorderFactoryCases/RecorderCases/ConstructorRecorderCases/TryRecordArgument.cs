@@ -29,13 +29,13 @@ public sealed class TryRecordArgument
 
         var context = RecorderContext<object>.Create();
 
-        context.MapperMock.Setup(static (mapper) => mapper.TryMapConstructorParameter(It.IsAny<IParameterSymbol>(), It.IsAny<object>())).Returns((IMappedSemanticConstructorRecorder?)null);
+        context.MapperMock.Setup(static (mapper) => mapper.Constructor.TryMapParameter(It.IsAny<IParameterSymbol>(), It.IsAny<object>())).Returns((ISemanticMappedConstructorRecorder?)null);
 
         var outcome = Target(context.Recorder, parameter, Mock.Of<object>());
 
         Assert.False(outcome);
 
-        context.MapperMock.Verify((mapper) => mapper.TryMapConstructorParameter(parameter, context.DataRecordMock.Object), Times.Once);
+        context.MapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(parameter, context.DataRecordMock.Object), Times.Once);
 
         context.LoggerFactoryMock.Verify((factory) => factory.Create<ISemanticRecorder>().ConstructorArgument.FailedToMapConstructorParameterToRecorder(), Times.Once);
     }
@@ -54,12 +54,12 @@ public sealed class TryRecordArgument
 
         var context = RecorderContext<object>.Create();
 
-        context.MapperMock.Setup(static (mapper) => mapper.TryMapConstructorParameter(It.IsAny<IParameterSymbol>(), It.IsAny<object>())!.TryRecordArgument(It.IsAny<object?>())).Returns(recorderReturnValue);
+        context.MapperMock.Setup(static (mapper) => mapper.Constructor.TryMapParameter(It.IsAny<IParameterSymbol>(), It.IsAny<object>())!.TryRecordArgument(It.IsAny<object?>())).Returns(recorderReturnValue);
 
         var outcome = Target(context.Recorder, parameter, argument);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        context.MapperMock.Verify((mapper) => mapper.TryMapConstructorParameter(parameter, context.DataRecordMock.Object)!.TryRecordArgument(argument), Times.Once);
+        context.MapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(parameter, context.DataRecordMock.Object)!.TryRecordArgument(argument), Times.Once);
     }
 }

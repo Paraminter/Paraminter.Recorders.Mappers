@@ -1,4 +1,4 @@
-﻿namespace SharpAttributeParser.Mappers.SyntacticRecorderFactoryCases.RecorderCases.ConstructorRecorderCases;
+﻿namespace SharpAttributeParser.Mappers.SyntacticRecorderFactoryCases.RecorderCases.ConstructorRecorderCases.NormalConstructorRecorderCases;
 
 using Moq;
 
@@ -15,19 +15,19 @@ internal sealed class RecorderContext<TRecord> where TRecord : class
         Mock<ISyntacticMapper<TRecord>> mapperMock = new();
         Mock<TRecord> dataRecordMock = new();
 
-        var recorder = ((ISyntacticRecorderFactory)factory).Create(mapperMock.Object, dataRecordMock.Object).Constructor;
+        var recorder = ((ISyntacticRecorderFactory)factory).Create(mapperMock.Object, dataRecordMock.Object).Constructor.Normal;
 
         return new(recorder, mapperMock, dataRecordMock, loggerFactoryMock);
     }
 
-    public ISyntacticConstructorRecorder Recorder { get; }
+    public ISyntacticNormalConstructorRecorder Recorder { get; }
 
     public Mock<ISyntacticMapper<TRecord>> MapperMock { get; }
     public Mock<TRecord> DataRecordMock { get; }
 
     public Mock<ISyntacticRecorderLoggerFactory> LoggerFactoryMock { get; }
 
-    private RecorderContext(ISyntacticConstructorRecorder recorder, Mock<ISyntacticMapper<TRecord>> mapperMock, Mock<TRecord> dataRecordMock, Mock<ISyntacticRecorderLoggerFactory> loggerFactoryMock)
+    private RecorderContext(ISyntacticNormalConstructorRecorder recorder, Mock<ISyntacticMapper<TRecord>> mapperMock, Mock<TRecord> dataRecordMock, Mock<ISyntacticRecorderLoggerFactory> loggerFactoryMock)
     {
         Recorder = recorder;
 

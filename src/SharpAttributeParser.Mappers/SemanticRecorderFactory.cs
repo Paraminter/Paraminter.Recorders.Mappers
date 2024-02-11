@@ -81,7 +81,7 @@ public sealed class SemanticRecorderFactory : ISemanticRecorderFactory
 
                 using var _ = Logger.TypeArgument.BeginScopeRecordingTypeArgument(parameter, argument);
 
-                if (RecorderMapper.TryMapTypeParameter(parameter, Record) is not IMappedSemanticTypeRecorder argumentRecorder)
+                if (RecorderMapper.Type.TryMapParameter(parameter, Record) is not ISemanticMappedTypeRecorder argumentRecorder)
                 {
                     Logger.TypeArgument.FailedToMapTypeParameterToRecorder();
 
@@ -116,7 +116,7 @@ public sealed class SemanticRecorderFactory : ISemanticRecorderFactory
 
                 using var _ = Logger.ConstructorArgument.BeginScopeRecordingConstructorArgument(parameter, argument);
 
-                if (RecorderMapper.TryMapConstructorParameter(parameter, Record) is not IMappedSemanticConstructorRecorder argumentRecorder)
+                if (RecorderMapper.Constructor.TryMapParameter(parameter, Record) is not ISemanticMappedConstructorRecorder argumentRecorder)
                 {
                     Logger.ConstructorArgument.FailedToMapConstructorParameterToRecorder();
 
@@ -151,7 +151,7 @@ public sealed class SemanticRecorderFactory : ISemanticRecorderFactory
 
                 using var _ = Logger.NamedArgument.BeginScopeRecordingNamedArgument(parameterName, argument);
 
-                if (RecorderMapper.TryMapNamedParameter(parameterName, Record) is not IMappedSemanticNamedRecorder argumentRecorder)
+                if (RecorderMapper.Named.TryMapParameter(parameterName, Record) is not ISemanticMappedNamedRecorder argumentRecorder)
                 {
                     Logger.NamedArgument.FailedToMapNamedParameterToRecorder();
 

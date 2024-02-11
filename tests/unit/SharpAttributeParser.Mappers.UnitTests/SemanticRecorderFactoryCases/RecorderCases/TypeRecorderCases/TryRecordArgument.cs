@@ -39,13 +39,13 @@ public sealed class TryRecordArgument
 
         var context = RecorderContext<object>.Create();
 
-        context.MapperMock.Setup(static (mapper) => mapper.TryMapTypeParameter(It.IsAny<ITypeParameterSymbol>(), It.IsAny<object>())).Returns((IMappedSemanticTypeRecorder?)null);
+        context.MapperMock.Setup(static (mapper) => mapper.Type.TryMapParameter(It.IsAny<ITypeParameterSymbol>(), It.IsAny<object>())).Returns((ISemanticMappedTypeRecorder?)null);
 
         var outcome = Target(context.Recorder, parameter, Mock.Of<ITypeSymbol>());
 
         Assert.False(outcome);
 
-        context.MapperMock.Verify((mapper) => mapper.TryMapTypeParameter(parameter, context.DataRecordMock.Object), Times.Once);
+        context.MapperMock.Verify((mapper) => mapper.Type.TryMapParameter(parameter, context.DataRecordMock.Object), Times.Once);
 
         context.LoggerFactoryMock.Verify((factory) => factory.Create<ISemanticRecorder>().TypeArgument.FailedToMapTypeParameterToRecorder(), Times.Once);
     }
@@ -64,12 +64,12 @@ public sealed class TryRecordArgument
 
         var context = RecorderContext<object>.Create();
 
-        context.MapperMock.Setup(static (mapper) => mapper.TryMapTypeParameter(It.IsAny<ITypeParameterSymbol>(), It.IsAny<object>())!.TryRecordArgument(It.IsAny<ITypeSymbol>())).Returns(recorderReturnValue);
+        context.MapperMock.Setup(static (mapper) => mapper.Type.TryMapParameter(It.IsAny<ITypeParameterSymbol>(), It.IsAny<object>())!.TryRecordArgument(It.IsAny<ITypeSymbol>())).Returns(recorderReturnValue);
 
         var outcome = Target(context.Recorder, parameter, argument);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        context.MapperMock.Verify((mapper) => mapper.TryMapTypeParameter(parameter, context.DataRecordMock.Object)!.TryRecordArgument(argument), Times.Once);
+        context.MapperMock.Verify((mapper) => mapper.Type.TryMapParameter(parameter, context.DataRecordMock.Object)!.TryRecordArgument(argument), Times.Once);
     }
 }

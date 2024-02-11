@@ -1,26 +1,14 @@
 ﻿namespace SharpAttributeParser.Mappers;
 
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-using System.Collections.Generic;
-
 /// <summary>Records the arguments of some constructor parameter.</summary>
 public interface IMappedConstructorRecorder
 {
-    /// <summary>Attempts to record an argument of some constructor parameter.</summary>
-    /// <param name="argument">The argument of the constructor parameter.</param>
-    /// <param name="syntax">The syntactic description of the argument.</param>
-    /// <returns>A <see cref="bool"/> indicating whether the argument was successfully recorded.</returns>
-    public abstract bool TryRecordArgument(object? argument, ExpressionSyntax syntax);
+    /// <summary>Records the normal arguments of some constructor parameter.</summary>
+    public abstract IMappedNormalConstructorRecorder Normal { get; }
 
-    /// <summary>Attempts to record a <see langword="params"/>-argument of some constructor parameter.</summary>
-    /// <param name="argument">The argument of the constructor parameter.</param>
-    /// <param name="elementSyntax">The syntactic description of each element in the <see langword="params"/>-argument.</param>
-    /// <returns>A <see cref="bool"/> indicating whether the argument was successfully recorded.</returns>
-    public abstract bool TryRecordParamsArgument(object? argument, IReadOnlyList<ExpressionSyntax> elementSyntax);
+    /// <summary>Records the <see langword="params"/>-arguments of some constructor parameter.</summary>
+    public abstract IMappedParamsConstructorRecorder Params { get; }
 
-    /// <summary>Attempts to record an unspecified argument of some optional constructor parameter.</summary>
-    /// <param name="argument">The argument of the constructor parameter.</param>
-    /// <returns>A <see cref="bool"/> indicating whether the argument was successfully recorded.</returns>
-    public abstract bool TryRecordDefaultArgument(object? argument);
+    /// <summary>Records the unspecified arguments of some optional constructor parameter.</summary>
+    public abstract IMappedDefaultConstructorRecorder Default { get; }
 }
