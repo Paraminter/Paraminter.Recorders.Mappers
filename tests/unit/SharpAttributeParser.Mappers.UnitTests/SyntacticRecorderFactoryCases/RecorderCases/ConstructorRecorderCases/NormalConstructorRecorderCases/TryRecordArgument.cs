@@ -5,7 +5,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Moq;
 
-using SharpAttributeParser.Mappers.SyntacticMappedRecorders;
 using SharpAttributeParser.SyntacticRecorderComponents.SyntacticConstructorRecorderComponents;
 
 using System;
@@ -35,22 +34,6 @@ public sealed class TryRecordArgument
     }
 
     [Fact]
-    public void NullReturningMapper_ReturnsFalseAndLogs()
-    {
-        var parameter = Mock.Of<IParameterSymbol>();
-
-        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.TryMapParameter(It.IsAny<IParameterSymbol>())).Returns((ISyntacticMappedConstructorRecorder?)null);
-
-        var outcome = Target(Context.Recorder, parameter, ExpressionSyntaxFactory.Create());
-
-        Assert.False(outcome);
-
-        Context.MapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(parameter), Times.Once);
-
-        Context.LoggerFactoryMock.Verify((factory) => factory.Create<ISyntacticRecorder>().ConstructorArgument.FailedToMapConstructorParameterToRecorder(), Times.Once);
-    }
-
-    [Fact]
     public void TrueReturningRecorder_ReturnsTrue() => ValidRecorder_PropagatesReturnValue(true);
 
     [Fact]
@@ -62,12 +45,12 @@ public sealed class TryRecordArgument
         var parameter = Mock.Of<IParameterSymbol>();
         var syntax = ExpressionSyntaxFactory.Create();
 
-        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.TryMapParameter(It.IsAny<IParameterSymbol>())!.Normal.TryRecordArgument(It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
+        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.MapParameter(It.IsAny<IParameterSymbol>()).Normal.TryRecordArgument(It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
 
         var outcome = Target(Context.Recorder, parameter, syntax);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        Context.MapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(parameter)!.Normal.TryRecordArgument(syntax), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Constructor.MapParameter(parameter).Normal.TryRecordArgument(syntax), Times.Once);
     }
 }

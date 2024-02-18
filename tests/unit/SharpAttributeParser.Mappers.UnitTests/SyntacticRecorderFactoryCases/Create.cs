@@ -41,8 +41,8 @@ public sealed class Create
         recorder.Constructor.Normal.TryRecordArgument(constructorParameter, constructorSyntax);
         recorder.Named.TryRecordArgument(namedParameterName, namedSyntax);
 
-        mapperMock.Verify((mapper) => mapper.Type.TryMapParameter(typeParameter)!.TryRecordArgument(typeSyntax), Times.Once);
-        mapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(constructorParameter)!.Normal.TryRecordArgument(constructorSyntax), Times.Once);
-        mapperMock.Verify((mapper) => mapper.Named.TryMapParameter(namedParameterName)!.TryRecordArgument(namedSyntax), Times.Once);
+        mapperMock.Verify((mapper) => mapper.Type.MapParameter(typeParameter)!.TryRecordArgument(typeSyntax), Times.Once);
+        mapperMock.Verify((mapper) => mapper.Constructor.MapParameter(constructorParameter)!.Normal.TryRecordArgument(constructorSyntax), Times.Once);
+        mapperMock.Verify((mapper) => mapper.Named.MapParameter(namedParameterName)!.TryRecordArgument(namedSyntax), Times.Once);
     }
 }

@@ -12,7 +12,4 @@ public interface IConstructorParameterLogger
     /// <param name="parameter">The constructor parameter.</param>
     /// <returns>The <see cref="IDisposable"/> used to close the log scope.</returns>
     public abstract IDisposable? BeginScopeMappingConstructorParameter<TRecorder>(IParameterSymbol parameter);
-
-    /// <summary>Logs a message describing a failed attempt to map a constructor parameter to a recorder.</summary>
-    public abstract void FailedToMapConstructorParameter();
 }

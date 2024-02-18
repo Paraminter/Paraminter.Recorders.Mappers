@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis;
 
 using Moq;
 
-using SharpAttributeParser.Mappers.SemanticMappedRecorders;
 using SharpAttributeParser.SemanticRecorderComponents;
 
 using System;
@@ -26,22 +25,6 @@ public sealed class TryRecordArgument
     }
 
     [Fact]
-    public void NullReturningMapper_ReturnsFalseAndLogs()
-    {
-        var parameter = Mock.Of<IParameterSymbol>();
-
-        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.TryMapParameter(It.IsAny<IParameterSymbol>())).Returns((ISemanticMappedConstructorRecorder?)null);
-
-        var outcome = Target(Context.Recorder, parameter, Mock.Of<object>());
-
-        Assert.False(outcome);
-
-        Context.MapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(parameter), Times.Once);
-
-        Context.LoggerFactoryMock.Verify((factory) => factory.Create<ISemanticRecorder>().ConstructorArgument.FailedToMapConstructorParameterToRecorder(), Times.Once);
-    }
-
-    [Fact]
     public void TrueReturningRecorder_ReturnsTrue() => ValidRecorder_PropagatesReturnValue(true);
 
     [Fact]
@@ -53,12 +36,12 @@ public sealed class TryRecordArgument
         var parameter = Mock.Of<IParameterSymbol>();
         var argument = Mock.Of<object>();
 
-        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.TryMapParameter(It.IsAny<IParameterSymbol>())!.TryRecordArgument(It.IsAny<object?>())).Returns(recorderReturnValue);
+        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.MapParameter(It.IsAny<IParameterSymbol>()).TryRecordArgument(It.IsAny<object?>())).Returns(recorderReturnValue);
 
         var outcome = Target(Context.Recorder, parameter, argument);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        Context.MapperMock.Verify((mapper) => mapper.Constructor.TryMapParameter(parameter)!.TryRecordArgument(argument), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Constructor.MapParameter(parameter).TryRecordArgument(argument), Times.Once);
     }
 }

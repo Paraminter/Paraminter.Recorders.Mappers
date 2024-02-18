@@ -5,7 +5,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Moq;
 
-using SharpAttributeParser.Mappers.SyntacticMappedRecorders;
 using SharpAttributeParser.SyntacticRecorderComponents;
 
 using System;
@@ -35,22 +34,6 @@ public sealed class TryRecordArgument
     }
 
     [Fact]
-    public void NullReturningMapper_ReturnsFalseAndLogs()
-    {
-        var parameter = Mock.Of<ITypeParameterSymbol>();
-
-        Context.MapperMock.Setup(static (mapper) => mapper.Type.TryMapParameter(It.IsAny<ITypeParameterSymbol>())).Returns((ISyntacticMappedTypeRecorder?)null);
-
-        var outcome = Target(Context.Recorder, parameter, ExpressionSyntaxFactory.Create());
-
-        Assert.False(outcome);
-
-        Context.MapperMock.Verify((mapper) => mapper.Type.TryMapParameter(parameter), Times.Once);
-
-        Context.LoggerFactoryMock.Verify((factory) => factory.Create<ISyntacticRecorder>().TypeArgument.FailedToMapTypeParameterToRecorder(), Times.Once);
-    }
-
-    [Fact]
     public void TrueReturningRecorder_ReturnsTrue() => ValidRecorder_PropagatesReturnValue(true);
 
     [Fact]
@@ -62,12 +45,12 @@ public sealed class TryRecordArgument
         var parameter = Mock.Of<ITypeParameterSymbol>();
         var syntax = ExpressionSyntaxFactory.Create();
 
-        Context.MapperMock.Setup(static (mapper) => mapper.Type.TryMapParameter(It.IsAny<ITypeParameterSymbol>())!.TryRecordArgument(It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
+        Context.MapperMock.Setup(static (mapper) => mapper.Type.MapParameter(It.IsAny<ITypeParameterSymbol>()).TryRecordArgument(It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
 
         var outcome = Target(Context.Recorder, parameter, syntax);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        Context.MapperMock.Verify((mapper) => mapper.Type.TryMapParameter(parameter)!.TryRecordArgument(syntax), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Type.MapParameter(parameter).TryRecordArgument(syntax), Times.Once);
     }
 }

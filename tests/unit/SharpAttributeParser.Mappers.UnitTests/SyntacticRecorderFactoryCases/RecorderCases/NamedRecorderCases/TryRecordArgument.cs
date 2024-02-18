@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Moq;
 
-using SharpAttributeParser.Mappers.SyntacticMappedRecorders;
 using SharpAttributeParser.SyntacticRecorderComponents;
 
 using System;
@@ -34,22 +33,6 @@ public sealed class TryRecordArgument
     }
 
     [Fact]
-    public void NullReturningMapper_ReturnsFalseAndLogs()
-    {
-        var parameterName = string.Empty;
-
-        Context.MapperMock.Setup(static (mapper) => mapper.Named.TryMapParameter(It.IsAny<string>())).Returns((ISyntacticMappedNamedRecorder?)null);
-
-        var outcome = Target(Context.Recorder, parameterName, ExpressionSyntaxFactory.Create());
-
-        Assert.False(outcome);
-
-        Context.MapperMock.Verify((mapper) => mapper.Named.TryMapParameter(parameterName), Times.Once);
-
-        Context.LoggerFactoryMock.Verify((factory) => factory.Create<ISyntacticRecorder>().NamedArgument.FailedToMapNamedParameterToRecorder(), Times.Once);
-    }
-
-    [Fact]
     public void TrueReturningRecorder_ReturnsTrue() => ValidRecorder_PropagatesReturnValue(true);
 
     [Fact]
@@ -61,12 +44,12 @@ public sealed class TryRecordArgument
         var parameterName = string.Empty;
         var syntax = ExpressionSyntaxFactory.Create();
 
-        Context.MapperMock.Setup(static (mapper) => mapper.Named.TryMapParameter(It.IsAny<string>())!.TryRecordArgument(It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
+        Context.MapperMock.Setup(static (mapper) => mapper.Named.MapParameter(It.IsAny<string>()).TryRecordArgument(It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
 
         var outcome = Target(Context.Recorder, parameterName, syntax);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        Context.MapperMock.Verify((mapper) => mapper.Named.TryMapParameter(parameterName)!.TryRecordArgument(syntax), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Named.MapParameter(parameterName).TryRecordArgument(syntax), Times.Once);
     }
 }

@@ -12,7 +12,4 @@ public interface ITypeParameterLogger
     /// <param name="parameter">The type parameter.</param>
     /// <returns>The <see cref="IDisposable"/> used to close the log scope.</returns>
     public abstract IDisposable? BeginScopeMappingTypeParameter<TRecorder>(ITypeParameterSymbol parameter);
-
-    /// <summary>Logs a message describing a failed attempt to map a type parameter to a recorder.</summary>
-    public abstract void FailedToMapTypeParameter();
 }
