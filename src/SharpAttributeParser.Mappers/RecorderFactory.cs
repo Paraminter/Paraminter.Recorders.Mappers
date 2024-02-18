@@ -133,9 +133,9 @@ public sealed class RecorderFactory : IRecorderFactory
 
                     using var _ = Logger.ConstructorArgument.BeginScopeRecordingNormalConstructorlArgument(parameter, argument, syntax);
 
-                    var recorder = Mapper.Constructor.MapParameter(parameter);
+                    var recorder = Mapper.Constructor.Normal.MapParameter(parameter);
 
-                    return recorder.Normal.TryRecordArgument(argument, syntax);
+                    return recorder.TryRecordArgument(argument, syntax);
                 }
 
             }
@@ -167,9 +167,9 @@ public sealed class RecorderFactory : IRecorderFactory
 
                     using var _ = Logger.ConstructorArgument.BeginScopeRecordingParamsConstructorArgument(parameter, argument, elementSyntax);
 
-                    var recorder = Mapper.Constructor.MapParameter(parameter);
+                    var recorder = Mapper.Constructor.Params.MapParameter(parameter);
 
-                    return recorder.Params.TryRecordArgument(argument, elementSyntax);
+                    return recorder.TryRecordArgument(argument, elementSyntax);
                 }
             }
 
@@ -195,9 +195,9 @@ public sealed class RecorderFactory : IRecorderFactory
 
                     using var _ = Logger.ConstructorArgument.BeginScopeRecordingDefaultConstructorArgument(parameter, argument);
 
-                    var recorder = Mapper.Constructor.MapParameter(parameter);
+                    var recorder = Mapper.Constructor.Default.MapParameter(parameter);
 
-                    return recorder.Default.TryRecordArgument(argument);
+                    return recorder.TryRecordArgument(argument);
                 }
             }
         }

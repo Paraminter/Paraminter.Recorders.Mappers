@@ -46,12 +46,12 @@ public sealed class TryRecordArgument
         var parameter = Mock.Of<IParameterSymbol>();
         var elementSyntax = Mock.Of<IReadOnlyList<ExpressionSyntax>>();
 
-        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.MapParameter(It.IsAny<IParameterSymbol>()).Params.TryRecordArgument(It.IsAny<IReadOnlyList<ExpressionSyntax>>())).Returns(recorderReturnValue);
+        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.Params.MapParameter(It.IsAny<IParameterSymbol>()).TryRecordArgument(It.IsAny<IReadOnlyList<ExpressionSyntax>>())).Returns(recorderReturnValue);
 
         var outcome = Target(Context.Recorder, parameter, elementSyntax);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        Context.MapperMock.Verify((mapper) => mapper.Constructor.MapParameter(parameter).Params.TryRecordArgument(elementSyntax), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Constructor.Params.MapParameter(parameter).TryRecordArgument(elementSyntax), Times.Once);
     }
 }

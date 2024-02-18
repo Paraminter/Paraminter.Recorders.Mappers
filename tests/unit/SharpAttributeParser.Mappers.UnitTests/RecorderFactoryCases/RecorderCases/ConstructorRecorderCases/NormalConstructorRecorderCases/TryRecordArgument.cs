@@ -46,12 +46,12 @@ public sealed class TryRecordArgument
         var argument = Mock.Of<object>();
         var syntax = ExpressionSyntaxFactory.Create();
 
-        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.MapParameter(It.IsAny<IParameterSymbol>()).Normal.TryRecordArgument(It.IsAny<object?>(), It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
+        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.Normal.MapParameter(It.IsAny<IParameterSymbol>()).TryRecordArgument(It.IsAny<object?>(), It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
 
         var outcome = Target(Context.Recorder, parameter, argument, syntax);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        Context.MapperMock.Verify((mapper) => mapper.Constructor.MapParameter(parameter).Normal.TryRecordArgument(argument, syntax), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Constructor.Normal.MapParameter(parameter).TryRecordArgument(argument, syntax), Times.Once);
     }
 }
