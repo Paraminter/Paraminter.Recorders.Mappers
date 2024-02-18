@@ -4,7 +4,7 @@ using SharpAttributeParser.Mappers.Logging.SyntacticMapperLoggerComponents;
 
 using System.Diagnostics.CodeAnalysis;
 
-/// <summary>Handles logging for <see cref="ISyntacticMapper"/>.</summary>
+/// <summary>Handles logging for <see cref="ISyntacticMapper{TRecord}"/>.</summary>
 public interface ISyntacticMapperLogger
 {
     /// <summary>Handles logging related to type parameters.</summary>
@@ -17,7 +17,7 @@ public interface ISyntacticMapperLogger
     public abstract INamedParameterLogger NamedParameter { get; }
 }
 
-/// <summary>Handles logging for <see cref="ISyntacticMapper"/>.</summary>
+/// <summary>Handles logging for <see cref="ISyntacticMapper{TRecord}"/>.</summary>
 /// <typeparam name="TCategoryName">The name of the logging category.</typeparam>
 [SuppressMessage("Major Code Smell", "S2326: Unused type parameters should be removed", Justification = "Follows the pattern of ILogger<CategoryName>")]
 public interface ISyntacticMapperLogger<out TCategoryName> : ISyntacticMapperLogger { }

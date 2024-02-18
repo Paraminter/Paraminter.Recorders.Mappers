@@ -15,12 +15,12 @@ public sealed class TryRecordArgument
 {
     private static bool Target(ITypeRecorder recorder, ITypeParameterSymbol parameter, ITypeSymbol argument, ExpressionSyntax syntax) => recorder.TryRecordArgument(parameter, argument, syntax);
 
-    private readonly RecorderContext Context = RecorderContext.Create();
-
     [Fact]
     public void NullParameter_ArgumentNullException()
     {
-        var exception = Record.Exception(() => Target(Context.Recorder, null!, Mock.Of<ITypeSymbol>(), ExpressionSyntaxFactory.Create()));
+        var context = RecorderContext<object>.Create();
+
+        var exception = Record.Exception(() => Target(context.Recorder, null!, Mock.Of<ITypeSymbol>(), ExpressionSyntaxFactory.Create()));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -28,7 +28,9 @@ public sealed class TryRecordArgument
     [Fact]
     public void NullArgument_ArgumentNullException()
     {
-        var exception = Record.Exception(() => Target(Context.Recorder, Mock.Of<ITypeParameterSymbol>(), null!, ExpressionSyntaxFactory.Create()));
+        var context = RecorderContext<object>.Create();
+
+        var exception = Record.Exception(() => Target(context.Recorder, Mock.Of<ITypeParameterSymbol>(), null!, ExpressionSyntaxFactory.Create()));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -36,7 +38,9 @@ public sealed class TryRecordArgument
     [Fact]
     public void NullSyntax_ArgumentNullException()
     {
-        var exception = Record.Exception(() => Target(Context.Recorder, Mock.Of<ITypeParameterSymbol>(), Mock.Of<ITypeSymbol>(), null!));
+        var context = RecorderContext<object>.Create();
+
+        var exception = Record.Exception(() => Target(context.Recorder, Mock.Of<ITypeParameterSymbol>(), Mock.Of<ITypeSymbol>(), null!));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -48,18 +52,20 @@ public sealed class TryRecordArgument
     public void FalseReturningRecorder_ReturnsFalse() => ValidRecorder_PropagatesReturnValue(false);
 
     [AssertionMethod]
-    private void ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
+    private static void ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
     {
+        var context = RecorderContext<object>.Create();
+
         var parameter = Mock.Of<ITypeParameterSymbol>();
         var argument = Mock.Of<ITypeSymbol>();
         var syntax = ExpressionSyntaxFactory.Create();
 
-        Context.MapperMock.Setup(static (mapper) => mapper.Type.MapParameter(It.IsAny<ITypeParameterSymbol>()).TryRecordArgument(It.IsAny<ITypeSymbol>(), It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
+        context.MapperMock.Setup(static (mapper) => mapper.Type.MapParameter(It.IsAny<ITypeParameterSymbol>()).TryRecordArgument(It.IsAny<object>(), It.IsAny<ITypeSymbol>(), It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
 
-        var outcome = Target(Context.Recorder, parameter, argument, syntax);
+        var outcome = Target(context.Recorder, parameter, argument, syntax);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        Context.MapperMock.Verify((mapper) => mapper.Type.MapParameter(parameter).TryRecordArgument(argument, syntax), Times.Once);
+        context.MapperMock.Verify((mapper) => mapper.Type.MapParameter(parameter).TryRecordArgument(context.DataRecord, argument, syntax), Times.Once);
     }
 }

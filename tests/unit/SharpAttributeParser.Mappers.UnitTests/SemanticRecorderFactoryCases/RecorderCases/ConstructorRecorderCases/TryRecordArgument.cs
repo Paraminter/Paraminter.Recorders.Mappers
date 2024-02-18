@@ -14,12 +14,12 @@ public sealed class TryRecordArgument
 {
     private static bool Target(ISemanticConstructorRecorder recorder, IParameterSymbol parameter, object? argument) => recorder.TryRecordArgument(parameter, argument);
 
-    private readonly RecorderContext Context = RecorderContext.Create();
-
     [Fact]
     public void NullParameter_ArgumentNullException()
     {
-        var exception = Record.Exception(() => Target(Context.Recorder, null!, Mock.Of<ITypeSymbol>()));
+        var context = RecorderContext<object>.Create();
+
+        var exception = Record.Exception(() => Target(context.Recorder, null!, Mock.Of<ITypeSymbol>()));
 
         Assert.IsType<ArgumentNullException>(exception);
     }
@@ -31,17 +31,19 @@ public sealed class TryRecordArgument
     public void FalseReturningRecorder_ReturnsFalse() => ValidRecorder_PropagatesReturnValue(false);
 
     [AssertionMethod]
-    private void ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
+    private static void ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
     {
+        var context = RecorderContext<object>.Create();
+
         var parameter = Mock.Of<IParameterSymbol>();
         var argument = Mock.Of<object>();
 
-        Context.MapperMock.Setup(static (mapper) => mapper.Constructor.MapParameter(It.IsAny<IParameterSymbol>()).TryRecordArgument(It.IsAny<object?>())).Returns(recorderReturnValue);
+        context.MapperMock.Setup(static (mapper) => mapper.Constructor.MapParameter(It.IsAny<IParameterSymbol>()).TryRecordArgument(It.IsAny<object>(), It.IsAny<object?>())).Returns(recorderReturnValue);
 
-        var outcome = Target(Context.Recorder, parameter, argument);
+        var outcome = Target(context.Recorder, parameter, argument);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        Context.MapperMock.Verify((mapper) => mapper.Constructor.MapParameter(parameter).TryRecordArgument(argument), Times.Once);
+        context.MapperMock.Verify((mapper) => mapper.Constructor.MapParameter(parameter).TryRecordArgument(context.DataRecord, argument), Times.Once);
     }
 }

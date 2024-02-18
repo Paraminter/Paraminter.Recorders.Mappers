@@ -15,36 +15,41 @@ public sealed class RecorderFactory : IRecorderFactory
 {
     private readonly IRecorderLoggerFactory LoggerFactory;
 
-    /// <summary>Instantiates a <see cref="RecorderFactory"/>, handling creation of <see cref="IRecorder"/> using <see cref="IMapper"/>.</summary>
+    /// <summary>Instantiates a <see cref="RecorderFactory"/>, handling creation of <see cref="IRecorder"/> using <see cref="IMapper{TRecord}"/>.</summary>
     /// <param name="loggerFactory">Handles creation of the loggers used by the created recorders.</param>
     public RecorderFactory(IRecorderLoggerFactory? loggerFactory = null)
     {
         LoggerFactory = loggerFactory ?? NullRecorderLoggerFactory.Instance;
     }
 
-    IRecorder IRecorderFactory.Create(IMapper mapper)
+    IRecorder IRecorderFactory.Create<TRecord>(IMapper<TRecord> mapper, TRecord dataRecord)
     {
         if (mapper is null)
         {
             throw new ArgumentNullException(nameof(mapper));
         }
 
+        if (dataRecord is null)
+        {
+            throw new ArgumentNullException(nameof(dataRecord));
+        }
+
         var recorderLogger = LoggerFactory.Create<IRecorder>();
 
-        return new Recorder(mapper, recorderLogger);
+        return new Recorder<TRecord>(mapper, dataRecord, recorderLogger);
     }
 
-    private sealed class Recorder : IRecorder
+    private sealed class Recorder<TRecord> : IRecorder
     {
         private readonly ITypeRecorder Type;
         private readonly IConstructorRecorder Constructor;
         private readonly INamedRecorder Named;
 
-        public Recorder(IMapper mapper, IRecorderLogger logger)
+        public Recorder(IMapper<TRecord> mapper, TRecord dataRecord, IRecorderLogger logger)
         {
-            Type = new TypeRecorder(mapper, logger);
-            Constructor = new ConstructorRecorder(mapper, logger);
-            Named = new NamedRecorder(mapper, logger);
+            Type = new TypeRecorder(mapper, dataRecord, logger);
+            Constructor = new ConstructorRecorder(mapper, dataRecord, logger);
+            Named = new NamedRecorder(mapper, dataRecord, logger);
         }
 
         ITypeRecorder IRecorder.Type => Type;
@@ -53,13 +58,15 @@ public sealed class RecorderFactory : IRecorderFactory
 
         private sealed class TypeRecorder : ITypeRecorder
         {
-            private readonly IMapper Mapper;
+            private readonly IMapper<TRecord> Mapper;
+            private readonly TRecord DataRecord;
 
             private readonly IRecorderLogger Logger;
 
-            public TypeRecorder(IMapper mapper, IRecorderLogger logger)
+            public TypeRecorder(IMapper<TRecord> mapper, TRecord dataRecord, IRecorderLogger logger)
             {
                 Mapper = mapper;
+                DataRecord = dataRecord;
 
                 Logger = logger;
             }
@@ -85,7 +92,7 @@ public sealed class RecorderFactory : IRecorderFactory
 
                 var recorder = Mapper.Type.MapParameter(parameter);
 
-                return recorder.TryRecordArgument(argument, syntax);
+                return recorder.TryRecordArgument(DataRecord, argument, syntax);
             }
         }
 
@@ -95,11 +102,11 @@ public sealed class RecorderFactory : IRecorderFactory
             private readonly IParamsConstructorRecorder Params;
             private readonly IDefaultConstructorRecorder Default;
 
-            public ConstructorRecorder(IMapper mapper, IRecorderLogger logger)
+            public ConstructorRecorder(IMapper<TRecord> mapper, TRecord dataRecord, IRecorderLogger logger)
             {
-                Normal = new NormalConstructorRecorder(mapper, logger);
-                Params = new ParamsConstructorRecorder(mapper, logger);
-                Default = new DefaultConstructorRecorder(mapper, logger);
+                Normal = new NormalConstructorRecorder(mapper, dataRecord, logger);
+                Params = new ParamsConstructorRecorder(mapper, dataRecord, logger);
+                Default = new DefaultConstructorRecorder(mapper, dataRecord, logger);
             }
 
             INormalConstructorRecorder IConstructorRecorder.Normal => Normal;
@@ -108,13 +115,15 @@ public sealed class RecorderFactory : IRecorderFactory
 
             private sealed class NormalConstructorRecorder : INormalConstructorRecorder
             {
-                private readonly IMapper Mapper;
+                private readonly IMapper<TRecord> Mapper;
+                private readonly TRecord DataRecord;
 
                 private readonly IRecorderLogger Logger;
 
-                public NormalConstructorRecorder(IMapper mapper, IRecorderLogger logger)
+                public NormalConstructorRecorder(IMapper<TRecord> mapper, TRecord dataRecord, IRecorderLogger logger)
                 {
                     Mapper = mapper;
+                    DataRecord = dataRecord;
 
                     Logger = logger;
                 }
@@ -135,20 +144,22 @@ public sealed class RecorderFactory : IRecorderFactory
 
                     var recorder = Mapper.Constructor.Normal.MapParameter(parameter);
 
-                    return recorder.TryRecordArgument(argument, syntax);
+                    return recorder.TryRecordArgument(DataRecord, argument, syntax);
                 }
 
             }
 
             private sealed class ParamsConstructorRecorder : IParamsConstructorRecorder
             {
-                private readonly IMapper Mapper;
+                private readonly IMapper<TRecord> Mapper;
+                private readonly TRecord DataRecord;
 
                 private readonly IRecorderLogger Logger;
 
-                public ParamsConstructorRecorder(IMapper mapper, IRecorderLogger logger)
+                public ParamsConstructorRecorder(IMapper<TRecord> mapper, TRecord dataRecord, IRecorderLogger logger)
                 {
                     Mapper = mapper;
+                    DataRecord = dataRecord;
 
                     Logger = logger;
                 }
@@ -169,19 +180,21 @@ public sealed class RecorderFactory : IRecorderFactory
 
                     var recorder = Mapper.Constructor.Params.MapParameter(parameter);
 
-                    return recorder.TryRecordArgument(argument, elementSyntax);
+                    return recorder.TryRecordArgument(DataRecord, argument, elementSyntax);
                 }
             }
 
             private sealed class DefaultConstructorRecorder : IDefaultConstructorRecorder
             {
-                private readonly IMapper Mapper;
+                private readonly IMapper<TRecord> Mapper;
+                private readonly TRecord DataRecord;
 
                 private readonly IRecorderLogger Logger;
 
-                public DefaultConstructorRecorder(IMapper mapper, IRecorderLogger logger)
+                public DefaultConstructorRecorder(IMapper<TRecord> mapper, TRecord dataRecord, IRecorderLogger logger)
                 {
                     Mapper = mapper;
+                    DataRecord = dataRecord;
 
                     Logger = logger;
                 }
@@ -197,20 +210,22 @@ public sealed class RecorderFactory : IRecorderFactory
 
                     var recorder = Mapper.Constructor.Default.MapParameter(parameter);
 
-                    return recorder.TryRecordArgument(argument);
+                    return recorder.TryRecordArgument(DataRecord, argument);
                 }
             }
         }
 
         private sealed class NamedRecorder : INamedRecorder
         {
-            private readonly IMapper Mapper;
+            private readonly IMapper<TRecord> Mapper;
+            private readonly TRecord DataRecord;
 
             private readonly IRecorderLogger Logger;
 
-            public NamedRecorder(IMapper mapper, IRecorderLogger logger)
+            public NamedRecorder(IMapper<TRecord> mapper, TRecord dataRecord, IRecorderLogger logger)
             {
                 Mapper = mapper;
+                DataRecord = dataRecord;
 
                 Logger = logger;
             }
@@ -231,7 +246,7 @@ public sealed class RecorderFactory : IRecorderFactory
 
                 var recorder = Mapper.Named.MapParameter(parameterName);
 
-                return recorder.TryRecordArgument(argument, syntax);
+                return recorder.TryRecordArgument(DataRecord, argument, syntax);
             }
         }
     }
