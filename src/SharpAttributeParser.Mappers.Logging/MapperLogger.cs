@@ -14,7 +14,7 @@ public sealed class MapperLogger<TCategoryName> : IMapperLogger<TCategoryName>
     private readonly IConstructorParameterLogger ConstructorParameter;
     private readonly INamedParameterLogger NamedParameter;
 
-    /// <summary>Instantiates a <see cref="MapperLogger{TCategoryName}"/>, handling logging for <see cref="IMapper"/>.</summary>
+    /// <summary>Instantiates a <see cref="MapperLogger{TCategoryName}"/>, handling logging for <see cref="IMapper{TRecord}"/>.</summary>
     /// <param name="logger">The logger used to log messages.</param>
     public MapperLogger(ILogger<TCategoryName> logger)
     {

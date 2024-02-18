@@ -5,10 +5,11 @@ using Microsoft.CodeAnalysis;
 using SharpAttributeParser.Mappers.SyntacticMappedRecorders.SyntacticMappedConstructorRecorders;
 
 /// <summary>Maps attribute constructor parameters to recorders, responsible for recording syntactic information about normal arguments of that parameter.</summary>
-public interface ISyntacticNormalConstructorMapper
+/// <typeparam name="TRecord">The type of the data record to which the mapped recorders record syntactic information.</typeparam>
+public interface ISyntacticNormalConstructorMapper<in TRecord>
 {
     /// <summary>Maps a constructor parameter to a recorder.</summary>
     /// <param name="parameter">The constructor parameter.</param>
     /// <returns>The mapped recorder.</returns>
-    public abstract ISyntacticMappedNormalConstructorRecorder MapParameter(IParameterSymbol parameter);
+    public abstract ISyntacticMappedNormalConstructorRecorder<TRecord> MapParameter(IParameterSymbol parameter);
 }

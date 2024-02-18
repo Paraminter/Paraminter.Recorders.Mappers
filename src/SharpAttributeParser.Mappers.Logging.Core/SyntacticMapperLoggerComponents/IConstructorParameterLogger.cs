@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 
 using System;
 
-/// <summary>Handles logging for <see cref="ISyntacticMapper"/> when related to constructor parameters.</summary>
+/// <summary>Handles logging for <see cref="ISyntacticMapper{TRecord}"/> when related to constructor parameters.</summary>
 public interface IConstructorParameterLogger
 {
     /// <summary>Begins a log scope describing an attempt to map a constructor parameter to a recorder.</summary>
