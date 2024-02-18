@@ -10,7 +10,4 @@ public interface INamedParameterLogger
     /// <param name="parameterName">The name of the named parameter.</param>
     /// <returns>The <see cref="IDisposable"/> used to close the log scope.</returns>
     public abstract IDisposable? BeginScopeMappingNamedParameter<TRecorder>(string parameterName);
-
-    /// <summary>Logs a message describing a failed attempt to map a named parameter to a recorder.</summary>
-    public abstract void FailedToMapNamedParameter();
 }

@@ -3,7 +3,6 @@
 using Microsoft.CodeAnalysis;
 
 using SharpAttributeParser.Mappers.Logging;
-using SharpAttributeParser.Mappers.SemanticMappedRecorders;
 using SharpAttributeParser.SemanticRecorderComponents;
 
 using System;
@@ -76,14 +75,9 @@ public sealed class SemanticRecorderFactory : ISemanticRecorderFactory
 
                 using var _ = Logger.TypeArgument.BeginScopeRecordingTypeArgument(parameter, argument);
 
-                if (Mapper.Type.TryMapParameter(parameter) is not ISemanticMappedTypeRecorder argumentRecorder)
-                {
-                    Logger.TypeArgument.FailedToMapTypeParameterToRecorder();
+                var recorder = Mapper.Type.MapParameter(parameter);
 
-                    return false;
-                }
-
-                return argumentRecorder.TryRecordArgument(argument);
+                return recorder.TryRecordArgument(argument);
             }
         }
 
@@ -109,14 +103,9 @@ public sealed class SemanticRecorderFactory : ISemanticRecorderFactory
 
                 using var _ = Logger.ConstructorArgument.BeginScopeRecordingConstructorArgument(parameter, argument);
 
-                if (Mapper.Constructor.TryMapParameter(parameter) is not ISemanticMappedConstructorRecorder argumentRecorder)
-                {
-                    Logger.ConstructorArgument.FailedToMapConstructorParameterToRecorder();
+                var recorder = Mapper.Constructor.MapParameter(parameter);
 
-                    return false;
-                }
-
-                return argumentRecorder.TryRecordArgument(argument);
+                return recorder.TryRecordArgument(argument);
             }
         }
 
@@ -142,14 +131,9 @@ public sealed class SemanticRecorderFactory : ISemanticRecorderFactory
 
                 using var _ = Logger.NamedArgument.BeginScopeRecordingNamedArgument(parameterName, argument);
 
-                if (Mapper.Named.TryMapParameter(parameterName) is not ISemanticMappedNamedRecorder argumentRecorder)
-                {
-                    Logger.NamedArgument.FailedToMapNamedParameterToRecorder();
+                var recorder = Mapper.Named.MapParameter(parameterName);
 
-                    return false;
-                }
-
-                return argumentRecorder.TryRecordArgument(argument);
+                return recorder.TryRecordArgument(argument);
             }
         }
     }

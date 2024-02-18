@@ -50,8 +50,6 @@ public sealed class SemanticMapperLogger<TCategoryName> : ISemanticMapperLogger<
 
             return ScopeDefinitions.MappingTypeParameter(Logger, parameter.Name, parameter.Ordinal);
         }
-
-        void ITypeParameterLogger.FailedToMapTypeParameter() => MessageDefinitions.FailedToMapTypeParameter(Logger, null);
     }
 
     private sealed class ConstructorParameterLogger : IConstructorParameterLogger
@@ -72,8 +70,6 @@ public sealed class SemanticMapperLogger<TCategoryName> : ISemanticMapperLogger<
 
             return ScopeDefinitions.MappingConstructorParameter(Logger, parameter.Name);
         }
-
-        void IConstructorParameterLogger.FailedToMapConstructorParameter() => MessageDefinitions.FailedToMapConstructorParameter(Logger, null);
     }
 
     private sealed class NamedParameterLogger : INamedParameterLogger
@@ -94,8 +90,6 @@ public sealed class SemanticMapperLogger<TCategoryName> : ISemanticMapperLogger<
 
             return ScopeDefinitions.MappingNamedParameter(Logger, parameterName);
         }
-
-        void INamedParameterLogger.FailedToMapNamedParameter() => MessageDefinitions.FailedToMapNamedParameter(Logger, null);
     }
 
     private static class ScopeDefinitions
@@ -109,36 +103,6 @@ public sealed class SemanticMapperLogger<TCategoryName> : ISemanticMapperLogger<
             MappingTypeParameter = LoggerMessage.DefineScope<string, int>("[TypeParameterName: {TypeParameterName}, TypeParameterIndex: {TypeParameterIndex}]");
             MappingConstructorParameter = LoggerMessage.DefineScope<string>("ConstructorParameterName: {ConstructorParameterName}");
             MappingNamedParameter = LoggerMessage.DefineScope<string>("NamedParameterName: {NamedParameterName}");
-        }
-    }
-
-    private static class MessageDefinitions
-    {
-        public static Action<ILogger, Exception?> FailedToMapTypeParameter { get; }
-        public static Action<ILogger, Exception?> FailedToMapConstructorParameter { get; }
-        public static Action<ILogger, Exception?> FailedToMapNamedParameter { get; }
-
-        static MessageDefinitions()
-        {
-            FailedToMapTypeParameter = LoggerMessage.Define(LogLevel.Debug, EventIDs.FailedToMapTypeParameter, "Failed to map a type parameter to a recorder, as a mapping did not exist.");
-            FailedToMapConstructorParameter = LoggerMessage.Define(LogLevel.Debug, EventIDs.FailedToMapConstructorParameter, "Failed to map a constructor parameter to a recorder, as a mapping did not exist.");
-            FailedToMapNamedParameter = LoggerMessage.Define(LogLevel.Debug, EventIDs.FailedToMapNamedParameter, "Failed to map a named parameter to a recorder, as a mapping did not exist.");
-        }
-    }
-
-    private static class EventIDs
-    {
-        public static EventId FailedToMapTypeParameter { get; }
-        public static EventId FailedToMapConstructorParameter { get; }
-        public static EventId FailedToMapNamedParameter { get; }
-
-        static EventIDs()
-        {
-            SequentialEventID eventIDs = new();
-
-            FailedToMapTypeParameter = new(eventIDs.Next, nameof(FailedToMapTypeParameter));
-            FailedToMapConstructorParameter = new(eventIDs.Next, nameof(FailedToMapConstructorParameter));
-            FailedToMapNamedParameter = new(eventIDs.Next, nameof(FailedToMapNamedParameter));
         }
     }
 }

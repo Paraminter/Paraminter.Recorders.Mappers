@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using SharpAttributeParser.Mappers.Logging;
-using SharpAttributeParser.Mappers.SyntacticMappedRecorders;
 using SharpAttributeParser.SyntacticRecorderComponents;
 using SharpAttributeParser.SyntacticRecorderComponents.SyntacticConstructorRecorderComponents;
 
@@ -79,14 +78,9 @@ public sealed class SyntacticRecorderFactory : ISyntacticRecorderFactory
 
                 using var _ = Logger.TypeArgument.BeginScopeRecordingTypeArgument(parameter, syntax);
 
-                if (Mapper.Type.TryMapParameter(parameter) is not ISyntacticMappedTypeRecorder argumentRecorder)
-                {
-                    Logger.TypeArgument.FailedToMapTypeParameterToRecorder();
+                var recorder = Mapper.Type.MapParameter(parameter);
 
-                    return false;
-                }
-
-                return argumentRecorder.TryRecordArgument(syntax);
+                return recorder.TryRecordArgument(syntax);
             }
         }
 
@@ -98,50 +92,22 @@ public sealed class SyntacticRecorderFactory : ISyntacticRecorderFactory
 
             public ConstructorRecorder(ISyntacticMapper mapper, ISyntacticRecorderLogger logger)
             {
-                ConstructorMapper constructorMapper = new(mapper, logger);
-
-                Normal = new NormalConstructorRecorder(constructorMapper, logger);
-                Params = new ParamsConstructorRecorder(constructorMapper, logger);
-                Default = new DefaultConstructorRecorder(constructorMapper, logger);
+                Normal = new NormalConstructorRecorder(mapper, logger);
+                Params = new ParamsConstructorRecorder(mapper, logger);
+                Default = new DefaultConstructorRecorder(mapper, logger);
             }
 
             ISyntacticNormalConstructorRecorder ISyntacticConstructorRecorder.Normal => Normal;
             ISyntacticParamsConstructorRecorder ISyntacticConstructorRecorder.Params => Params;
             ISyntacticDefaultConstructorRecorder ISyntacticConstructorRecorder.Default => Default;
 
-            private sealed class ConstructorMapper
+            private sealed class NormalConstructorRecorder : ISyntacticNormalConstructorRecorder
             {
                 private readonly ISyntacticMapper Mapper;
 
                 private readonly ISyntacticRecorderLogger Logger;
 
-                public ConstructorMapper(ISyntacticMapper mapper, ISyntacticRecorderLogger logger)
-                {
-                    Mapper = mapper;
-
-                    Logger = logger;
-                }
-
-                public ISyntacticMappedConstructorRecorder? TryMapParameter(IParameterSymbol parameter)
-                {
-                    if (Mapper.Constructor.TryMapParameter(parameter) is not ISyntacticMappedConstructorRecorder argumentRecorder)
-                    {
-                        Logger.ConstructorArgument.FailedToMapConstructorParameterToRecorder();
-
-                        return null;
-                    }
-
-                    return argumentRecorder;
-                }
-            }
-
-            private sealed class NormalConstructorRecorder : ISyntacticNormalConstructorRecorder
-            {
-                private readonly ConstructorMapper Mapper;
-
-                private readonly ISyntacticRecorderLogger Logger;
-
-                public NormalConstructorRecorder(ConstructorMapper mapper, ISyntacticRecorderLogger logger)
+                public NormalConstructorRecorder(ISyntacticMapper mapper, ISyntacticRecorderLogger logger)
                 {
                     Mapper = mapper;
 
@@ -162,22 +128,19 @@ public sealed class SyntacticRecorderFactory : ISyntacticRecorderFactory
 
                     using var _ = Logger.ConstructorArgument.BeginScopeRecordingNormalConstructorArgument(parameter, syntax);
 
-                    if (Mapper.TryMapParameter(parameter) is not ISyntacticMappedConstructorRecorder argumentRecorder)
-                    {
-                        return false;
-                    }
+                    var recorder = Mapper.Constructor.MapParameter(parameter);
 
-                    return argumentRecorder.Normal.TryRecordArgument(syntax);
+                    return recorder.Normal.TryRecordArgument(syntax);
                 }
             }
 
             private sealed class ParamsConstructorRecorder : ISyntacticParamsConstructorRecorder
             {
-                private readonly ConstructorMapper Mapper;
+                private readonly ISyntacticMapper Mapper;
 
                 private readonly ISyntacticRecorderLogger Logger;
 
-                public ParamsConstructorRecorder(ConstructorMapper mapper, ISyntacticRecorderLogger logger)
+                public ParamsConstructorRecorder(ISyntacticMapper mapper, ISyntacticRecorderLogger logger)
                 {
                     Mapper = mapper;
 
@@ -198,22 +161,19 @@ public sealed class SyntacticRecorderFactory : ISyntacticRecorderFactory
 
                     using var _ = Logger.ConstructorArgument.BeginScopeRecordingParamsConstructorArgument(parameter, elementSyntax);
 
-                    if (Mapper.TryMapParameter(parameter) is not ISyntacticMappedConstructorRecorder argumentRecorder)
-                    {
-                        return false;
-                    }
+                    var recorder = Mapper.Constructor.MapParameter(parameter);
 
-                    return argumentRecorder.Params.TryRecordArgument(elementSyntax);
+                    return recorder.Params.TryRecordArgument(elementSyntax);
                 }
             }
 
             private sealed class DefaultConstructorRecorder : ISyntacticDefaultConstructorRecorder
             {
-                private readonly ConstructorMapper Mapper;
+                private readonly ISyntacticMapper Mapper;
 
                 private readonly ISyntacticRecorderLogger Logger;
 
-                public DefaultConstructorRecorder(ConstructorMapper mapper, ISyntacticRecorderLogger logger)
+                public DefaultConstructorRecorder(ISyntacticMapper mapper, ISyntacticRecorderLogger logger)
                 {
                     Mapper = mapper;
 
@@ -229,12 +189,9 @@ public sealed class SyntacticRecorderFactory : ISyntacticRecorderFactory
 
                     using var _ = Logger.ConstructorArgument.BeginScopeRecordingDefaultConstructorArgument(parameter);
 
-                    if (Mapper.TryMapParameter(parameter) is not ISyntacticMappedConstructorRecorder argumentRecorder)
-                    {
-                        return false;
-                    }
+                    var recorder = Mapper.Constructor.MapParameter(parameter);
 
-                    return argumentRecorder.Default.TryRecordArgument();
+                    return recorder.Default.TryRecordArgument();
                 }
             }
         }
@@ -264,14 +221,11 @@ public sealed class SyntacticRecorderFactory : ISyntacticRecorderFactory
                     throw new ArgumentNullException(nameof(syntax));
                 }
 
-                if (Mapper.Named.TryMapParameter(parameterName) is not ISyntacticMappedNamedRecorder argumentRecorder)
-                {
-                    Logger.NamedArgument.FailedToMapNamedParameterToRecorder();
+                using var _ = Logger.NamedArgument.BeginScopeRecordingNamedArgument(parameterName, syntax);
 
-                    return false;
-                }
+                var recorder = Mapper.Named.MapParameter(parameterName);
 
-                return argumentRecorder.TryRecordArgument(syntax);
+                return recorder.TryRecordArgument(syntax);
             }
         }
     }

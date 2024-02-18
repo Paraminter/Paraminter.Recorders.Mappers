@@ -5,7 +5,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 using Moq;
 
-using SharpAttributeParser.Mappers.MappedRecorders;
 using SharpAttributeParser.RecorderComponents;
 
 using System;
@@ -43,22 +42,6 @@ public sealed class TryRecordArgument
     }
 
     [Fact]
-    public void NullReturningMapper_ReturnsFalseAndLogs()
-    {
-        var parameter = Mock.Of<ITypeParameterSymbol>();
-
-        Context.MapperMock.Setup(static (mapper) => mapper.Type.TryMapParameter(It.IsAny<ITypeParameterSymbol>())).Returns((IMappedTypeRecorder?)null);
-
-        var outcome = Target(Context.Recorder, parameter, Mock.Of<ITypeSymbol>(), ExpressionSyntaxFactory.Create());
-
-        Assert.False(outcome);
-
-        Context.MapperMock.Verify((mapper) => mapper.Type.TryMapParameter(parameter), Times.Once);
-
-        Context.LoggerFactoryMock.Verify((factory) => factory.Create<IRecorder>().TypeArgument.FailedToMapTypeParameterToRecorder(), Times.Once);
-    }
-
-    [Fact]
     public void TrueReturningRecorder_ReturnsTrue() => ValidRecorder_PropagatesReturnValue(true);
 
     [Fact]
@@ -71,12 +54,12 @@ public sealed class TryRecordArgument
         var argument = Mock.Of<ITypeSymbol>();
         var syntax = ExpressionSyntaxFactory.Create();
 
-        Context.MapperMock.Setup(static (mapper) => mapper.Type.TryMapParameter(It.IsAny<ITypeParameterSymbol>())!.TryRecordArgument(It.IsAny<ITypeSymbol>(), It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
+        Context.MapperMock.Setup(static (mapper) => mapper.Type.MapParameter(It.IsAny<ITypeParameterSymbol>()).TryRecordArgument(It.IsAny<ITypeSymbol>(), It.IsAny<ExpressionSyntax>())).Returns(recorderReturnValue);
 
         var outcome = Target(Context.Recorder, parameter, argument, syntax);
 
         Assert.Equal(recorderReturnValue, outcome);
 
-        Context.MapperMock.Verify((mapper) => mapper.Type.TryMapParameter(parameter)!.TryRecordArgument(argument, syntax), Times.Once);
+        Context.MapperMock.Verify((mapper) => mapper.Type.MapParameter(parameter).TryRecordArgument(argument, syntax), Times.Once);
     }
 }

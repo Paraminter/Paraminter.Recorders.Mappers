@@ -22,21 +22,15 @@ public sealed class NullSyntacticMapperLogger<TCategoryName> : ISyntacticMapperL
     private sealed class NullTypeParameterLogger : ITypeParameterLogger
     {
         IDisposable? ITypeParameterLogger.BeginScopeMappingTypeParameter<TRecorder>(ITypeParameterSymbol parameter) => null;
-
-        void ITypeParameterLogger.FailedToMapTypeParameter() { }
     }
 
     private sealed class NullConstructorParameterLogger : IConstructorParameterLogger
     {
         IDisposable? IConstructorParameterLogger.BeginScopeMappingConstructorParameter<TRecorder>(IParameterSymbol parameter) => null;
-
-        void IConstructorParameterLogger.FailedToMapConstructorParameter() { }
     }
 
     private sealed class NullNamedParameterLogger : INamedParameterLogger
     {
         IDisposable? INamedParameterLogger.BeginScopeMappingNamedParameter<TRecorder>(string parameterName) => null;
-
-        void INamedParameterLogger.FailedToMapNamedParameter() { }
     }
 }
