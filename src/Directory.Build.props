@@ -4,10 +4,10 @@
 
     <PropertyGroup>
         <IsPackable>true</IsPackable>
-        <Owners>SharpAttributeParser</Owners>
+        <Owners>Attribinter</Owners>
         <Authors>ErikWe</Authors>
-        <PackageProjectUrl>https://github.com/SharpAttributeParser/SharpAttributeParser.Mappers</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/SharpAttributeParser/SharpAttributeParser.Mappers</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/Attribinter/Attribinter.Mappers</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Attribinter/Attribinter.Mappers</RepositoryUrl>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageReadmeFile>README.nupkg.md</PackageReadmeFile>
         <PackageIcon>Logo.png</PackageIcon>
@@ -20,11 +20,11 @@
     
     <ItemGroup>
         <None Include="README.nupkg.md" Pack="true" PackagePath="\" />
-        <None Include="$(PkgSharpAttributeParser_Logo)\Logo.png" Pack="true" PackagePath="\" />
+        <None Include="$(PkgAttribinter_Logo)\Logo.png" Pack="true" PackagePath="\" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="SharpAttributeParser.Logo" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="Attribinter.Logo" PrivateAssets="all" GeneratePathProperty="true" />
     </ItemGroup>
 
 </Project>
