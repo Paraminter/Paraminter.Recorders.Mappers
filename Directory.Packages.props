@@ -6,7 +6,7 @@
 
     <ItemGroup>
         <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
-        <PackageVersion Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+        <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
         <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     </ItemGroup>
 
@@ -15,10 +15,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageVersion Include="SharpAttributeParser.Common.Logging" Version="6.0.3" />
-        <PackageVersion Include="SharpAttributeParser.Common.Tests" Version="6.1.0" />
-        <PackageVersion Include="SharpAttributeParser.Core" Version="9.0.0-alpha.21" />
-        <PackageVersion Include="SharpAttributeParser.Logo" Version="1.0.1" />
+        <PackageVersion Include="Attribinter.Tests.Common" Version="8.0.0-alpha.9" />
+        <PackageVersion Include="Attribinter.Core" Version="8.0.0-alpha.34" />
+        <PackageVersion Include="Attribinter.Logo" Version="1.0.3" />
     </ItemGroup>
     
     <ItemGroup>
