@@ -38,7 +38,7 @@ public sealed class Create
 
         Mock<IParameterMapper<object, object, object>> mapperMock = new() { DefaultValue = DefaultValue.Mock };
 
-        var recorder = Target(Context.Factory, mapperMock.Object, dataRecord);
+        var recorder = Target(mapperMock.Object, dataRecord);
 
         recorder.TryRecordData(parameter, argument);
 

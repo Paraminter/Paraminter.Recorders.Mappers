@@ -45,6 +45,9 @@ public sealed class AddAttribinterMappers
     [Fact]
     public void IArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IArgumentRecorderFactory>();
 
+    [Fact]
+    public void IMappedArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IMappedArgumentRecorderFactory>();
+
     [AssertionMethod]
     private void ServiceCanBeResolved<TService>() where TService : notnull
     {
