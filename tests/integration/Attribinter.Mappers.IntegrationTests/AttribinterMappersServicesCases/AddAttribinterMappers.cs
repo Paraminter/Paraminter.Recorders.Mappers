@@ -48,6 +48,12 @@ public sealed class AddAttribinterMappers
     [Fact]
     public void IMappedArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IMappedArgumentRecorderFactory>();
 
+    [Fact]
+    public void IBoolDelegateMappedArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IBoolDelegateMappedArgumentRecorderFactory>();
+
+    [Fact]
+    public void IVoidDelegateMappedArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IVoidDelegateMappedArgumentRecorderFactory>();
+
     [AssertionMethod]
     private void ServiceCanBeResolved<TService>() where TService : notnull
     {

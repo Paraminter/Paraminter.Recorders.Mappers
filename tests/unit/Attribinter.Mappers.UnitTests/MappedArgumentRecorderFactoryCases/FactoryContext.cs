@@ -1,18 +1,29 @@
 ﻿namespace Attribinter.Mappers.MappedArgumentRecorderFactoryCases;
 
+using Moq;
+
 internal sealed class FactoryContext
 {
     public static FactoryContext Create()
     {
-        MappedArgumentRecorderFactory factory = new();
+        var boolDelegateFactory = Mock.Of<IBoolDelegateMappedArgumentRecorderFactory>();
+        var voidDelegateFactory = Mock.Of<IVoidDelegateMappedArgumentRecorderFactory>();
 
-        return new(factory);
+        MappedArgumentRecorderFactory factory = new(boolDelegateFactory, voidDelegateFactory);
+
+        return new(factory, boolDelegateFactory, voidDelegateFactory);
     }
 
     public MappedArgumentRecorderFactory Factory { get; }
 
-    private FactoryContext(MappedArgumentRecorderFactory factory)
+    public IBoolDelegateMappedArgumentRecorderFactory BoolDelegateFactory { get; }
+    public IVoidDelegateMappedArgumentRecorderFactory VoidDelegateFactory { get; }
+
+    private FactoryContext(MappedArgumentRecorderFactory factory, IBoolDelegateMappedArgumentRecorderFactory boolDelegateFactory, IVoidDelegateMappedArgumentRecorderFactory voidDelegateFactory)
     {
         Factory = factory;
+
+        BoolDelegateFactory = boolDelegateFactory;
+        VoidDelegateFactory = voidDelegateFactory;
     }
 }

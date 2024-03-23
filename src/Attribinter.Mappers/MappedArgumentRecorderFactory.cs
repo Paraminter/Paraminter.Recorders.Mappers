@@ -5,41 +5,18 @@ using System;
 /// <inheritdoc cref="IMappedArgumentRecorderFactory"/>
 public sealed class MappedArgumentRecorderFactory : IMappedArgumentRecorderFactory
 {
-    /// <summary>Instantiates a <see cref="MappedArgumentRecorderFactory"/>, handling creation of <see cref="IMappedArgumentRecorder{TRecord, TData}"/> using delegates.</summary>
-    public MappedArgumentRecorderFactory() { }
+    private readonly IBoolDelegateMappedArgumentRecorderFactory BoolDelegateFactory;
+    private readonly IVoidDelegateMappedArgumentRecorderFactory VoidDelegateFactory;
 
-    IMappedArgumentRecorder<TRecord, TData> IMappedArgumentRecorderFactory.Create<TRecord, TData>(Func<TRecord, TData, bool> recorderDelegate)
+    /// <summary>Instantiates a <see cref="MappedArgumentRecorderFactory"/>, handling creation of <see cref="IMappedArgumentRecorder{TRecord, TData}"/>.</summary>
+    /// <param name="boolDelegateFactory">Handles creation of <see cref="IMappedArgumentRecorder{TRecord, TData}"/> using <see cref="bool"/>-returning delegates.</param>
+    /// <param name="voidDelegateFactory">Handles creation of <see cref="IMappedArgumentRecorder{TRecord, TData}"/> using <see langword="void"/>-returning delegates.</param>
+    public MappedArgumentRecorderFactory(IBoolDelegateMappedArgumentRecorderFactory boolDelegateFactory, IVoidDelegateMappedArgumentRecorderFactory voidDelegateFactory)
     {
-        if (recorderDelegate is null)
-        {
-            throw new ArgumentNullException(nameof(recorderDelegate));
-        }
-
-        return new MappedArgumentRecorder<TRecord, TData>(recorderDelegate);
+        BoolDelegateFactory = boolDelegateFactory ?? throw new ArgumentNullException(nameof(boolDelegateFactory));
+        VoidDelegateFactory = voidDelegateFactory ?? throw new ArgumentNullException(nameof(voidDelegateFactory));
     }
 
-    private sealed class MappedArgumentRecorder<TRecord, TData> : IMappedArgumentRecorder<TRecord, TData>
-    {
-        private readonly Func<TRecord, TData, bool> RecorderDelegate;
-
-        public MappedArgumentRecorder(Func<TRecord, TData, bool> recorderDelegate)
-        {
-            RecorderDelegate = recorderDelegate;
-        }
-
-        bool IMappedArgumentRecorder<TRecord, TData>.TryRecordData(TRecord dataRecord, TData data)
-        {
-            if (dataRecord is null)
-            {
-                throw new ArgumentNullException(nameof(dataRecord));
-            }
-
-            if (data is null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
-
-            return RecorderDelegate(dataRecord, data);
-        }
-    }
+    IBoolDelegateMappedArgumentRecorderFactory IMappedArgumentRecorderFactory.BoolDelegateFactory => BoolDelegateFactory;
+    IVoidDelegateMappedArgumentRecorderFactory IMappedArgumentRecorderFactory.VoidDelegateFactory => VoidDelegateFactory;
 }

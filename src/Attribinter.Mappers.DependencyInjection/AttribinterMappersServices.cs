@@ -20,6 +20,8 @@ public static class AttribinterMappersServices
         services.AddSingleton<IArgumentRecorderFactory, ArgumentRecorderFactory>();
 
         services.AddSingleton<IMappedArgumentRecorderFactory, MappedArgumentRecorderFactory>();
+        services.AddSingleton<IBoolDelegateMappedArgumentRecorderFactory, BoolDelegateMappedArgumentRecorderFactory>();
+        services.AddSingleton<IVoidDelegateMappedArgumentRecorderFactory, VoidDelegateMappedArgumentRecorderFactory>();
 
         return services;
     }
