@@ -19,6 +19,8 @@ public static class AttribinterMappersServices
 
         services.AddSingleton<IArgumentRecorderFactory, ArgumentRecorderFactory>();
 
+        services.AddSingleton<IMappedArgumentRecorderFactory, MappedArgumentRecorderFactory>();
+
         return services;
     }
 }
