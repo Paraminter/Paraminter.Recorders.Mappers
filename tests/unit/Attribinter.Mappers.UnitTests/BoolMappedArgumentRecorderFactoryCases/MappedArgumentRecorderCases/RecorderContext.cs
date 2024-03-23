@@ -1,4 +1,4 @@
-﻿namespace Attribinter.Mappers.MappedArgumentRecorderFactoryCases.MappedArgumentRecorderCases;
+﻿namespace Attribinter.Mappers.BoolDelegateMappedArgumentRecorderFactoryCases.MappedArgumentRecorderCases;
 
 using Moq;
 
@@ -8,11 +8,11 @@ internal sealed class RecorderContext<TRecord, TData> where TRecord : class
 {
     public static RecorderContext<TRecord, TData> Create()
     {
-        MappedArgumentRecorderFactory factory = new();
+        BoolDelegateMappedArgumentRecorderFactory factory = new();
 
         Mock<Func<TRecord, TData, bool>> recorderDelegateMock = new();
 
-        var recorder = ((IMappedArgumentRecorderFactory)factory).Create(recorderDelegateMock.Object);
+        var recorder = ((IBoolDelegateMappedArgumentRecorderFactory)factory).Create(recorderDelegateMock.Object);
 
         return new(recorder, recorderDelegateMock);
     }
