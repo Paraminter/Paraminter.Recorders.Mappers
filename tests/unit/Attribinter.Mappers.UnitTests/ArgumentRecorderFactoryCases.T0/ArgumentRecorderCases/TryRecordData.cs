@@ -1,4 +1,4 @@
-﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases.ArgumentRecorderCases;
+﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases.T0.ArgumentRecorderCases;
 
 using Microsoft.CodeAnalysis;
 
@@ -33,13 +33,32 @@ public sealed class TryRecordData
     }
 
     [Fact]
-    public void TrueReturningRecorder_ReturnsTrue() => ValidRecorder_PropagatesReturnValue(true);
+    public void NullReturningMapper_ReturnsFalse()
+    {
+        var context = RecorderContext<object, object, object>.Create();
+
+        var parameter = Mock.Of<object>();
+        var data = Mock.Of<object>();
+
+        context.MapperMock.Setup(static (mapper) => mapper.TryMapParameter(It.IsAny<object>())).Returns((IMappedArgumentRecorder<object, object>?)null);
+
+        var outcome = Target(context.Recorder, parameter, data);
+
+        Assert.False(outcome);
+
+        context.MapperMock.Verify((mapper) => mapper.TryMapParameter(parameter), Times.Once);
+
+        context.MapperMock.VerifyNoOtherCalls();
+    }
 
     [Fact]
-    public void FalseReturningRecorder_ReturnsFalse() => ValidRecorder_PropagatesReturnValue(false);
+    public void NonNullReturningMapper_TrueReturningRecorder_ReturnsTrue() => NonNullReturningMapper_ValidRecorder_PropagatesReturnValue(true);
+
+    [Fact]
+    public void NonNullReturningMapper_FalseReturningRecorder_ReturnsFalse() => NonNullReturningMapper_ValidRecorder_PropagatesReturnValue(false);
 
     [AssertionMethod]
-    private static void ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
+    private static void NonNullReturningMapper_ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
     {
         var context = RecorderContext<object, object, object>.Create();
 
