@@ -1,4 +1,4 @@
-﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases;
+﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases.T0;
 
 internal sealed class FactoryContext
 {
@@ -9,9 +9,9 @@ internal sealed class FactoryContext
         return new(factory);
     }
 
-    public ArgumentRecorderFactory Factory { get; }
+    public IArgumentRecorderFactory Factory { get; }
 
-    private FactoryContext(ArgumentRecorderFactory factory)
+    private FactoryContext(IArgumentRecorderFactory factory)
     {
         Factory = factory;
     }

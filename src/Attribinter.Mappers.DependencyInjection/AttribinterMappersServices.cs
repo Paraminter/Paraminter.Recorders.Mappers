@@ -18,6 +18,7 @@ public static class AttribinterMappersServices
         }
 
         services.AddSingleton<IArgumentRecorderFactory, ArgumentRecorderFactory>();
+        services.AddSingleton(typeof(IArgumentRecorderFactory<,,>), typeof(ArgumentRecorderFactory<,,>));
 
         services.AddSingleton<IMappedArgumentRecorderFactory, MappedArgumentRecorderFactory>();
         services.AddSingleton<IBoolDelegateMappedArgumentRecorderFactory, BoolDelegateMappedArgumentRecorderFactory>();

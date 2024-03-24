@@ -1,0 +1,29 @@
+﻿namespace Attribinter.Mappers;
+
+using System;
+
+/// <inheritdoc cref="IArgumentRecorderFactory{TParameter, TRecord, TData}"/>
+public sealed class ArgumentRecorderFactory<TParameter, TRecord, TData> : IArgumentRecorderFactory<TParameter, TRecord, TData>
+{
+    private readonly IArgumentRecorderFactory InnerFactory;
+    private readonly IParameterMapperProvider<TParameter, TRecord, TData> MapperProvider;
+
+    /// <summary>Instantiates a <see cref="ArgumentRecorderFactory{TParameter, TRecord, TData}"/>, handling creation of <see cref="IArgumentRecorder{TParameter, TData}"/>.</summary>
+    /// <param name="innerFactory">Handles creation of <see cref="IArgumentRecorder{TParameter, TData}"/> using <see cref="IParameterMapper{TParameter, TRecord, TData}"/>.</param>
+    /// <param name="mapperProvider">Provides the <see cref="IParameterMapper{TParameter, TRecord, TData}"/> used to create <see cref="IArgumentRecorder{TParameter, TData}"/>.</param>
+    public ArgumentRecorderFactory(IArgumentRecorderFactory innerFactory, IParameterMapperProvider<TParameter, TRecord, TData> mapperProvider)
+    {
+        InnerFactory = innerFactory ?? throw new ArgumentNullException(nameof(innerFactory));
+        MapperProvider = mapperProvider ?? throw new ArgumentNullException(nameof(mapperProvider));
+    }
+
+    IArgumentRecorder<TParameter, TData> IArgumentRecorderFactory<TParameter, TRecord, TData>.Create(TRecord dataRecord)
+    {
+        if (dataRecord is null)
+        {
+            throw new ArgumentNullException(nameof(dataRecord));
+        }
+
+        return InnerFactory.Create(MapperProvider.Mapper, dataRecord);
+    }
+}
