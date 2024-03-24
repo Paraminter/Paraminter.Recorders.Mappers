@@ -25,6 +25,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\src\Attribinter.Mappers.Abstractions\Attribinter.Mappers.Abstractions.csproj" />
+        <ProjectReference Include="..\..\..\src\Attribinter.Mappers.Core\Attribinter.Mappers.Core.csproj" />
         <ProjectReference Include="..\..\..\src\Attribinter.Mappers.DependencyInjection\Attribinter.Mappers.DependencyInjection.csproj" />
     </ItemGroup>
 

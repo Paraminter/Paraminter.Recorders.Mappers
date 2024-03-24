@@ -6,15 +6,15 @@ using System;
 public sealed class ArgumentRecorderFactory<TParameter, TRecord, TData> : IArgumentRecorderFactory<TParameter, TRecord, TData>
 {
     private readonly IArgumentRecorderFactory InnerFactory;
-    private readonly IParameterMapperProvider<TParameter, TRecord, TData> MapperProvider;
+    private readonly IParameterMapper<TParameter, TRecord, TData> Mapper;
 
     /// <summary>Instantiates a <see cref="ArgumentRecorderFactory{TParameter, TRecord, TData}"/>, handling creation of <see cref="IArgumentRecorder{TParameter, TData}"/>.</summary>
     /// <param name="innerFactory">Handles creation of <see cref="IArgumentRecorder{TParameter, TData}"/> using <see cref="IParameterMapper{TParameter, TRecord, TData}"/>.</param>
-    /// <param name="mapperProvider">Provides the <see cref="IParameterMapper{TParameter, TRecord, TData}"/> used to create <see cref="IArgumentRecorder{TParameter, TData}"/>.</param>
-    public ArgumentRecorderFactory(IArgumentRecorderFactory innerFactory, IParameterMapperProvider<TParameter, TRecord, TData> mapperProvider)
+    /// <param name="mapper">The <see cref="IParameterMapper{TParameter, TRecord, TData}"/> used to create <see cref="IArgumentRecorder{TParameter, TData}"/>.</param>
+    public ArgumentRecorderFactory(IArgumentRecorderFactory innerFactory, IParameterMapper<TParameter, TRecord, TData> mapper)
     {
         InnerFactory = innerFactory ?? throw new ArgumentNullException(nameof(innerFactory));
-        MapperProvider = mapperProvider ?? throw new ArgumentNullException(nameof(mapperProvider));
+        Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     IArgumentRecorder<TParameter, TData> IArgumentRecorderFactory<TParameter, TRecord, TData>.Create(TRecord dataRecord)
@@ -24,6 +24,6 @@ public sealed class ArgumentRecorderFactory<TParameter, TRecord, TData> : IArgum
             throw new ArgumentNullException(nameof(dataRecord));
         }
 
-        return InnerFactory.Create(MapperProvider.Mapper, dataRecord);
+        return InnerFactory.Create(Mapper, dataRecord);
     }
 }
