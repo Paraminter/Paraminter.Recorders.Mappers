@@ -35,11 +35,11 @@ public sealed class AddAttribinterMappers
     public void IArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IArgumentRecorderFactory>();
 
     [Fact]
-    public void IArgumentRecorderFactory_T3_ServiceCanBeResolvedIfMapperProviderAdded()
+    public void IArgumentRecorderFactory_T3_ServiceCanBeResolvedIfMapperAdded()
     {
         ServiceCanBeResolved<IArgumentRecorderFactory<object, object, object>>(additionalConfiguration);
 
-        static void additionalConfiguration(IServiceCollection services) => services.AddSingleton(Mock.Of<IParameterMapperProvider<object, object, object>>());
+        static void additionalConfiguration(IServiceCollection services) => services.AddSingleton(Mock.Of<IParameterMapper<object, object, object>>());
     }
 
     [Fact]
