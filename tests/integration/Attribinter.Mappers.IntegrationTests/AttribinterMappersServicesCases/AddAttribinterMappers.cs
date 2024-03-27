@@ -32,10 +32,7 @@ public sealed class AddAttribinterMappers
     }
 
     [Fact]
-    public void IArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IArgumentRecorderFactory>();
-
-    [Fact]
-    public void IArgumentRecorderFactory_T3_ServiceCanBeResolvedIfMapperAdded()
+    public void IArgumentRecorderFactory_ServiceCanBeResolvedIfMapperAdded()
     {
         ServiceCanBeResolved<IArgumentRecorderFactory<object, object, object>>(additionalConfiguration);
 

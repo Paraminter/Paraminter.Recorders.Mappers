@@ -17,7 +17,6 @@ public static class AttribinterMappersServices
             throw new ArgumentNullException(nameof(services));
         }
 
-        services.AddSingleton<IArgumentRecorderFactory, ArgumentRecorderFactory>();
         services.AddSingleton(typeof(IArgumentRecorderFactory<,,>), typeof(ArgumentRecorderFactory<,,>));
 
         services.AddSingleton<IMappedArgumentRecorderFactory, MappedArgumentRecorderFactory>();

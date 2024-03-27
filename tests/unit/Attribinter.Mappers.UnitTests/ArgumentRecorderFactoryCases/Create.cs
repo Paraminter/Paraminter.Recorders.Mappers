@@ -1,4 +1,4 @@
-﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases.T3;
+﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases;
 
 using Moq;
 
@@ -21,21 +21,14 @@ public sealed class Create
     }
 
     [Fact]
-    public void ValidRecord_ConstructsRecorder()
+    public void ValidRecord_ReturnsNotNull()
     {
         var dataRecord = Mock.Of<object>();
 
-        var recorder = Mock.Of<IArgumentRecorder<object, object>>();
-
         var context = FactoryContext<object, object, object>.Create();
-
-        context.InnerFactoryMock.Setup(static (factory) => factory.Create(It.IsAny<IParameterMapper<object, object, object>>(), It.IsAny<object>())).Returns(recorder);
 
         var actual = Target(context.Factory, dataRecord);
 
-        Assert.Same(recorder, actual);
-
-        context.InnerFactoryMock.Verify((factory) => factory.Create(context.Mapper, dataRecord), Times.Once());
-        context.InnerFactoryMock.VerifyNoOtherCalls();
+        Assert.NotNull(actual);
     }
 }
