@@ -8,10 +8,9 @@ using Xunit;
 
 public sealed class Create
 {
-    private IMappedArgumentRecorder<TRecord, TData> Target<TRecord, TData>(Func<TRecord, TData, bool> recorderDelegate) => Target(Context.Factory, recorderDelegate);
-    private static IMappedArgumentRecorder<TRecord, TData> Target<TRecord, TData>(IBoolDelegateMappedArgumentRecorderFactory factory, Func<TRecord, TData, bool> recorderDelegate) => factory.Create(recorderDelegate);
+    private static IMappedArgumentRecorder<TRecord, TData> Target<TRecord, TData>(Func<TRecord, TData, bool> recorderDelegate) => Context.Factory.Create(recorderDelegate);
 
-    private readonly FactoryContext Context = FactoryContext.Create();
+    private static readonly FactoryContext Context = FactoryContext.Create();
 
     [Fact]
     public void NullRecorderDelegate_ThrowsArgumentNullException()

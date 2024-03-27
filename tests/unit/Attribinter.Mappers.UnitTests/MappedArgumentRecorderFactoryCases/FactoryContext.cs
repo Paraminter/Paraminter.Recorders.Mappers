@@ -9,17 +9,17 @@ internal sealed class FactoryContext
         var boolDelegateFactory = Mock.Of<IBoolDelegateMappedArgumentRecorderFactory>();
         var voidDelegateFactory = Mock.Of<IVoidDelegateMappedArgumentRecorderFactory>();
 
-        MappedArgumentRecorderFactory factory = new(boolDelegateFactory, voidDelegateFactory);
+        IMappedArgumentRecorderFactory factory = new MappedArgumentRecorderFactory(boolDelegateFactory, voidDelegateFactory);
 
         return new(factory, boolDelegateFactory, voidDelegateFactory);
     }
 
-    public MappedArgumentRecorderFactory Factory { get; }
+    public IMappedArgumentRecorderFactory Factory { get; }
 
     public IBoolDelegateMappedArgumentRecorderFactory BoolDelegateFactory { get; }
     public IVoidDelegateMappedArgumentRecorderFactory VoidDelegateFactory { get; }
 
-    private FactoryContext(MappedArgumentRecorderFactory factory, IBoolDelegateMappedArgumentRecorderFactory boolDelegateFactory, IVoidDelegateMappedArgumentRecorderFactory voidDelegateFactory)
+    private FactoryContext(IMappedArgumentRecorderFactory factory, IBoolDelegateMappedArgumentRecorderFactory boolDelegateFactory, IVoidDelegateMappedArgumentRecorderFactory voidDelegateFactory)
     {
         Factory = factory;
 

@@ -4,14 +4,14 @@ internal sealed class FactoryContext
 {
     public static FactoryContext Create()
     {
-        VoidDelegateMappedArgumentRecorderFactory factory = new();
+        IVoidDelegateMappedArgumentRecorderFactory factory = new VoidDelegateMappedArgumentRecorderFactory();
 
         return new(factory);
     }
 
-    public VoidDelegateMappedArgumentRecorderFactory Factory { get; }
+    public IVoidDelegateMappedArgumentRecorderFactory Factory { get; }
 
-    private FactoryContext(VoidDelegateMappedArgumentRecorderFactory factory)
+    private FactoryContext(IVoidDelegateMappedArgumentRecorderFactory factory)
     {
         Factory = factory;
     }

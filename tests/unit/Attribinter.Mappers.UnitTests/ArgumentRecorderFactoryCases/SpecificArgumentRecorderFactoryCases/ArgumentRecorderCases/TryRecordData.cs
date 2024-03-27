@@ -1,4 +1,4 @@
-﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases.ArgumentRecorderCases;
+﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases.SpecificArgumentRecorderFactoryCases.ArgumentRecorderCases;
 
 using Microsoft.CodeAnalysis;
 

@@ -2,57 +2,71 @@
 
 using System;
 
-/// <inheritdoc cref="IArgumentRecorderFactory{TParameter, TRecord, TData}"/>
-public sealed class ArgumentRecorderFactory<TParameter, TRecord, TData> : IArgumentRecorderFactory<TParameter, TRecord, TData>
+/// <inheritdoc cref="IArgumentRecorderFactory"/>
+public sealed class ArgumentRecorderFactory : IArgumentRecorderFactory
 {
-    private readonly IParameterMapper<TParameter, TRecord, TData> Mapper;
+    /// <summary>Instantiates a <see cref="ArgumentRecorderFactory"/>, handling creation of <see cref="IArgumentRecorder{TParameter, TData}"/>.</summary>
+    public ArgumentRecorderFactory() { }
 
-    /// <summary>Instantiates a <see cref="ArgumentRecorderFactory{TParameter, TRecord, TData}"/>, handling creation of <see cref="IArgumentRecorder{TParameter, TData}"/>.</summary>
-    /// <param name="mapper">The <see cref="IParameterMapper{TParameter, TRecord, TData}"/> used to create <see cref="IArgumentRecorder{TParameter, TData}"/>.</param>
-    public ArgumentRecorderFactory(IParameterMapper<TParameter, TRecord, TData> mapper)
+    IArgumentRecorderFactory<TParameter, TRecord, TData> IArgumentRecorderFactory.WithMapper<TParameter, TRecord, TData>(IParameterMapper<TParameter, TRecord, TData> mapper)
     {
-        Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-    }
-
-    IArgumentRecorder<TParameter, TData> IArgumentRecorderFactory<TParameter, TRecord, TData>.Create(TRecord dataRecord)
-    {
-        if (dataRecord is null)
+        if (mapper is null)
         {
-            throw new ArgumentNullException(nameof(dataRecord));
+            throw new ArgumentNullException(nameof(mapper));
         }
 
-        return new ArgumentRecorder(Mapper, dataRecord);
+        return new SpecificArgumentRecorderFactory<TParameter, TRecord, TData>(mapper);
     }
 
-    private sealed class ArgumentRecorder : IArgumentRecorder<TParameter, TData>
+    private sealed class SpecificArgumentRecorderFactory<TParameter, TRecord, TData> : IArgumentRecorderFactory<TParameter, TRecord, TData>
     {
         private readonly IParameterMapper<TParameter, TRecord, TData> Mapper;
-        private readonly TRecord DataRecord;
 
-        public ArgumentRecorder(IParameterMapper<TParameter, TRecord, TData> mapper, TRecord dataRecord)
+        public SpecificArgumentRecorderFactory(IParameterMapper<TParameter, TRecord, TData> mapper)
         {
             Mapper = mapper;
-            DataRecord = dataRecord;
         }
 
-        bool IArgumentRecorder<TParameter, TData>.TryRecordData(TParameter parameter, TData data)
+        IArgumentRecorder<TParameter, TData> IArgumentRecorderFactory<TParameter, TRecord, TData>.Create(TRecord dataRecord)
         {
-            if (parameter is null)
+            if (dataRecord is null)
             {
-                throw new ArgumentNullException(nameof(parameter));
+                throw new ArgumentNullException(nameof(dataRecord));
             }
 
-            if (data is null)
+            return new ArgumentRecorder(Mapper, dataRecord);
+        }
+
+        private sealed class ArgumentRecorder : IArgumentRecorder<TParameter, TData>
+        {
+            private readonly IParameterMapper<TParameter, TRecord, TData> Mapper;
+            private readonly TRecord DataRecord;
+
+            public ArgumentRecorder(IParameterMapper<TParameter, TRecord, TData> mapper, TRecord dataRecord)
             {
-                throw new ArgumentNullException(nameof(data));
+                Mapper = mapper;
+                DataRecord = dataRecord;
             }
 
-            if (Mapper.TryMapParameter(parameter) is not IMappedArgumentRecorder<TRecord, TData> recorder)
+            bool IArgumentRecorder<TParameter, TData>.TryRecordData(TParameter parameter, TData data)
             {
-                return false;
-            }
+                if (parameter is null)
+                {
+                    throw new ArgumentNullException(nameof(parameter));
+                }
 
-            return recorder.TryRecordData(DataRecord, data);
+                if (data is null)
+                {
+                    throw new ArgumentNullException(nameof(data));
+                }
+
+                if (Mapper.TryMapParameter(parameter) is not IMappedArgumentRecorder<TRecord, TData> recorder)
+                {
+                    return false;
+                }
+
+                return recorder.TryRecordData(DataRecord, data);
+            }
         }
     }
 }
