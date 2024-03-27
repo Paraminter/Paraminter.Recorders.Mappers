@@ -4,10 +4,9 @@ using Xunit;
 
 public sealed class VoidDelegateFactory
 {
-    private IVoidDelegateMappedArgumentRecorderFactory Target() => Target(Context.Factory);
-    private static IVoidDelegateMappedArgumentRecorderFactory Target(IMappedArgumentRecorderFactory factory) => factory.VoidDelegateFactory;
+    private static IVoidDelegateMappedArgumentRecorderFactory Target() => Context.Factory.VoidDelegateFactory;
 
-    private readonly FactoryContext Context = FactoryContext.Create();
+    private static readonly FactoryContext Context = FactoryContext.Create();
 
     [Fact]
     public void Valid_ReturnsSameAsConstructedWith()

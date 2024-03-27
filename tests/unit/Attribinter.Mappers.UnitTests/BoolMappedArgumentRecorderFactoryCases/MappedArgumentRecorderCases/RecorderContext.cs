@@ -8,11 +8,11 @@ internal sealed class RecorderContext<TRecord, TData> where TRecord : class
 {
     public static RecorderContext<TRecord, TData> Create()
     {
-        BoolDelegateMappedArgumentRecorderFactory factory = new();
+        IBoolDelegateMappedArgumentRecorderFactory factory = new BoolDelegateMappedArgumentRecorderFactory();
 
         Mock<Func<TRecord, TData, bool>> recorderDelegateMock = new();
 
-        var recorder = ((IBoolDelegateMappedArgumentRecorderFactory)factory).Create(recorderDelegateMock.Object);
+        var recorder = factory.Create(recorderDelegateMock.Object);
 
         return new(recorder, recorderDelegateMock);
     }
