@@ -1,4 +1,7 @@
-﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases.T0.ArgumentRecorderCases;
+﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases.ArgumentRecorderCases;
+
+using Attribinter;
+using Attribinter.Mappers;
 
 using Moq;
 
@@ -6,12 +9,13 @@ internal sealed class RecorderContext<TParameter, TRecord, TData> where TRecord 
 {
     public static RecorderContext<TParameter, TRecord, TData> Create()
     {
-        ArgumentRecorderFactory factory = new();
-
         Mock<IParameterMapper<TParameter, TRecord, TData>> mapperMock = new();
+
+        ArgumentRecorderFactory<TParameter, TRecord, TData> factory = new(mapperMock.Object);
+
         var dataRecord = Mock.Of<TRecord>();
 
-        var recorder = ((IArgumentRecorderFactory)factory).Create(mapperMock.Object, dataRecord);
+        var recorder = ((IArgumentRecorderFactory<TParameter, TRecord, TData>)factory).Create(dataRecord);
 
         return new(recorder, mapperMock, dataRecord);
     }
