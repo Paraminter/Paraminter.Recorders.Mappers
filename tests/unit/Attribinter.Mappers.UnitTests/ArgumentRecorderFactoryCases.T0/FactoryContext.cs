@@ -1,4 +1,4 @@
-﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases;
+﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases.T0;
 
 using Attribinter.Mappers;
 

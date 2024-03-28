@@ -17,11 +17,12 @@ public static class AttribinterMappersServices
             throw new ArgumentNullException(nameof(services));
         }
 
-        services.AddSingleton<IArgumentRecorderFactory, ArgumentRecorderFactory>();
+        services.AddTransient<IArgumentRecorderFactory, ArgumentRecorderFactory>();
+        services.AddTransient(typeof(IArgumentRecorderFactory<,,>), typeof(ArgumentRecorderFactory<,,>));
 
-        services.AddSingleton<IMappedArgumentRecorderFactory, MappedArgumentRecorderFactory>();
-        services.AddSingleton<IBoolDelegateMappedArgumentRecorderFactory, BoolDelegateMappedArgumentRecorderFactory>();
-        services.AddSingleton<IVoidDelegateMappedArgumentRecorderFactory, VoidDelegateMappedArgumentRecorderFactory>();
+        services.AddTransient<IMappedArgumentRecorderFactory, MappedArgumentRecorderFactory>();
+        services.AddTransient<IBoolDelegateMappedArgumentRecorderFactory, BoolDelegateMappedArgumentRecorderFactory>();
+        services.AddTransient<IVoidDelegateMappedArgumentRecorderFactory, VoidDelegateMappedArgumentRecorderFactory>();
 
         return services;
     }
