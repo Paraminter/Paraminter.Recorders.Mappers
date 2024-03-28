@@ -1,4 +1,4 @@
-﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases.SpecificArgumentRecorderFactoryCases;
+﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases.T3;
 
 using Moq;
 
