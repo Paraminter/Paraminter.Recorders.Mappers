@@ -21,6 +21,7 @@ public static class AttribinterMappersServices
         services.AddTransient(typeof(IArgumentRecorderFactory<,,>), typeof(ArgumentRecorderFactory<,,>));
 
         services.AddTransient<IMappedArgumentRecorderFactory, MappedArgumentRecorderFactory>();
+        services.AddTransient<IMappedArgumentRecorderFactoryProvider, MappedArgumentRecorderFactoryProvider>();
         services.AddTransient<IBoolDelegateMappedArgumentRecorderFactory, BoolDelegateMappedArgumentRecorderFactory>();
         services.AddTransient<IVoidDelegateMappedArgumentRecorderFactory, VoidDelegateMappedArgumentRecorderFactory>();
 

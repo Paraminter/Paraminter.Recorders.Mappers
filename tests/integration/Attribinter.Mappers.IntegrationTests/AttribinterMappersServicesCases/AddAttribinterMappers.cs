@@ -46,6 +46,9 @@ public sealed class AddAttribinterMappers
     public void IMappedArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IMappedArgumentRecorderFactory>();
 
     [Fact]
+    public void IMappedArgumentRecorderFactoryProvider_ServiceCanBeResolved() => ServiceCanBeResolved<IMappedArgumentRecorderFactoryProvider>();
+
+    [Fact]
     public void IBoolDelegateMappedArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IBoolDelegateMappedArgumentRecorderFactory>();
 
     [Fact]

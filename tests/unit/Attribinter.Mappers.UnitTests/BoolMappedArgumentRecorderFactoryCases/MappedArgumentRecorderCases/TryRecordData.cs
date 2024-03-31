@@ -43,7 +43,6 @@ public sealed class TryRecordData
         Assert.Equal(recorderReturnValue, outcome);
 
         context.RecorderDelegateMock.Verify((recorder) => recorder.Invoke(dataRecord, data), Times.Once());
-
         context.RecorderDelegateMock.VerifyNoOtherCalls();
     }
 }
