@@ -6,24 +6,21 @@ internal sealed class FactoryContext
 {
     public static FactoryContext Create()
     {
-        var boolDelegateFactory = Mock.Of<IBoolDelegateMappedArgumentRecorderFactory>();
-        var voidDelegateFactory = Mock.Of<IVoidDelegateMappedArgumentRecorderFactory>();
+        Mock<IMappedArgumentRecorderFactoryProvider> factoryProviderMock = new() { DefaultValue = DefaultValue.Mock };
 
-        IMappedArgumentRecorderFactory factory = new MappedArgumentRecorderFactory(boolDelegateFactory, voidDelegateFactory);
+        IMappedArgumentRecorderFactory factory = new MappedArgumentRecorderFactory(factoryProviderMock.Object);
 
-        return new(factory, boolDelegateFactory, voidDelegateFactory);
+        return new(factory, factoryProviderMock);
     }
 
     public IMappedArgumentRecorderFactory Factory { get; }
 
-    public IBoolDelegateMappedArgumentRecorderFactory BoolDelegateFactory { get; }
-    public IVoidDelegateMappedArgumentRecorderFactory VoidDelegateFactory { get; }
+    public Mock<IMappedArgumentRecorderFactoryProvider> FactoryProviderMock { get; }
 
-    private FactoryContext(IMappedArgumentRecorderFactory factory, IBoolDelegateMappedArgumentRecorderFactory boolDelegateFactory, IVoidDelegateMappedArgumentRecorderFactory voidDelegateFactory)
+    private FactoryContext(IMappedArgumentRecorderFactory factory, Mock<IMappedArgumentRecorderFactoryProvider> factoryProviderMock)
     {
         Factory = factory;
 
-        BoolDelegateFactory = boolDelegateFactory;
-        VoidDelegateFactory = voidDelegateFactory;
+        FactoryProviderMock = factoryProviderMock;
     }
 }

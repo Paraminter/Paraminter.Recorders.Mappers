@@ -47,7 +47,6 @@ public sealed class TryRecordData
         Assert.False(outcome);
 
         context.MapperMock.Verify((mapper) => mapper.TryMapParameter(parameter), Times.Once);
-
         context.MapperMock.VerifyNoOtherCalls();
     }
 
@@ -72,7 +71,6 @@ public sealed class TryRecordData
         Assert.Equal(recorderReturnValue, outcome);
 
         context.MapperMock.Verify((mapper) => mapper.TryMapParameter(parameter)!.TryRecordData(context.DataRecord, data), Times.Once);
-
         context.MapperMock.VerifyNoOtherCalls();
     }
 }
