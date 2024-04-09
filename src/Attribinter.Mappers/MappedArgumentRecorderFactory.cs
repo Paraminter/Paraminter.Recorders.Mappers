@@ -14,7 +14,7 @@ public sealed class MappedArgumentRecorderFactory : IMappedArgumentRecorderFacto
         FactoryProvider = factoryProvider ?? throw new ArgumentNullException(nameof(factoryProvider));
     }
 
-    IMappedArgumentRecorder<TRecord, TData> IMappedArgumentRecorderFactory.Create<TRecord, TData>(Func<TRecord, TData, bool> recorderDelegate)
+    IMappedArgumentRecorder<TRecord, TData> IMappedArgumentRecorderFactory.Create<TRecord, TData>(DAttemptingArgumentRecorder<TRecord, TData> recorderDelegate)
     {
         if (recorderDelegate is null)
         {
@@ -24,7 +24,7 @@ public sealed class MappedArgumentRecorderFactory : IMappedArgumentRecorderFacto
         return FactoryProvider.BoolDelegateFactory.Create(recorderDelegate);
     }
 
-    IMappedArgumentRecorder<TRecord, TData> IMappedArgumentRecorderFactory.Create<TRecord, TData>(Action<TRecord, TData> recorderDelegate)
+    IMappedArgumentRecorder<TRecord, TData> IMappedArgumentRecorderFactory.Create<TRecord, TData>(DCertainArgumentRecorder<TRecord, TData> recorderDelegate)
     {
         if (recorderDelegate is null)
         {

@@ -8,16 +8,16 @@ using Xunit;
 
 public sealed class TryRecordData
 {
-    private static bool Target<TRecord, TData>(IMappedArgumentRecorder<TRecord, TData> recorder, TRecord dataRecord, TData data) => recorder.TryRecordData(dataRecord, data);
+    private static bool Target<TRecord, TData>(IRecorderFixture<TRecord, TData> fixture, TRecord dataRecord, TData data) => fixture.Sut.TryRecordData(dataRecord, data);
 
     [Fact]
     public void NullDataRecord_ThrowsArgumentNullException()
     {
-        var context = RecorderContext<object, object>.Create();
+        var fixture = RecorderFixtureFactory.Create<object, object>();
 
-        var exception = Record.Exception(() => Target(context.Recorder, null!, Mock.Of<object>()));
+        var result = Record.Exception(() => Target(fixture, null!, Mock.Of<object>()));
 
-        Assert.IsType<ArgumentNullException>(exception);
+        Assert.IsType<ArgumentNullException>(result);
     }
 
     [Fact]
@@ -29,15 +29,15 @@ public sealed class TryRecordData
     [AssertionMethod]
     private static void ValidRecorder_ReturnsTrue(object? data)
     {
-        var context = RecorderContext<object, object?>.Create();
+        var fixture = RecorderFixtureFactory.Create<object, object?>();
 
         var dataRecord = Mock.Of<object>();
 
-        var outcome = Target(context.Recorder, dataRecord, data);
+        var result = Target(fixture, dataRecord, data);
 
-        Assert.True(outcome);
+        Assert.True(result);
 
-        context.RecorderDelegateMock.Verify((recorder) => recorder.Invoke(dataRecord, data), Times.Once());
-        context.RecorderDelegateMock.VerifyNoOtherCalls();
+        fixture.RecorderDelegateMock.Verify((recorder) => recorder.Invoke(dataRecord, data), Times.Once());
+        fixture.RecorderDelegateMock.VerifyNoOtherCalls();
     }
 }

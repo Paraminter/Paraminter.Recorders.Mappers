@@ -8,30 +8,29 @@ using Xunit;
 
 public sealed class Create_Func
 {
-    private static IMappedArgumentRecorder<TRecord, TData> Target<TRecord, TData>(Func<TRecord, TData, bool> recorderDelegate) => Context.Factory.Create(recorderDelegate);
-    private static readonly FactoryContext Context = FactoryContext.Create();
+    private IMappedArgumentRecorder<TRecord, TData> Target<TRecord, TData>(DAttemptingArgumentRecorder<TRecord, TData> recorderDelegate) => Fixture.Sut.Create(recorderDelegate);
+    private readonly IFactoryFixture Fixture = FactoryFixtureFactory.Create();
 
     [Fact]
     public void NullDelegate_ThrowsArgumentNullException()
     {
-        var exception = Record.Exception(() => Target<object, object>(null!));
+        var result = Record.Exception(() => Target<object, object>(null!));
 
-        Assert.IsType<ArgumentNullException>(exception);
+        Assert.IsType<ArgumentNullException>(result);
     }
 
     [Fact]
     public void ValidDelegate_ReturnsRecorder()
     {
         var recorder = Mock.Of<IMappedArgumentRecorder<object, object>>();
-        var recorderDelegate = Mock.Of<Func<object, object, bool>>();
+        var recorderDelegate = Mock.Of<DAttemptingArgumentRecorder<object, object>>();
 
-        Context.FactoryProviderMock.Setup(static (provider) => provider.BoolDelegateFactory.Create(It.IsAny<Func<object, object, bool>>())).Returns(recorder);
+        Fixture.FactoryProviderMock.Setup(static (provider) => provider.BoolDelegateFactory.Create(It.IsAny<DAttemptingArgumentRecorder<object, object>>())).Returns(recorder);
 
-        var actual = Target(recorderDelegate);
+        var result = Target(recorderDelegate);
 
-        Assert.Same(recorder, actual);
+        Assert.Same(recorder, result);
 
-        Context.FactoryProviderMock.Verify((provider) => provider.BoolDelegateFactory.Create(recorderDelegate), Times.Once());
-        Context.FactoryProviderMock.VerifyNoOtherCalls();
+        Fixture.FactoryProviderMock.Verify((provider) => provider.BoolDelegateFactory.Create(recorderDelegate), Times.Once());
     }
 }

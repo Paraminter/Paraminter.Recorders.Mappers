@@ -1,7 +1,5 @@
 ﻿namespace Attribinter.Mappers;
 
-using System;
-
 /// <summary>Handles creation of <see cref="IMappedArgumentRecorder{TRecord, TData}"/> using <see cref="bool"/>-returning delegates.</summary>
 public interface IBoolDelegateMappedArgumentRecorderFactory
 {
@@ -10,5 +8,5 @@ public interface IBoolDelegateMappedArgumentRecorderFactory
     /// <typeparam name="TData">The type of the recorded data.</typeparam>
     /// <param name="recorderDelegate">The delegate reponsible for recording data.</param>
     /// <returns>The created <see cref="IMappedArgumentRecorder{TRecord, TData}"/>.</returns>
-    public abstract IMappedArgumentRecorder<TRecord, TData> Create<TRecord, TData>(Func<TRecord, TData, bool> recorderDelegate);
+    public abstract IMappedArgumentRecorder<TRecord, TData> Create<TRecord, TData>(DAttemptingArgumentRecorder<TRecord, TData> recorderDelegate);
 }

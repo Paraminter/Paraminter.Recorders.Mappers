@@ -8,7 +8,7 @@ public sealed class BoolDelegateMappedArgumentRecorderFactory : IBoolDelegateMap
     /// <summary>Instantiates a <see cref="BoolDelegateMappedArgumentRecorderFactory"/>, handling creation of <see cref="IMappedArgumentRecorder{TRecord, TData}"/> using <see cref="bool"/>-returning delegates.</summary>
     public BoolDelegateMappedArgumentRecorderFactory() { }
 
-    IMappedArgumentRecorder<TRecord, TData> IBoolDelegateMappedArgumentRecorderFactory.Create<TRecord, TData>(Func<TRecord, TData, bool> recorderDelegate)
+    IMappedArgumentRecorder<TRecord, TData> IBoolDelegateMappedArgumentRecorderFactory.Create<TRecord, TData>(DAttemptingArgumentRecorder<TRecord, TData> recorderDelegate)
     {
         if (recorderDelegate is null)
         {
@@ -20,9 +20,9 @@ public sealed class BoolDelegateMappedArgumentRecorderFactory : IBoolDelegateMap
 
     private sealed class MappedArgumentRecorder<TRecord, TData> : IMappedArgumentRecorder<TRecord, TData>
     {
-        private readonly Func<TRecord, TData, bool> RecorderDelegate;
+        private readonly DAttemptingArgumentRecorder<TRecord, TData> RecorderDelegate;
 
-        public MappedArgumentRecorder(Func<TRecord, TData, bool> recorderDelegate)
+        public MappedArgumentRecorder(DAttemptingArgumentRecorder<TRecord, TData> recorderDelegate)
         {
             RecorderDelegate = recorderDelegate;
         }

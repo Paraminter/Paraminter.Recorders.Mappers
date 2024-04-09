@@ -18,6 +18,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Attribinter.Mappers.Abstractions\Attribinter.Mappers.Abstractions.csproj" />
+        <ProjectReference Include="..\Attribinter.Mappers.Core\Attribinter.Mappers.Core.csproj" />
         <ProjectReference Include="..\Attribinter.Mappers\Attribinter.Mappers.csproj" PrivateAssets="compile" />
     </ItemGroup>
 

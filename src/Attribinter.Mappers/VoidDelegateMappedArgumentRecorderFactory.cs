@@ -8,7 +8,7 @@ public sealed class VoidDelegateMappedArgumentRecorderFactory : IVoidDelegateMap
     /// <summary>Instantiates a <see cref="VoidDelegateMappedArgumentRecorderFactory"/>, handling creation of <see cref="IMappedArgumentRecorder{TRecord, TData}"/> using <see langword="void"/>-returning delegates.</summary>
     public VoidDelegateMappedArgumentRecorderFactory() { }
 
-    IMappedArgumentRecorder<TRecord, TData> IVoidDelegateMappedArgumentRecorderFactory.Create<TRecord, TData>(Action<TRecord, TData> recorderDelegate)
+    IMappedArgumentRecorder<TRecord, TData> IVoidDelegateMappedArgumentRecorderFactory.Create<TRecord, TData>(DCertainArgumentRecorder<TRecord, TData> recorderDelegate)
     {
         if (recorderDelegate is null)
         {
@@ -20,9 +20,9 @@ public sealed class VoidDelegateMappedArgumentRecorderFactory : IVoidDelegateMap
 
     private sealed class MappedArgumentRecorder<TRecord, TData> : IMappedArgumentRecorder<TRecord, TData>
     {
-        private readonly Action<TRecord, TData> RecorderDelegate;
+        private readonly DCertainArgumentRecorder<TRecord, TData> RecorderDelegate;
 
-        public MappedArgumentRecorder(Action<TRecord, TData> recorderDelegate)
+        public MappedArgumentRecorder(DCertainArgumentRecorder<TRecord, TData> recorderDelegate)
         {
             RecorderDelegate = recorderDelegate;
         }

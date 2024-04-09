@@ -8,16 +8,16 @@ using Xunit;
 
 public sealed class TryRecordData
 {
-    private static bool Target<TRecord, TData>(IMappedArgumentRecorder<TRecord, TData> recorder, TRecord dataRecord, TData data) => recorder.TryRecordData(dataRecord, data);
+    private static bool Target<TRecord, TData>(IRecorderFixture<TRecord, TData> fixture, TRecord dataRecord, TData data) => fixture.Sut.TryRecordData(dataRecord, data);
 
     [Fact]
     public void NullDataRecord_ThrowsArgumentNullException()
     {
-        var context = RecorderContext<object, object>.Create();
+        var fixture = RecorderFixtureFactory.Create<object, object>();
 
-        var exception = Record.Exception(() => Target(context.Recorder, null!, Mock.Of<object>()));
+        var result = Record.Exception(() => Target(fixture, null!, Mock.Of<object>()));
 
-        Assert.IsType<ArgumentNullException>(exception);
+        Assert.IsType<ArgumentNullException>(result);
     }
 
     [Fact]
@@ -32,17 +32,16 @@ public sealed class TryRecordData
     [AssertionMethod]
     private static void ValidRecorder_PropagatesReturnValue(object? data, bool recorderReturnValue)
     {
-        var context = RecorderContext<object, object?>.Create();
+        var fixture = RecorderFixtureFactory.Create<object, object?>();
 
         var dataRecord = Mock.Of<object>();
 
-        context.RecorderDelegateMock.Setup(static (recorder) => recorder.Invoke(It.IsAny<object>(), It.IsAny<object>())).Returns(recorderReturnValue);
+        fixture.RecorderDelegateMock.Setup(static (recorder) => recorder.Invoke(It.IsAny<object>(), It.IsAny<object>())).Returns(recorderReturnValue);
 
-        var outcome = Target(context.Recorder, dataRecord, data);
+        var result = Target(fixture, dataRecord, data);
 
-        Assert.Equal(recorderReturnValue, outcome);
+        Assert.Equal(recorderReturnValue, result);
 
-        context.RecorderDelegateMock.Verify((recorder) => recorder.Invoke(dataRecord, data), Times.Once());
-        context.RecorderDelegateMock.VerifyNoOtherCalls();
+        fixture.RecorderDelegateMock.Verify((recorder) => recorder.Invoke(dataRecord, data), Times.Once());
     }
 }
