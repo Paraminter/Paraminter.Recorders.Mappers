@@ -2,29 +2,28 @@
 
 using System;
 
-/// <inheritdoc cref="IArgumentRecorderFactory{TParameter, TRecord, TData}"/>
-public sealed class ArgumentRecorderFactory<TParameter, TRecord, TData> : IArgumentRecorderFactory<TParameter, TRecord, TData>
+/// <inheritdoc cref="IArgumentRecorderFactory"/>
+public sealed class ArgumentRecorderFactory : IArgumentRecorderFactory
 {
-    private readonly IParameterMapper<TParameter, TRecord, TData> Mapper;
+    /// <summary>Instantiates a <see cref="ArgumentRecorderFactory"/>, handling creation of <see cref="IArgumentRecorder{TParameter, TData}"/>.</summary>
+    public ArgumentRecorderFactory() { }
 
-    /// <summary>Instantiates a <see cref="ArgumentRecorderFactory{TParameter, TRecord, TData}"/>, handling creation of <see cref="IArgumentRecorder{TParameter, TData}"/>.</summary>
-    /// <param name="mapper">Maps type parameters to recorders, responsible for recording data about the arguments of that parameter.</param>
-    public ArgumentRecorderFactory(IParameterMapper<TParameter, TRecord, TData> mapper)
+    IArgumentRecorder<TParameter, TData> IArgumentRecorderFactory.Create<TParameter, TRecord, TData>(IParameterMapper<TParameter, TRecord, TData> mapper, TRecord dataRecord)
     {
-        Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-    }
+        if (mapper is null)
+        {
+            throw new ArgumentNullException(nameof(mapper));
+        }
 
-    IArgumentRecorder<TParameter, TData> IArgumentRecorderFactory<TParameter, TRecord, TData>.Create(TRecord dataRecord)
-    {
         if (dataRecord is null)
         {
             throw new ArgumentNullException(nameof(dataRecord));
         }
 
-        return new ArgumentRecorder(Mapper, dataRecord);
+        return new ArgumentRecorder<TParameter, TRecord, TData>(mapper, dataRecord);
     }
 
-    private sealed class ArgumentRecorder : IArgumentRecorder<TParameter, TData>
+    private sealed class ArgumentRecorder<TParameter, TRecord, TData> : IArgumentRecorder<TParameter, TData>
     {
         private readonly IParameterMapper<TParameter, TRecord, TData> Mapper;
         private readonly TRecord DataRecord;

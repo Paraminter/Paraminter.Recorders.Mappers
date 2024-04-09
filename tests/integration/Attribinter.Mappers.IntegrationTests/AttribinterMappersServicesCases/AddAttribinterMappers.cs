@@ -32,12 +32,7 @@ public sealed class AddAttribinterMappers
     }
 
     [Fact]
-    public void IArgumentRecorderFactory_MapperAdded_ServiceCanBeResolved()
-    {
-        ServiceCanBeResolved<IArgumentRecorderFactory<object, object, object>>(additionalConfiguration);
-
-        static void additionalConfiguration(IServiceCollection services) => services.AddTransient((_) => Mock.Of<IParameterMapper<object, object, object>>());
-    }
+    public void IArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IArgumentRecorderFactory>();
 
     [Fact]
     public void IMappedArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IMappedArgumentRecorderFactory>();
@@ -52,10 +47,7 @@ public sealed class AddAttribinterMappers
     public void IVoidDelegateMappedArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IVoidDelegateMappedArgumentRecorderFactory>();
 
     [AssertionMethod]
-    private static void ServiceCanBeResolved<TService>() where TService : notnull => ServiceCanBeResolved<TService>((_) => { });
-
-    [AssertionMethod]
-    private static void ServiceCanBeResolved<TService>(Action<IServiceCollection> additionalConfiguration) where TService : notnull
+    private static void ServiceCanBeResolved<TService>() where TService : notnull
     {
         HostBuilder host = new();
 
@@ -67,10 +59,6 @@ public sealed class AddAttribinterMappers
 
         Assert.NotNull(service);
 
-        void configureServices(IServiceCollection services)
-        {
-            Target(services);
-            additionalConfiguration(services);
-        }
+        static void configureServices(IServiceCollection services) => Target(services);
     }
 }

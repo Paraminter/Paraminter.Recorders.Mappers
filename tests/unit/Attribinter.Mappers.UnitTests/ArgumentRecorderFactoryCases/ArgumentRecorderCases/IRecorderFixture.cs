@@ -7,5 +7,5 @@ internal interface IRecorderFixture<TParameter, TRecord, TData> where TRecord : 
     public abstract IArgumentRecorder<TParameter, TData> Sut { get; }
 
     public abstract Mock<IParameterMapper<TParameter, TRecord, TData>> MapperMock { get; }
-    public abstract TRecord DataRecord { get; }
+    public abstract Mock<TRecord> DataRecordMock { get; }
 }

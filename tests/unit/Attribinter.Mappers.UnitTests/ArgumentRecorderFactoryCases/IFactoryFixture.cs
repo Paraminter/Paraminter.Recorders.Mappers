@@ -1,10 +1,6 @@
 ﻿namespace Attribinter.Mappers.ArgumentRecorderFactoryCases;
 
-using Moq;
-
-internal interface IFactoryFixture<TParameter, TRecord, TData>
+internal interface IFactoryFixture
 {
-    public abstract IArgumentRecorderFactory<TParameter, TRecord, TData> Sut { get; }
-
-    public abstract Mock<IParameterMapper<TParameter, TRecord, TData>> MapperMock { get; }
+    public abstract IArgumentRecorderFactory Sut { get; }
 }

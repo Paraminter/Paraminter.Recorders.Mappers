@@ -2,8 +2,6 @@
 
 using Moq;
 
-using System;
-
 internal interface IRecorderFixture<TRecord, TData>
 {
     public abstract IMappedArgumentRecorder<TRecord, TData> Sut { get; }
