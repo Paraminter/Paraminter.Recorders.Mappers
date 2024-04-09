@@ -17,7 +17,7 @@ public static class AttribinterMappersServices
             throw new ArgumentNullException(nameof(services));
         }
 
-        services.AddTransient(typeof(IArgumentRecorderFactory<,,>), typeof(ArgumentRecorderFactory<,,>));
+        services.AddTransient<IArgumentRecorderFactory, ArgumentRecorderFactory>();
 
         services.AddTransient<IMappedArgumentRecorderFactory, MappedArgumentRecorderFactory>();
         services.AddTransient<IMappedArgumentRecorderFactoryProvider, MappedArgumentRecorderFactoryProvider>();

@@ -69,6 +69,6 @@ public sealed class TryRecordData
 
         Assert.Equal(recorderReturnValue, result);
 
-        fixture.MapperMock.Verify((mapper) => mapper.TryMapParameter(parameter)!.TryRecordData(fixture.DataRecord, data), Times.Once);
+        fixture.MapperMock.Verify((mapper) => mapper.TryMapParameter(parameter)!.TryRecordData(fixture.DataRecordMock.Object, data), Times.Once);
     }
 }
