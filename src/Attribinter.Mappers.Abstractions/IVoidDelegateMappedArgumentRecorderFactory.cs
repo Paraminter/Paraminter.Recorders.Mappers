@@ -1,7 +1,5 @@
 ﻿namespace Attribinter.Mappers;
 
-using System;
-
 /// <summary>Handles creation of <see cref="IMappedArgumentRecorder{TRecord, TData}"/> using <see langword="void"/>-returning delegates.</summary>
 public interface IVoidDelegateMappedArgumentRecorderFactory
 {
@@ -10,5 +8,5 @@ public interface IVoidDelegateMappedArgumentRecorderFactory
     /// <typeparam name="TData">The type of the recorded data.</typeparam>
     /// <param name="recorderDelegate">The delegate reponsible for recording data.</param>
     /// <returns>The created <see cref="IMappedArgumentRecorder{TRecord, TData}"/>.</returns>
-    public abstract IMappedArgumentRecorder<TRecord, TData> Create<TRecord, TData>(Action<TRecord, TData> recorderDelegate);
+    public abstract IMappedArgumentRecorder<TRecord, TData> Create<TRecord, TData>(DCertainArgumentRecorder<TRecord, TData> recorderDelegate);
 }

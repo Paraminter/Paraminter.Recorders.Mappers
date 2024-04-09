@@ -4,15 +4,15 @@ using Xunit;
 
 public sealed class BoolDelegateFactory
 {
-    private static IBoolDelegateMappedArgumentRecorderFactory Target() => Context.Provider.BoolDelegateFactory;
+    private IBoolDelegateMappedArgumentRecorderFactory Target() => Fixture.Sut.BoolDelegateFactory;
 
-    private static readonly ProviderContext Context = ProviderContext.Create();
+    private readonly IProviderFixture Fixture = ProviderFixtureFactory.Create();
 
     [Fact]
     public void Valid_ReturnsSameAsConstructedWith()
     {
-        var actual = Target();
+        var result = Target();
 
-        Assert.Same(Context.BoolDelegateFactory, actual);
+        Assert.Same(Fixture.BoolDelegateFactoryMock.Object, result);
     }
 }

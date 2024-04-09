@@ -4,15 +4,15 @@ using Xunit;
 
 public sealed class VoidDelegateFactory
 {
-    private static IVoidDelegateMappedArgumentRecorderFactory Target() => Context.Provider.VoidDelegateFactory;
+    private IVoidDelegateMappedArgumentRecorderFactory Target() => Fixture.Sut.VoidDelegateFactory;
 
-    private static readonly ProviderContext Context = ProviderContext.Create();
+    private readonly IProviderFixture Fixture = ProviderFixtureFactory.Create();
 
     [Fact]
     public void Valid_ReturnsSameAsConstructedWith()
     {
-        var actual = Target();
+        var result = Target();
 
-        Assert.Same(Context.VoidDelegateFactory, actual);
+        Assert.Same(Fixture.VoidDelegateFactoryMock.Object, result);
     }
 }
