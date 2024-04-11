@@ -16,9 +16,9 @@ public sealed class AddAttribinterMappers
     [Fact]
     public void NullServiceCollection_ArgumentNullException()
     {
-        var exception = Record.Exception(() => Target(null!));
+        var result = Record.Exception(() => Target(null!));
 
-        Assert.IsType<ArgumentNullException>(exception);
+        Assert.IsType<ArgumentNullException>(result);
     }
 
     [Fact]
@@ -26,9 +26,9 @@ public sealed class AddAttribinterMappers
     {
         var serviceCollection = Mock.Of<IServiceCollection>();
 
-        var actual = Target(serviceCollection);
+        var result = Target(serviceCollection);
 
-        Assert.Same(serviceCollection, actual);
+        Assert.Same(serviceCollection, result);
     }
 
     [Fact]
@@ -55,9 +55,9 @@ public sealed class AddAttribinterMappers
 
         var serviceProvider = host.Build().Services;
 
-        var service = serviceProvider.GetRequiredService<TService>();
+        var result = serviceProvider.GetRequiredService<TService>();
 
-        Assert.NotNull(service);
+        Assert.NotNull(result);
 
         static void configureServices(IServiceCollection services) => Target(services);
     }
