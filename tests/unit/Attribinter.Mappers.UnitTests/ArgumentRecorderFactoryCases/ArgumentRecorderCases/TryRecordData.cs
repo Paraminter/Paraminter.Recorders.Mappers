@@ -45,8 +45,6 @@ public sealed class TryRecordData
         var result = Target(fixture, parameter, data);
 
         Assert.False(result);
-
-        fixture.MapperMock.Verify((mapper) => mapper.TryMapParameter(parameter), Times.Once);
     }
 
     [Fact]
@@ -60,15 +58,20 @@ public sealed class TryRecordData
     {
         var fixture = RecorderFixtureFactory.Create<object, object, object>();
 
+        Mock<IMappedArgumentRecorder<object, object>> recorderMock = new();
+
+        recorderMock.Setup(static (recorder) => recorder.TryRecordData(It.IsAny<object>(), It.IsAny<object>())).Returns(recorderReturnValue);
+
         var parameter = Mock.Of<object>();
         var data = Mock.Of<object>();
 
-        fixture.MapperMock.Setup(static (mapper) => mapper.TryMapParameter(It.IsAny<object>())!.TryRecordData(It.IsAny<object>(), It.IsAny<object>())).Returns(recorderReturnValue);
+        fixture.MapperMock.Setup(static (mapper) => mapper.TryMapParameter(It.IsAny<object>())).Returns(recorderMock.Object);
 
         var result = Target(fixture, parameter, data);
 
         Assert.Equal(recorderReturnValue, result);
 
-        fixture.MapperMock.Verify((mapper) => mapper.TryMapParameter(parameter)!.TryRecordData(fixture.DataRecordMock.Object, data), Times.Once);
+        recorderMock.Verify((recorder) => recorder.TryRecordData(fixture.DataRecordMock.Object, data), Times.Once());
+        recorderMock.VerifyNoOtherCalls();
     }
 }

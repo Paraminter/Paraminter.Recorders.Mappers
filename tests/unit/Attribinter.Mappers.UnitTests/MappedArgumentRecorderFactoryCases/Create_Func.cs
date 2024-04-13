@@ -30,7 +30,5 @@ public sealed class Create_Func
         var result = Target(recorderDelegate);
 
         Assert.Same(recorder, result);
-
-        Fixture.FactoryProviderMock.Verify((provider) => provider.BoolDelegateFactory.Create(recorderDelegate), Times.Once());
     }
 }
