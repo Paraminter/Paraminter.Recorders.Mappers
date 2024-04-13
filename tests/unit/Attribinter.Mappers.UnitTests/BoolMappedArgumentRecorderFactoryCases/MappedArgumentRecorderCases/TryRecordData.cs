@@ -43,5 +43,6 @@ public sealed class TryRecordData
         Assert.Equal(recorderReturnValue, result);
 
         fixture.RecorderDelegateMock.Verify((recorder) => recorder.Invoke(dataRecord, data), Times.Once());
+        fixture.RecorderDelegateMock.VerifyNoOtherCalls();
     }
 }

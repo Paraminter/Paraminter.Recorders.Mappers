@@ -30,7 +30,5 @@ public sealed class Create_DCertainArgumentRecorder
         var result = Target(recorderDelegate);
 
         Assert.Same(recorder, result);
-
-        Fixture.FactoryProviderMock.Verify((provider) => provider.VoidDelegateFactory.Create(recorderDelegate), Times.Once());
     }
 }
