@@ -1,3 +1,14 @@
-# Attribinter.Mappers [![NuGet version](https://img.shields.io/nuget/v/Attribinter.Mappers.svg?style=plastic)](https://www.nuget.org/packages/Attribinter.Mappers/) ![License](https://img.shields.io/github/license/Attribinter/Attribinter.Mappers?style=plastic)
+# Attribinter.Mappers
 
 Adds mappers to `Attribinter`, acting as blueprints of recorders.
+
+See [Attribinter](https://www.github.com/Attribinter/Attribinter) for more information.
+
+## NuGet
+
+The repository publishes the following NuGet packages:
+
+* [Attribinter.Mappers](https://www.nuget.org/packages/Attribinter.Mappers/)
+* [Attribinter.Mappers.Abstractions](https://www.nuget.org/packages/Attribinter.Mappers.Abstractions/)
+* [Attribinter.Mappers.Core](https://www.nuget.org/packages/Attribinter.Mappers.Core/)
+* [Attribinter.Mappers.DependencyInjection](https://www.nuget.org/packages/Attribinter.Mappers.DependencyInjection/)
