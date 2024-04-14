@@ -8,7 +8,7 @@
     <PropertyGroup>
         <Title>Attribinter.Mappers.Abstractions</Title>
         <Description>
-            Provides abstractions related to Attribinter mappers, acting as blueprints of recorders.
+            Provides abstractions related to Attribinter mappers.
         </Description>
     </PropertyGroup>
 

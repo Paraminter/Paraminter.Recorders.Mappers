@@ -8,7 +8,7 @@
     <PropertyGroup>
         <Title>Attribinter.Mappers.Core</Title>
         <Description>
-            Provides the core definitions of Attribinter mappers, acting as blueprints of recorders.
+            Defines the core components of Attribinter mappers.
         </Description>
     </PropertyGroup>
 

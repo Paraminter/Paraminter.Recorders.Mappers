@@ -1,5 +1,5 @@
 # Attribinter.Mappers.Core
 
-Provides the core components of `Attribinter` mappers, acting as blueprints of recorders.
+Defines the core components of `Attribinter` mappers.
 
 See [GitHub](https://github.com/Attribinter/Attribinter.Mappers) for more information.

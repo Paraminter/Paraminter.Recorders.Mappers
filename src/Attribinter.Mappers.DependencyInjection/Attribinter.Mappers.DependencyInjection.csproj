@@ -8,7 +8,7 @@
     <PropertyGroup>
         <Title>Attribinter.Mappers.DependencyInjection</Title>
         <Description>
-            Allows the services provided by Attribinter.Mappers to be registered with DI-containers.
+            Allows the services provided by Attribinter.Mappers to be registered with .NET DI-containers.
         </Description>
     </PropertyGroup>
 
@@ -18,7 +18,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Attribinter.Mappers.Abstractions\Attribinter.Mappers.Abstractions.csproj" />
-        <ProjectReference Include="..\Attribinter.Mappers.Core\Attribinter.Mappers.Core.csproj" />
         <ProjectReference Include="..\Attribinter.Mappers\Attribinter.Mappers.csproj" PrivateAssets="compile" />
     </ItemGroup>
 

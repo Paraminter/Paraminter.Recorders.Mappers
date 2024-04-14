@@ -1,5 +1,5 @@
 # Attribinter.Mappers.Abstractions
 
-Provides abstractions related to `Attribinter` mappers, acting as blueprints of recorders.
+Provides abstractions related to `Attribinter` mappers.
 
 See [GitHub](https://github.com/Attribinter/Attribinter.Mappers) for more information.
