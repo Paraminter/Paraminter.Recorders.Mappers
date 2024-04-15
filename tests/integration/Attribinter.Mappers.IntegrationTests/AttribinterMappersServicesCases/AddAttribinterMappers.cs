@@ -59,6 +59,9 @@ public sealed class AddAttribinterMappers
 
         Assert.NotNull(result);
 
-        static void configureServices(IServiceCollection services) => Target(services);
+        static void configureServices(IServiceCollection services)
+        {
+            Target(services);
+        }
     }
 }

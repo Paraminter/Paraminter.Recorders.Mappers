@@ -25,7 +25,7 @@ public sealed class Create_Func
         var recorder = Mock.Of<IMappedArgumentRecorder<object, object>>();
         var recorderDelegate = Mock.Of<DAttemptingArgumentRecorder<object, object>>();
 
-        Fixture.FactoryProviderMock.Setup(static (provider) => provider.BoolDelegateFactory.Create(It.IsAny<DAttemptingArgumentRecorder<object, object>>())).Returns(recorder);
+        Fixture.FactoryProviderMock.Setup((provider) => provider.BoolDelegateFactory.Create(recorderDelegate)).Returns(recorder);
 
         var result = Target(recorderDelegate);
 
