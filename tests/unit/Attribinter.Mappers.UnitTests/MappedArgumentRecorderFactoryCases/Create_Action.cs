@@ -9,6 +9,7 @@ using Xunit;
 public sealed class Create_DCertainArgumentRecorder
 {
     private IMappedArgumentRecorder<TRecord, TData> Target<TRecord, TData>(DCertainArgumentRecorder<TRecord, TData> recorderDelegate) => Fixture.Sut.Create(recorderDelegate);
+
     private readonly IFactoryFixture Fixture = FactoryFixtureFactory.Create();
 
     [Fact]
