@@ -8,7 +8,6 @@
         <Authors>ErikWe</Authors>
         <PackageProjectUrl>https://github.com/Attribinter/Attribinter.Mappers</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Attribinter/Attribinter.Mappers</RepositoryUrl>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageReadmeFile>README.nupkg.md</PackageReadmeFile>
         <PackageIcon>Logo.png</PackageIcon>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
