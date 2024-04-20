@@ -6,7 +6,6 @@
 
     <PropertyGroup>
         <Nullable>enable</Nullable>
-        <WarningsAsErrors>nullable</WarningsAsErrors>
         <AnalysisMode>all</AnalysisMode>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -15,7 +14,7 @@
 
     <PropertyGroup>
         <IsPackable>false</IsPackable>
-        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);CS1591;CS1573</NoWarn> <!-- https://github.com/dotnet/roslyn/issues/41640#issuecomment-985780130 -->
     </PropertyGroup>
     
     <ItemGroup>
