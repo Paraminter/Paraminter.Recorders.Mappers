@@ -9,9 +9,9 @@ internal static class ProviderFixtureFactory
         Mock<IBoolDelegateMappedArgumentRecorderFactory> boolDelegateFactoryMock = new();
         Mock<IVoidDelegateMappedArgumentRecorderFactory> voidDelegateFactoryMock = new();
 
-        MappedArgumentRecorderFactoryProvider provider = new(boolDelegateFactoryMock.Object, voidDelegateFactoryMock.Object);
+        MappedArgumentRecorderFactoryProvider sut = new(boolDelegateFactoryMock.Object, voidDelegateFactoryMock.Object);
 
-        return new ProviderFixture(provider, boolDelegateFactoryMock, voidDelegateFactoryMock);
+        return new ProviderFixture(sut, boolDelegateFactoryMock, voidDelegateFactoryMock);
     }
 
     private sealed class ProviderFixture : IProviderFixture
