@@ -5,15 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
-        <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-
-        <PackageVersion Include="Moq" Version="4.20.70" />
-
         <PackageVersion Include="Attribinter.Core" Version="8.0.0-alpha.47" />
         <PackageVersion Include="Attribinter.Logo" Version="1.0.3" />
         <PackageVersion Include="Attribinter.Tests.Common" Version="8.0.0-alpha.11" />
+
+        <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+        <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+
+        <PackageVersion Include="Moq" Version="4.20.70" />
 
         <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.16.0.82469" />
 
