@@ -65,7 +65,7 @@ public sealed class TryRecordData
         var parameter = Mock.Of<object>();
         var data = Mock.Of<object>();
 
-        fixture.MapperMock.Setup(static (mapper) => mapper.TryMapParameter(It.IsAny<object>())).Returns(recorderMock.Object);
+        fixture.MapperMock.Setup((mapper) => mapper.TryMapParameter(parameter)).Returns(recorderMock.Object);
 
         var result = Target(fixture, parameter, data);
 
