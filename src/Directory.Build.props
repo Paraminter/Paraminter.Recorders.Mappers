@@ -4,6 +4,7 @@
 
     <PropertyGroup>
         <IsPackable>true</IsPackable>
+        
         <Owners>Attribinter</Owners>
         <Authors>ErikWe</Authors>
         <PackageProjectUrl>https://github.com/Attribinter/Attribinter.Mappers</PackageProjectUrl>
@@ -12,7 +13,7 @@
         <PackageIcon>Logo.png</PackageIcon>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-        <NeutralLanguage>en</NeutralLanguage>
+        
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
@@ -20,9 +21,7 @@
     <ItemGroup>
         <None Include="README.nupkg.md" Pack="true" PackagePath="\" />
         <None Include="$(PkgAttribinter_Logo)\Logo.png" Pack="true" PackagePath="\" Visible="false" />
-    </ItemGroup>
 
-    <ItemGroup>
         <PackageReference Include="Attribinter.Logo" PrivateAssets="all" GeneratePathProperty="true" />
     </ItemGroup>
 
