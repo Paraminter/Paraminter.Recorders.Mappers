@@ -21,16 +21,16 @@ public sealed class TryRecordData
     }
 
     [Fact]
-    public void TrueReturningRecorder_NullData_ReturnsTrue() => ValidRecorder_PropagatesReturnValue(null, true);
+    public void TrueReturningRecorder_NullData_InvokesRecorderAndReturnsTrue() => ValidRecorder_InvokesRecorderAndPropagatesReturnValue(null, true);
 
     [Fact]
-    public void TrueReturningRecorder_NonNullData_ReturnsTrue() => ValidRecorder_PropagatesReturnValue(Mock.Of<object>(), true);
+    public void TrueReturningRecorder_NonNullData_InvokesRecorderAndReturnsTrue() => ValidRecorder_InvokesRecorderAndPropagatesReturnValue(Mock.Of<object>(), true);
 
     [Fact]
-    public void FalseReturningRecorder_ReturnsFalse() => ValidRecorder_PropagatesReturnValue(Mock.Of<object>(), false);
+    public void FalseReturningRecorder_InvokesRecorderAndReturnsFalse() => ValidRecorder_InvokesRecorderAndPropagatesReturnValue(Mock.Of<object>(), false);
 
     [AssertionMethod]
-    private static void ValidRecorder_PropagatesReturnValue(object? data, bool recorderReturnValue)
+    private static void ValidRecorder_InvokesRecorderAndPropagatesReturnValue(object? data, bool recorderReturnValue)
     {
         var fixture = RecorderFixtureFactory.Create<object, object?>();
 

@@ -48,13 +48,13 @@ public sealed class TryRecordData
     }
 
     [Fact]
-    public void NonNullReturningMapper_TrueReturningRecorder_ReturnsTrue() => NonNullReturningMapper_ValidRecorder_PropagatesReturnValue(true);
+    public void NonNullReturningMapper_TrueReturningRecorder_InvokesRecorderAndReturnsTrue() => NonNullReturningMapper_ValidRecorder_InvokesRecorderAndPropagatesReturnValue(true);
 
     [Fact]
-    public void NonNullReturningMapper_FalseReturningRecorder_ReturnsFalse() => NonNullReturningMapper_ValidRecorder_PropagatesReturnValue(false);
+    public void NonNullReturningMapper_FalseReturningRecorder_InvokesRecorderAndReturnsFalse() => NonNullReturningMapper_ValidRecorder_InvokesRecorderAndPropagatesReturnValue(false);
 
     [AssertionMethod]
-    private static void NonNullReturningMapper_ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
+    private static void NonNullReturningMapper_ValidRecorder_InvokesRecorderAndPropagatesReturnValue(bool recorderReturnValue)
     {
         var fixture = RecorderFixtureFactory.Create<object, object, object>();
 

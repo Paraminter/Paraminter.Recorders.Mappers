@@ -25,4 +25,12 @@ public sealed class Constructor
 
         Assert.IsType<ArgumentNullException>(result);
     }
+
+    [Fact]
+    public void ValidArguments_ReturnsProvider()
+    {
+        var result = Target(Mock.Of<IBoolDelegateMappedArgumentRecorderFactory>(), Mock.Of<IVoidDelegateMappedArgumentRecorderFactory>());
+
+        Assert.NotNull(result);
+    }
 }

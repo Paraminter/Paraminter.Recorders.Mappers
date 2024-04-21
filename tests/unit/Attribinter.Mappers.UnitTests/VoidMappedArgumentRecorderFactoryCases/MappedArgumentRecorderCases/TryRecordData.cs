@@ -21,13 +21,13 @@ public sealed class TryRecordData
     }
 
     [Fact]
-    public void NullData_ReturnsTrue() => ValidRecorder_ReturnsTrue(null);
+    public void NullData_InvokesRecorderAndReturnsTrue() => ValidRecorder_InvokesRecorderAndReturnsTrue(null);
 
     [Fact]
-    public void NonNullData_ReturnsTrue() => ValidRecorder_ReturnsTrue(Mock.Of<object>());
+    public void NonNullData_InvokesRecorderAndReturnsTrue() => ValidRecorder_InvokesRecorderAndReturnsTrue(Mock.Of<object>());
 
     [AssertionMethod]
-    private static void ValidRecorder_ReturnsTrue(object? data)
+    private static void ValidRecorder_InvokesRecorderAndReturnsTrue(object? data)
     {
         var fixture = RecorderFixtureFactory.Create<object, object?>();
 

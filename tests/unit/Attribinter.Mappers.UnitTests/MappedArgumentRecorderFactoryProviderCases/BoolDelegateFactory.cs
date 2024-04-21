@@ -9,7 +9,7 @@ public sealed class BoolDelegateFactory
     private readonly IProviderFixture Fixture = ProviderFixtureFactory.Create();
 
     [Fact]
-    public void Valid_ReturnsSameAsConstructedWith()
+    public void ReturnsSameAsConstructedWith()
     {
         var result = Target();
 
