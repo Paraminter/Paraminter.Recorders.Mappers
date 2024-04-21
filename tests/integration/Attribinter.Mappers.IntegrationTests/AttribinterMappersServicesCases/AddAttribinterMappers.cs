@@ -24,11 +24,11 @@ public sealed class AddAttribinterMappers
     [Fact]
     public void ValidServiceCollection_ReturnsSameServiceCollection()
     {
-        var serviceCollection = Mock.Of<IServiceCollection>();
+        var services = Mock.Of<IServiceCollection>();
 
-        var result = Target(serviceCollection);
+        var result = Target(services);
 
-        Assert.Same(serviceCollection, result);
+        Assert.Same(services, result);
     }
 
     [Fact]
