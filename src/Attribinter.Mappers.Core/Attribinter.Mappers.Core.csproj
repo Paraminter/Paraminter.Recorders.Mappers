@@ -2,14 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <RootNamespace>Attribinter.Mappers</RootNamespace>
-    </PropertyGroup>
 
-    <PropertyGroup>
+        <RootNamespace>Attribinter.Mappers</RootNamespace>
+
         <Title>Attribinter.Mappers.Core</Title>
-        <Description>
-            Defines the core components of Attribinter mappers.
-        </Description>
+        <Description>Defines the core components of Attribinter mappers.</Description>
     </PropertyGroup>
 
 </Project>
