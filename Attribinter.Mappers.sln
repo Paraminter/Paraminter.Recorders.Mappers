@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{93BD6F75-CECC-4A34-9B6F-570B24384A87}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		tests\.editorconfig = tests\.editorconfig
 		Directory.Build.props = Directory.Build.props
 		src\Directory.Build.props = src\Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
@@ -19,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Attribinter.Mappers", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Attribinter.Mappers.DependencyInjection", "src\Attribinter.Mappers.DependencyInjection\Attribinter.Mappers.DependencyInjection.csproj", "{37A9CC7D-5CF7-4C0D-BBC0-5D41E90F002A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Attribinter.Mappers.IntegrationTests", "tests\integration\Attribinter.Mappers.IntegrationTests\Attribinter.Mappers.IntegrationTests.csproj", "{1BD21C8E-67BD-499A-B5E9-4B2A7AE1A160}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Attribinter.Mappers.IntegrationTests", "tests\integration\Attribinter.Mappers.IntegrationTests\Attribinter.Mappers.IntegrationTests.csproj", "{1BD21C8E-67BD-499A-B5E9-4B2A7AE1A160}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Attribinter.Mappers.UnitTests", "tests\unit\Attribinter.Mappers.UnitTests\Attribinter.Mappers.UnitTests.csproj", "{2DEC5127-B590-43C9-A20E-2E18667D25D6}"
 EndProject
