@@ -11,8 +11,6 @@ using Xunit;
 
 public sealed class AddAttribinterMappers
 {
-    private static IServiceCollection Target(IServiceCollection services) => AttribinterMappersServices.AddAttribinterMappers(services);
-
     [Fact]
     public void NullServiceCollection_ArgumentNullException()
     {
@@ -46,8 +44,11 @@ public sealed class AddAttribinterMappers
     [Fact]
     public void IVoidDelegateMappedArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IVoidDelegateMappedArgumentRecorderFactory>();
 
+    private static IServiceCollection Target(IServiceCollection services) => AttribinterMappersServices.AddAttribinterMappers(services);
+
     [AssertionMethod]
-    private static void ServiceCanBeResolved<TService>() where TService : notnull
+    private static void ServiceCanBeResolved<TService>()
+        where TService : notnull
     {
         HostBuilder host = new();
 

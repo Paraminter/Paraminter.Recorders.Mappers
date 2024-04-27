@@ -6,7 +6,7 @@ using System;
 
 using Xunit;
 
-public sealed class Create_Func
+public sealed class Create_DAttemptingArgumentRecorder
 {
     private IMappedArgumentRecorder<TRecord, TData> Target<TRecord, TData>(DAttemptingArgumentRecorder<TRecord, TData> recorderDelegate) => Fixture.Sut.Create(recorderDelegate);
 

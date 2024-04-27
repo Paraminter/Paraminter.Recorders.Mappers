@@ -4,8 +4,6 @@ using Xunit;
 
 public sealed class Constructor
 {
-    private static VoidDelegateMappedArgumentRecorderFactory Target() => new();
-
     [Fact]
     public void ReturnsFactoryy()
     {
@@ -13,4 +11,6 @@ public sealed class Constructor
 
         Assert.NotNull(result);
     }
+
+    private static VoidDelegateMappedArgumentRecorderFactory Target() => new();
 }

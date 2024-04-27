@@ -8,8 +8,6 @@ using Xunit;
 
 public sealed class TryRecordData
 {
-    private static bool Target<TRecord, TData>(IRecorderFixture<TRecord, TData> fixture, TRecord dataRecord, TData data) => fixture.Sut.TryRecordData(dataRecord, data);
-
     [Fact]
     public void NullDataRecord_ThrowsArgumentNullException()
     {
@@ -28,6 +26,8 @@ public sealed class TryRecordData
 
     [Fact]
     public void FalseReturningRecorder_InvokesRecorderAndReturnsFalse() => ValidRecorder_InvokesRecorderAndPropagatesReturnValue(Mock.Of<object>(), false);
+
+    private static bool Target<TRecord, TData>(IRecorderFixture<TRecord, TData> fixture, TRecord dataRecord, TData data) => fixture.Sut.TryRecordData(dataRecord, data);
 
     [AssertionMethod]
     private static void ValidRecorder_InvokesRecorderAndPropagatesReturnValue(object? data, bool recorderReturnValue)

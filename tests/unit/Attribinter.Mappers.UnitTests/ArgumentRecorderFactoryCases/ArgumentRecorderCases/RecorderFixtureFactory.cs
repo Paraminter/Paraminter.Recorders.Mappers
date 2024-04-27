@@ -4,7 +4,8 @@ using Moq;
 
 internal static class RecorderFixtureFactory
 {
-    public static IRecorderFixture<TParameter, TRecord, TData> Create<TParameter, TRecord, TData>() where TRecord : class
+    public static IRecorderFixture<TParameter, TRecord, TData> Create<TParameter, TRecord, TData>()
+        where TRecord : class
     {
         IArgumentRecorderFactory factory = new ArgumentRecorderFactory();
 
@@ -16,7 +17,8 @@ internal static class RecorderFixtureFactory
         return new RecorderFixture<TParameter, TRecord, TData>(sut, mapperMock, dataRecordMock);
     }
 
-    private sealed class RecorderFixture<TParameter, TRecord, TData> : IRecorderFixture<TParameter, TRecord, TData> where TRecord : class
+    private sealed class RecorderFixture<TParameter, TRecord, TData> : IRecorderFixture<TParameter, TRecord, TData>
+        where TRecord : class
     {
         private readonly IArgumentRecorder<TParameter, TData> Sut;
 

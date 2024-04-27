@@ -326,26 +326,11 @@ dotnet_diagnostic.IDE2000.severity = warning
 # Boolean literals should not be redundant
 dotnet_diagnostic.S1125.severity = none
 
-# XML comment analysis is disabled due to project configuration
-dotnet_diagnostic.SA0001.severity = none
-
-# The keyword 'new' should be followed by a space
-dotnet_diagnostic.SA1000.severity = none
-
 # Prefix local calls with this
 dotnet_diagnostic.SA1101.severity = none
 
-# Generic type constraints should be on their own line
-dotnet_diagnostic.SA1127.severity = none
-
-# Put constructor initializers on their own line
-dotnet_diagnostic.SA1128.severity = none
-
 # A constructor should not follow a property
 dotnet_diagnostic.SA1201.severity = none
-
-# 'public' members should come before 'private' members
-dotnet_diagnostic.SA1202.severity = none
 
 # Element should begin with an uppercase letter
 dotnet_diagnostic.SA1300.severity = none
@@ -353,8 +338,17 @@ dotnet_diagnostic.SA1300.severity = none
 # Field should begin with lower-case letter
 dotnet_diagnostic.SA1306.severity = none
 
+# Element should not be on a single line
+dotnet_diagnostic.SA1502.severity = none
+
 # Elements should be separated by blank line
 dotnet_diagnostic.SA1516.severity = none
+
+# Elements should be documented
+dotnet_diagnostic.SA1600.severity = none
+
+# Enumeration items should be documented
+dotnet_diagnostic.SA1602.severity = none
 
 # The property's documentation summary text should begin with: 'Gets'
 dotnet_diagnostic.SA1623.severity = none
@@ -364,12 +358,6 @@ dotnet_diagnostic.SA1633.severity = none
 
 # Constructor summary documentation should begin with standard text
 dotnet_diagnostic.SA1642.severity = none
-
-# Element should not be on a single line
-dotnet_diagnostic.SA1502.severity = none
-
-# Elements should be documented
-dotnet_diagnostic.SA1600.severity = none
 
 csharp_style_throw_expression = true
 

@@ -10,8 +10,6 @@ using Xunit;
 
 public sealed class TryRecordData
 {
-    private static bool Target<TParameter, TRecord, TData>(IRecorderFixture<TParameter, TRecord, TData> fixture, TParameter parameter, TData data) where TRecord : class => fixture.Sut.TryRecordData(parameter, data);
-
     [Fact]
     public void NullParameter_ThrowsArgumentNullException()
     {
@@ -52,6 +50,12 @@ public sealed class TryRecordData
 
     [Fact]
     public void NonNullReturningMapper_FalseReturningRecorder_InvokesRecorderAndReturnsFalse() => NonNullReturningMapper_ValidRecorder_InvokesRecorderAndPropagatesReturnValue(false);
+
+    private static bool Target<TParameter, TRecord, TData>(IRecorderFixture<TParameter, TRecord, TData> fixture, TParameter parameter, TData data)
+        where TRecord : class
+    {
+        return fixture.Sut.TryRecordData(parameter, data);
+    }
 
     [AssertionMethod]
     private static void NonNullReturningMapper_ValidRecorder_InvokesRecorderAndPropagatesReturnValue(bool recorderReturnValue)
