@@ -10,8 +10,6 @@ using Xunit;
 
 public sealed class TryRecordData
 {
-    private static bool Target<TParameter, TRecord, TData>(IRecorderFixture<TParameter, TRecord, TData> fixture, TParameter parameter, TData data) where TRecord : class => fixture.Sut.TryRecordData(parameter, data);
-
     [Fact]
     public void NullParameter_ThrowsArgumentNullException()
     {
@@ -48,13 +46,19 @@ public sealed class TryRecordData
     }
 
     [Fact]
-    public void NonNullReturningMapper_TrueReturningRecorder_ReturnsTrue() => NonNullReturningMapper_ValidRecorder_PropagatesReturnValue(true);
+    public void NonNullReturningMapper_TrueReturningRecorder_InvokesRecorderAndReturnsTrue() => NonNullReturningMapper_ValidRecorder_InvokesRecorderAndPropagatesReturnValue(true);
 
     [Fact]
-    public void NonNullReturningMapper_FalseReturningRecorder_ReturnsFalse() => NonNullReturningMapper_ValidRecorder_PropagatesReturnValue(false);
+    public void NonNullReturningMapper_FalseReturningRecorder_InvokesRecorderAndReturnsFalse() => NonNullReturningMapper_ValidRecorder_InvokesRecorderAndPropagatesReturnValue(false);
+
+    private static bool Target<TParameter, TRecord, TData>(IRecorderFixture<TParameter, TRecord, TData> fixture, TParameter parameter, TData data)
+        where TRecord : class
+    {
+        return fixture.Sut.TryRecordData(parameter, data);
+    }
 
     [AssertionMethod]
-    private static void NonNullReturningMapper_ValidRecorder_PropagatesReturnValue(bool recorderReturnValue)
+    private static void NonNullReturningMapper_ValidRecorder_InvokesRecorderAndPropagatesReturnValue(bool recorderReturnValue)
     {
         var fixture = RecorderFixtureFactory.Create<object, object, object>();
 
@@ -65,7 +69,7 @@ public sealed class TryRecordData
         var parameter = Mock.Of<object>();
         var data = Mock.Of<object>();
 
-        fixture.MapperMock.Setup(static (mapper) => mapper.TryMapParameter(It.IsAny<object>())).Returns(recorderMock.Object);
+        fixture.MapperMock.Setup((mapper) => mapper.TryMapParameter(parameter)).Returns(recorderMock.Object);
 
         var result = Target(fixture, parameter, data);
 

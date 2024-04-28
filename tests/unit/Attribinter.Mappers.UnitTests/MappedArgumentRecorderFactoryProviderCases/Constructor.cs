@@ -8,8 +8,6 @@ using Xunit;
 
 public sealed class Constructor
 {
-    private static MappedArgumentRecorderFactoryProvider Target(IBoolDelegateMappedArgumentRecorderFactory boolDelegateFactory, IVoidDelegateMappedArgumentRecorderFactory voidDelegateFactory) => new(boolDelegateFactory, voidDelegateFactory);
-
     [Fact]
     public void NullBoolDelegateFactory_ThrowsArgumentNullException()
     {
@@ -25,4 +23,14 @@ public sealed class Constructor
 
         Assert.IsType<ArgumentNullException>(result);
     }
+
+    [Fact]
+    public void ValidArguments_ReturnsProvider()
+    {
+        var result = Target(Mock.Of<IBoolDelegateMappedArgumentRecorderFactory>(), Mock.Of<IVoidDelegateMappedArgumentRecorderFactory>());
+
+        Assert.NotNull(result);
+    }
+
+    private static MappedArgumentRecorderFactoryProvider Target(IBoolDelegateMappedArgumentRecorderFactory boolDelegateFactory, IVoidDelegateMappedArgumentRecorderFactory voidDelegateFactory) => new(boolDelegateFactory, voidDelegateFactory);
 }

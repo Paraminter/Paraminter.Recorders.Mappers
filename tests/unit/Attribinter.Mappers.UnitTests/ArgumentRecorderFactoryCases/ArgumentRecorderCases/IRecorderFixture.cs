@@ -2,7 +2,8 @@
 
 using Moq;
 
-internal interface IRecorderFixture<TParameter, TRecord, TData> where TRecord : class
+internal interface IRecorderFixture<TParameter, TRecord, TData>
+    where TRecord : class
 {
     public abstract IArgumentRecorder<TParameter, TData> Sut { get; }
 

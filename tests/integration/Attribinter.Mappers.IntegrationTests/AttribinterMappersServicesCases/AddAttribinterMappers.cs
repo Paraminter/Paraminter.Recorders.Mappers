@@ -11,8 +11,6 @@ using Xunit;
 
 public sealed class AddAttribinterMappers
 {
-    private static IServiceCollection Target(IServiceCollection services) => AttribinterMappersServices.AddAttribinterMappers(services);
-
     [Fact]
     public void NullServiceCollection_ArgumentNullException()
     {
@@ -24,11 +22,11 @@ public sealed class AddAttribinterMappers
     [Fact]
     public void ValidServiceCollection_ReturnsSameServiceCollection()
     {
-        var serviceCollection = Mock.Of<IServiceCollection>();
+        var services = Mock.Of<IServiceCollection>();
 
-        var result = Target(serviceCollection);
+        var result = Target(services);
 
-        Assert.Same(serviceCollection, result);
+        Assert.Same(services, result);
     }
 
     [Fact]
@@ -46,19 +44,20 @@ public sealed class AddAttribinterMappers
     [Fact]
     public void IVoidDelegateMappedArgumentRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IVoidDelegateMappedArgumentRecorderFactory>();
 
+    private static IServiceCollection Target(IServiceCollection services) => AttribinterMappersServices.AddAttribinterMappers(services);
+
     [AssertionMethod]
-    private static void ServiceCanBeResolved<TService>() where TService : notnull
+    private static void ServiceCanBeResolved<TService>()
+        where TService : notnull
     {
         HostBuilder host = new();
 
-        host.ConfigureServices(configureServices);
+        host.ConfigureServices(static (services) => Target(services));
 
         var serviceProvider = host.Build().Services;
 
         var result = serviceProvider.GetRequiredService<TService>();
 
         Assert.NotNull(result);
-
-        static void configureServices(IServiceCollection services) => Target(services);
     }
 }

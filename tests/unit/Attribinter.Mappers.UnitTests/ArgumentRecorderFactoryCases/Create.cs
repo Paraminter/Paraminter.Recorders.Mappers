@@ -27,4 +27,12 @@ public sealed class Create
 
         Assert.IsType<ArgumentNullException>(result);
     }
+
+    [Fact]
+    public void ValidArguments_ReturnsRecorder()
+    {
+        var result = Target(Mock.Of<IParameterMapper<object, object, object>>(), Mock.Of<object>());
+
+        Assert.NotNull(result);
+    }
 }

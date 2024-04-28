@@ -8,9 +8,9 @@ internal static class FactoryFixtureFactory
     {
         Mock<IMappedArgumentRecorderFactoryProvider> factoryProviderMock = new() { DefaultValue = DefaultValue.Mock };
 
-        MappedArgumentRecorderFactory factory = new(factoryProviderMock.Object);
+        MappedArgumentRecorderFactory sut = new(factoryProviderMock.Object);
 
-        return new FactoryFixture(factory, factoryProviderMock);
+        return new FactoryFixture(sut, factoryProviderMock);
     }
 
     private sealed class FactoryFixture : IFactoryFixture

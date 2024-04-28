@@ -1,5 +1,7 @@
 ﻿namespace Attribinter.Mappers.VoidDelegateMappedArgumentRecorderFactoryCases;
 
+using Moq;
+
 using System;
 
 using Xunit;
@@ -16,5 +18,13 @@ public sealed class Create
         var result = Record.Exception(() => Target<object, object>(null!));
 
         Assert.IsType<ArgumentNullException>(result);
+    }
+
+    [Fact]
+    public void ValidRecorderDelegate_ReturnsRecorder()
+    {
+        var result = Target(Mock.Of<DCertainArgumentRecorder<object, object>>());
+
+        Assert.NotNull(result);
     }
 }
