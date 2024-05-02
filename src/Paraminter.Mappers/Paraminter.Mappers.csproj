@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+
+        <RootNamespace>Paraminter.Mappers</RootNamespace>
+
+        <Title>Paraminter.Mappers</Title>
+        <Description>Adds mappers to Paraminter, acting as blueprints of recorders.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Paraminter.Mappers.Abstractions\Paraminter.Mappers.Abstractions.csproj" />
+        <ProjectReference Include="..\Paraminter.Mappers.Core\Paraminter.Mappers.Core.csproj" />
+    </ItemGroup>
+
+</Project>
