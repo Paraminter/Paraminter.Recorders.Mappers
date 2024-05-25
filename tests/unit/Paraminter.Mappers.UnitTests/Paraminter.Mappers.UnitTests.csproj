@@ -18,6 +18,7 @@
 
         <ProjectReference Include="..\..\..\src\Paraminter.Mappers.Abstractions\Paraminter.Mappers.Abstractions.csproj" />
         <ProjectReference Include="..\..\..\src\Paraminter.Mappers.Core\Paraminter.Mappers.Core.csproj" />
+        <ProjectReference Include="..\..\..\src\Paraminter.Mappers.DependencyInjection\Paraminter.Mappers.DependencyInjection.csproj" />
         <ProjectReference Include="..\..\..\src\Paraminter.Mappers\Paraminter.Mappers.csproj" />
     </ItemGroup>
 

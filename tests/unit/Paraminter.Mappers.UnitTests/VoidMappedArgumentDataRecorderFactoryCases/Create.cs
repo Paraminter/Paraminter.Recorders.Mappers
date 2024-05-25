@@ -8,8 +8,6 @@ using Xunit;
 
 public sealed class Create
 {
-    private IMappedArgumentDataRecorder<TRecord, TArgumentData> Target<TRecord, TArgumentData>(DVoidArgumentDataRecorder<TRecord, TArgumentData> recorderDelegate) => Fixture.Sut.Create(recorderDelegate);
-
     private readonly IFactoryFixture Fixture = FactoryFixtureFactory.Create();
 
     [Fact]
@@ -27,4 +25,6 @@ public sealed class Create
 
         Assert.NotNull(result);
     }
+
+    private IMappedArgumentDataRecorder<TRecord, TArgumentData> Target<TRecord, TArgumentData>(DVoidArgumentDataRecorder<TRecord, TArgumentData> recorderDelegate) => Fixture.Sut.Create(recorderDelegate);
 }
