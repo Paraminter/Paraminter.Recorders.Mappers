@@ -2,7 +2,7 @@
 
 using Xunit;
 
-public sealed class VoidDelegateFactory
+public sealed class BoolDelegate
 {
     private readonly IProviderFixture Fixture = ProviderFixtureFactory.Create();
 
@@ -11,8 +11,8 @@ public sealed class VoidDelegateFactory
     {
         var result = Target();
 
-        Assert.Same(Fixture.VoidDelegateFactoryMock.Object, result);
+        Assert.Same(Fixture.BoolDelegateMock.Object, result);
     }
 
-    private IVoidDelegateMappedArgumentDataRecorderFactory Target() => Fixture.Sut.VoidDelegateFactory;
+    private IBoolDelegateMappedArgumentDataRecorderFactory Target() => Fixture.Sut.BoolDelegate;
 }

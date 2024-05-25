@@ -6,6 +6,6 @@ internal interface IProviderFixture
 {
     public abstract IMappedArgumentDataRecorderFactoryProvider Sut { get; }
 
-    public abstract Mock<IBoolDelegateMappedArgumentDataRecorderFactory> BoolDelegateFactoryMock { get; }
-    public abstract Mock<IVoidDelegateMappedArgumentDataRecorderFactory> VoidDelegateFactoryMock { get; }
+    public abstract Mock<IBoolDelegateMappedArgumentDataRecorderFactory> BoolDelegateMock { get; }
+    public abstract Mock<IVoidDelegateMappedArgumentDataRecorderFactory> VoidDelegateMock { get; }
 }
