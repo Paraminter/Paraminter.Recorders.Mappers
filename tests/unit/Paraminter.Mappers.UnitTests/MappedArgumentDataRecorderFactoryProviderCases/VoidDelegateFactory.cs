@@ -4,8 +4,6 @@ using Xunit;
 
 public sealed class VoidDelegateFactory
 {
-    private IVoidDelegateMappedArgumentDataRecorderFactory Target() => Fixture.Sut.VoidDelegateFactory;
-
     private readonly IProviderFixture Fixture = ProviderFixtureFactory.Create();
 
     [Fact]
@@ -15,4 +13,6 @@ public sealed class VoidDelegateFactory
 
         Assert.Same(Fixture.VoidDelegateFactoryMock.Object, result);
     }
+
+    private IVoidDelegateMappedArgumentDataRecorderFactory Target() => Fixture.Sut.VoidDelegateFactory;
 }

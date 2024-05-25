@@ -19,7 +19,6 @@ public static class ParaminterMappersServices
 
         services.AddTransient<IArgumentDataRecorderFactory, ArgumentDataRecorderFactory>();
 
-        services.AddTransient<IMappedArgumentDataRecorderFactory, MappedArgumentDataRecorderFactory>();
         services.AddTransient<IMappedArgumentDataRecorderFactoryProvider, MappedArgumentDataRecorderFactoryProvider>();
         services.AddTransient<IBoolDelegateMappedArgumentDataRecorderFactory, BoolDelegateMappedArgumentDataRecorderFactory>();
         services.AddTransient<IVoidDelegateMappedArgumentDataRecorderFactory, VoidDelegateMappedArgumentDataRecorderFactory>();
