@@ -9,5 +9,6 @@ public interface IParameterMapper<in TParameter, in TRecord, in TArgumentData>
     /// <summary>Attempts to map a parameter to a recorder, responsible for recording data about the arguments of that parameter.</summary>
     /// <param name="parameter">The parameter that is mapped to a recorder.</param>
     /// <returns>The mapped recorder, or <see langword="null"/> if the attempt was unsuccessful.</returns>
-    public abstract IMappedArgumentDataRecorder<TRecord, TArgumentData>? TryMapParameter(TParameter parameter);
+    public abstract IMappedArgumentDataRecorder<TRecord, TArgumentData>? TryMapParameter(
+        TParameter parameter);
 }

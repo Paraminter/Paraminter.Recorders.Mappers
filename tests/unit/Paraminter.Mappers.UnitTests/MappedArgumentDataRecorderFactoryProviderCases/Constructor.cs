@@ -32,5 +32,10 @@ public sealed class Constructor
         Assert.NotNull(result);
     }
 
-    private static MappedArgumentDataRecorderFactoryProvider Target(IBoolDelegateMappedArgumentDataRecorderFactory boolDelegateFactory, IVoidDelegateMappedArgumentDataRecorderFactory voidDelegateFactory) => new(boolDelegateFactory, voidDelegateFactory);
+    private static MappedArgumentDataRecorderFactoryProvider Target(
+        IBoolDelegateMappedArgumentDataRecorderFactory boolDelegateFactory,
+        IVoidDelegateMappedArgumentDataRecorderFactory voidDelegateFactory)
+    {
+        return new(boolDelegateFactory, voidDelegateFactory);
+    }
 }

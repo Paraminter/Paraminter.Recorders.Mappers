@@ -9,5 +9,7 @@ public interface IMappedArgumentDataRecorder<in TRecord, in TArgumentData>
     /// <param name="dataRecord">The record to which data is recorded.</param>
     /// <param name="argumentData">The data about the argument.</param>
     /// <returns>A <see cref="bool"/> indicating whether the attempt was successful.</returns>
-    public abstract bool TryRecordData(TRecord dataRecord, TArgumentData argumentData);
+    public abstract bool TryRecordData(
+        TRecord dataRecord,
+        TArgumentData argumentData);
 }

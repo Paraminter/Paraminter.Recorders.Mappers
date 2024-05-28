@@ -15,13 +15,16 @@ internal static class RecorderFixtureFactory
         return new RecorderFixture<TRecord, TArgumentData>(sut, recorderDelegateMock);
     }
 
-    private sealed class RecorderFixture<TRecord, TArgumentData> : IRecorderFixture<TRecord, TArgumentData>
+    private sealed class RecorderFixture<TRecord, TArgumentData>
+        : IRecorderFixture<TRecord, TArgumentData>
     {
         private readonly IMappedArgumentDataRecorder<TRecord, TArgumentData> Sut;
 
         private readonly Mock<DVoidArgumentDataRecorder<TRecord, TArgumentData>> RecorderDelegateMock;
 
-        public RecorderFixture(IMappedArgumentDataRecorder<TRecord, TArgumentData> sut, Mock<DVoidArgumentDataRecorder<TRecord, TArgumentData>> recorderDelegateMock)
+        public RecorderFixture(
+            IMappedArgumentDataRecorder<TRecord, TArgumentData> sut,
+            Mock<DVoidArgumentDataRecorder<TRecord, TArgumentData>> recorderDelegateMock)
         {
             Sut = sut;
 

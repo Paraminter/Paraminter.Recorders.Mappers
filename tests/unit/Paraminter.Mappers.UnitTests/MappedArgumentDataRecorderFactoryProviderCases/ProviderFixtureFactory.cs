@@ -14,14 +14,18 @@ internal static class ProviderFixtureFactory
         return new ProviderFixture(sut, boolDelegateMock, voidDelegateMock);
     }
 
-    private sealed class ProviderFixture : IProviderFixture
+    private sealed class ProviderFixture
+        : IProviderFixture
     {
         private readonly IMappedArgumentDataRecorderFactoryProvider Sut;
 
         private readonly Mock<IBoolDelegateMappedArgumentDataRecorderFactory> BoolDelegateMock;
         private readonly Mock<IVoidDelegateMappedArgumentDataRecorderFactory> VoidDelegateMock;
 
-        public ProviderFixture(IMappedArgumentDataRecorderFactoryProvider sut, Mock<IBoolDelegateMappedArgumentDataRecorderFactory> boolDelegateMock, Mock<IVoidDelegateMappedArgumentDataRecorderFactory> voidDelegateMock)
+        public ProviderFixture(
+            IMappedArgumentDataRecorderFactoryProvider sut,
+            Mock<IBoolDelegateMappedArgumentDataRecorderFactory> boolDelegateMock,
+            Mock<IVoidDelegateMappedArgumentDataRecorderFactory> voidDelegateMock)
         {
             Sut = sut;
 

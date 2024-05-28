@@ -5,4 +5,6 @@
 /// <typeparam name="TArgumentData">The type representing data about the arguments.</typeparam>
 /// <param name="dataRecord">The record to which data is recorded.</param>
 /// <param name="argumentData">The data about the argument.</param>
-public delegate void DVoidArgumentDataRecorder<in TRecord, in TArgumentData>(TRecord dataRecord, TArgumentData argumentData);
+public delegate void DVoidArgumentDataRecorder<in TRecord, in TArgumentData>(
+    TRecord dataRecord,
+    TArgumentData argumentData);

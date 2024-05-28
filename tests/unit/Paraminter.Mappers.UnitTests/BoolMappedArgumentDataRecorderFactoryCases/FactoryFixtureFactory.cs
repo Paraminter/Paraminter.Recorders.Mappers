@@ -9,11 +9,13 @@ internal static class FactoryFixtureFactory
         return new FactoryFixture(sut);
     }
 
-    private sealed class FactoryFixture : IFactoryFixture
+    private sealed class FactoryFixture
+        : IFactoryFixture
     {
         private readonly IBoolDelegateMappedArgumentDataRecorderFactory Sut;
 
-        public FactoryFixture(IBoolDelegateMappedArgumentDataRecorderFactory sut)
+        public FactoryFixture(
+            IBoolDelegateMappedArgumentDataRecorderFactory sut)
         {
             Sut = sut;
         }

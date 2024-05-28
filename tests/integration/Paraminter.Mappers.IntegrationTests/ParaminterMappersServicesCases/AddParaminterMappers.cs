@@ -19,7 +19,11 @@ public sealed class AddParaminterMappers
     [Fact]
     public void IVoidDelegateMappedArgumentDataRecorderFactory_ServiceCanBeResolved() => ServiceCanBeResolved<IVoidDelegateMappedArgumentDataRecorderFactory>();
 
-    private static void Target(IServiceCollection services) => ParaminterMappersServices.AddParaminterMappers(services);
+    private static void Target(
+        IServiceCollection services)
+    {
+        ParaminterMappersServices.AddParaminterMappers(services);
+    }
 
     [AssertionMethod]
     private static void ServiceCanBeResolved<TService>()
