@@ -8,5 +8,6 @@ public interface IBoolDelegateMappedArgumentDataRecorderFactory
     /// <typeparam name="TArgumentData">The type representing data about the arguments.</typeparam>
     /// <param name="recorderDelegate">The delegate reponsible for recording data.</param>
     /// <returns>The created <see cref="IMappedArgumentDataRecorder{TRecord, TArgumentData}"/>.</returns>
-    public abstract IMappedArgumentDataRecorder<TRecord, TArgumentData> Create<TRecord, TArgumentData>(DBoolArgumentDataRecorder<TRecord, TArgumentData> recorderDelegate);
+    public abstract IMappedArgumentDataRecorder<TRecord, TArgumentData> Create<TRecord, TArgumentData>(
+        DBoolArgumentDataRecorder<TRecord, TArgumentData> recorderDelegate);
 }

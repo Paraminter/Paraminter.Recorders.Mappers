@@ -10,5 +10,7 @@ public interface IArgumentDataRecorderFactory
     /// <param name="mapper">Maps type parameters to recorders, responsible for recording data about the arguments of that parameter.</param>
     /// <param name="dataRecord">The record to which data is recorded.</param>
     /// <returns>The created recorder.</returns>
-    public abstract IArgumentDataRecorder<TParameter, TArgumentData> Create<TParameter, TRecord, TArgumentData>(IParameterMapper<TParameter, TRecord, TArgumentData> mapper, TRecord dataRecord);
+    public abstract IArgumentDataRecorder<TParameter, TArgumentData> Create<TParameter, TRecord, TArgumentData>(
+        IParameterMapper<TParameter, TRecord, TArgumentData> mapper,
+        TRecord dataRecord);
 }

@@ -24,10 +24,17 @@ public sealed class TryRecordData
     [Fact]
     public void NonNullData_InvokesRecorderAndReturnsTrue() => ValidRecorder_InvokesRecorderAndReturnsTrue(Mock.Of<object>());
 
-    private static bool Target<TRecord, TArgumentData>(IRecorderFixture<TRecord, TArgumentData> fixture, TRecord dataRecord, TArgumentData argumentData) => fixture.Sut.TryRecordData(dataRecord, argumentData);
+    private static bool Target<TRecord, TArgumentData>(
+        IRecorderFixture<TRecord, TArgumentData> fixture,
+        TRecord dataRecord,
+        TArgumentData argumentData)
+    {
+        return fixture.Sut.TryRecordData(dataRecord, argumentData);
+    }
 
     [AssertionMethod]
-    private static void ValidRecorder_InvokesRecorderAndReturnsTrue(object? argumentData)
+    private static void ValidRecorder_InvokesRecorderAndReturnsTrue(
+        object? argumentData)
     {
         var fixture = RecorderFixtureFactory.Create<object, object?>();
 

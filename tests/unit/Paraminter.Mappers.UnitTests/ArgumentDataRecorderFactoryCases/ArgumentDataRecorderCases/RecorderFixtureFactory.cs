@@ -17,7 +17,8 @@ internal static class RecorderFixtureFactory
         return new RecorderFixture<TParameter, TRecord, TArgumentData>(sut, mapperMock, dataRecordMock);
     }
 
-    private sealed class RecorderFixture<TParameter, TRecord, TArgumentData> : IRecorderFixture<TParameter, TRecord, TArgumentData>
+    private sealed class RecorderFixture<TParameter, TRecord, TArgumentData>
+        : IRecorderFixture<TParameter, TRecord, TArgumentData>
         where TRecord : class
     {
         private readonly IArgumentDataRecorder<TParameter, TArgumentData> Sut;
@@ -25,7 +26,10 @@ internal static class RecorderFixtureFactory
         private readonly Mock<IParameterMapper<TParameter, TRecord, TArgumentData>> MapperMock;
         private readonly Mock<TRecord> DataRecordMock;
 
-        public RecorderFixture(IArgumentDataRecorder<TParameter, TArgumentData> sut, Mock<IParameterMapper<TParameter, TRecord, TArgumentData>> mapperMock, Mock<TRecord> dataRecordMock)
+        public RecorderFixture(
+            IArgumentDataRecorder<TParameter, TArgumentData> sut,
+            Mock<IParameterMapper<TParameter, TRecord, TArgumentData>> mapperMock,
+            Mock<TRecord> dataRecordMock)
         {
             Sut = sut;
 

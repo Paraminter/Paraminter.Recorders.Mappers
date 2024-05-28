@@ -34,5 +34,10 @@ public sealed class Create
         Assert.NotNull(result);
     }
 
-    private IArgumentDataRecorder<TParameter, TArgumentData> Target<TParameter, TRecord, TArgumentData>(IParameterMapper<TParameter, TRecord, TArgumentData> mapper, TRecord dataRecord) => Fixture.Sut.Create(mapper, dataRecord);
+    private IArgumentDataRecorder<TParameter, TArgumentData> Target<TParameter, TRecord, TArgumentData>(
+        IParameterMapper<TParameter, TRecord, TArgumentData> mapper,
+        TRecord dataRecord)
+    {
+        return Fixture.Sut.Create(mapper, dataRecord);
+    }
 }

@@ -26,5 +26,9 @@ public sealed class Create
         Assert.NotNull(result);
     }
 
-    private IMappedArgumentDataRecorder<TRecord, TArgumentData> Target<TRecord, TArgumentData>(DBoolArgumentDataRecorder<TRecord, TArgumentData> recorderDelegate) => Fixture.Sut.Create(recorderDelegate);
+    private IMappedArgumentDataRecorder<TRecord, TArgumentData> Target<TRecord, TArgumentData>(
+        DBoolArgumentDataRecorder<TRecord, TArgumentData> recorderDelegate)
+    {
+        return Fixture.Sut.Create(recorderDelegate);
+    }
 }

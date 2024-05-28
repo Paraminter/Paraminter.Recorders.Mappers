@@ -28,5 +28,9 @@ public sealed class AddParaminterMappers
         Assert.Same(services, result);
     }
 
-    private static IServiceCollection Target(IServiceCollection services) => ParaminterMappersServices.AddParaminterMappers(services);
+    private static IServiceCollection Target(
+        IServiceCollection services)
+    {
+        return ParaminterMappersServices.AddParaminterMappers(services);
+    }
 }

@@ -51,14 +51,18 @@ public sealed class TryRecordData
     [Fact]
     public void NonNullReturningMapper_FalseReturningRecorder_InvokesRecorderAndReturnsFalse() => NonNullReturningMapper_ValidRecorder_InvokesRecorderAndPropagatesReturnValue(false);
 
-    private static bool Target<TParameter, TRecord, TArgumentData>(IRecorderFixture<TParameter, TRecord, TArgumentData> fixture, TParameter parameter, TArgumentData argumentData)
+    private static bool Target<TParameter, TRecord, TArgumentData>(
+        IRecorderFixture<TParameter, TRecord, TArgumentData> fixture,
+        TParameter parameter,
+        TArgumentData argumentData)
         where TRecord : class
     {
         return fixture.Sut.TryRecordData(parameter, argumentData);
     }
 
     [AssertionMethod]
-    private static void NonNullReturningMapper_ValidRecorder_InvokesRecorderAndPropagatesReturnValue(bool recorderReturnValue)
+    private static void NonNullReturningMapper_ValidRecorder_InvokesRecorderAndPropagatesReturnValue(
+        bool recorderReturnValue)
     {
         var fixture = RecorderFixtureFactory.Create<object, object, object>();
 
