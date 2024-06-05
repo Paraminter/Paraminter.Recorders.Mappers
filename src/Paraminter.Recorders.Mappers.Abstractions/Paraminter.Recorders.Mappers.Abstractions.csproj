@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+
+        <RootNamespace>Paraminter.Mappers</RootNamespace>
+
+        <Title>Paraminter.Recorders.Mappers.Abstractions</Title>
+        <Description>Provides abstractions related to Paraminter mappers.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Paraminter.Recorders.Core" />
+
+        <ProjectReference Include="..\Paraminter.Recorders.Mappers.Core\Paraminter.Recorders.Mappers.Core.csproj" />
+    </ItemGroup>
+
+</Project>

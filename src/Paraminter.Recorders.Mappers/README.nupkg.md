@@ -2,4 +2,4 @@
 
 Adds mappers to `Paraminter`, acting as blueprints of recorders.
 
-See [Paraminter](https://www.github.com/Paraminter/Paraminter) for more information.
+See [GitHub](https://github.com/Paraminter/Paraminter.Recorders.Mappers) for more information.
