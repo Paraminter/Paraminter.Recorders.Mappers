@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers.BoolDelegateMappedArgumentExistenceRecorderFactoryCases.MappedArgumentExistenceRecorderCases;
+﻿namespace Paraminter.Recorders.Mappers.BoolDelegateMappedArgumentExistenceRecorderFactoryCases.MappedArgumentExistenceRecorderCases;
 
 using Moq;
 

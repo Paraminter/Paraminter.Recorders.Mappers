@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
 
-        <RootNamespace>Paraminter.Mappers</RootNamespace>
+        <RootNamespace>Paraminter.Recorders.Mappers</RootNamespace>
 
         <Title>Paraminter.Recorders.Mappers.DependencyInjection</Title>
         <Description>Allows the services provided by Paraminter.Recorders.Mappers to be registered with .NET DI-containers.</Description>

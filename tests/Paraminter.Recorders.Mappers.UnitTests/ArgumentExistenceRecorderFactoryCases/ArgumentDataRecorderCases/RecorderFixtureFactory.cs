@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers.ArgumentExistenceRecorderFactoryCases.ArgumentExistenceRecorderCases;
+﻿namespace Paraminter.Recorders.Mappers.ArgumentExistenceRecorderFactoryCases.ArgumentExistenceRecorderCases;
 
 using Moq;
 

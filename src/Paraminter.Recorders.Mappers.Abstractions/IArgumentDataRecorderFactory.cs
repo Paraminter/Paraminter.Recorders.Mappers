@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers;
+﻿namespace Paraminter.Recorders.Mappers;
 
 /// <summary>Handles creation of <see cref="IArgumentDataRecorder{TParameter, TArgumentData}"/>.</summary>
 public interface IArgumentDataRecorderFactory

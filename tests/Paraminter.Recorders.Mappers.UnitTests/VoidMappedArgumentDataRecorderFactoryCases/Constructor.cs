@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers.VoidDelegateMappedArgumentDataRecorderFactoryCases;
+﻿namespace Paraminter.Recorders.Mappers.VoidDelegateMappedArgumentDataRecorderFactoryCases;
 
 using Xunit;
 

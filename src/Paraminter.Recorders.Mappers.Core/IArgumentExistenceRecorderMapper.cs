@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers;
+﻿namespace Paraminter.Recorders.Mappers;
 
 /// <summary>Maps parameters to recorders, responsible for recording the existence of arguments of that parameter.</summary>
 /// <typeparam name="TParameter">The type of the mapped parameters.</typeparam>

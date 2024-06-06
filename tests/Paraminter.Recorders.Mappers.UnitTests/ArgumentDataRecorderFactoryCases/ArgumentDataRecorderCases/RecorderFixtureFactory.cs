@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers.ArgumentDataRecorderFactoryCases.ArgumentDataRecorderCases;
+﻿namespace Paraminter.Recorders.Mappers.ArgumentDataRecorderFactoryCases.ArgumentDataRecorderCases;
 
 using Moq;
 

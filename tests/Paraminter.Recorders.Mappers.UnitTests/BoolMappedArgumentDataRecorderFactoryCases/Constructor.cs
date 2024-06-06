@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers.BoolDelegateMappedArgumentDataRecorderFactoryCases;
+﻿namespace Paraminter.Recorders.Mappers.BoolDelegateMappedArgumentDataRecorderFactoryCases;
 
 using Xunit;
 

@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers.ParaminterMappersServicesCases;
+﻿namespace Paraminter.Recorders.Mappers.ParaminterMappersServicesCases;
 
 using Microsoft.Extensions.DependencyInjection;
 

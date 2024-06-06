@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers.BoolDelegateMappedArgumentExistenceRecorderFactoryCases;
+﻿namespace Paraminter.Recorders.Mappers.BoolDelegateMappedArgumentExistenceRecorderFactoryCases;
 
 internal static class FactoryFixtureFactory
 {

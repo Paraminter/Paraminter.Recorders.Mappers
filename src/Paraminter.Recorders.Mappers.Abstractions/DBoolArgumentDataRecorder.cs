@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers;
+﻿namespace Paraminter.Recorders.Mappers;
 
 /// <summary>Attempts to record data about the arguments of some parameter.</summary>
 /// <typeparam name="TRecord">The type of the record to which data is recorded.</typeparam>
