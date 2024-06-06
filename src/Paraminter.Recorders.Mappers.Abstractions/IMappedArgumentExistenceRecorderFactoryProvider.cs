@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers;
+﻿namespace Paraminter.Recorders.Mappers;
 
 /// <summary>Provides factories of <see cref="IMappedArgumentExistenceRecorder{TRecord}"/>.</summary>
 public interface IMappedArgumentExistenceRecorderFactoryProvider

@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers;
+﻿namespace Paraminter.Recorders.Mappers;
 
 using System;
 

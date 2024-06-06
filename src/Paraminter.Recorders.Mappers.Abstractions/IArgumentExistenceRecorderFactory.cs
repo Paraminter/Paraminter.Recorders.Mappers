@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers;
+﻿namespace Paraminter.Recorders.Mappers;
 
 /// <summary>Handles creation of <see cref="IArgumentExistenceRecorder{TParameter}"/>.</summary>
 public interface IArgumentExistenceRecorderFactory

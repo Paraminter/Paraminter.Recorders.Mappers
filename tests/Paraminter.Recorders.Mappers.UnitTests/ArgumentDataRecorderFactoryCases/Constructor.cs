@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers.ArgumentDataRecorderFactoryCases;
+﻿namespace Paraminter.Recorders.Mappers.ArgumentDataRecorderFactoryCases;
 
 using Xunit;
 

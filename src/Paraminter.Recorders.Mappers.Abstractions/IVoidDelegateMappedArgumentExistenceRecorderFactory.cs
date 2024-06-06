@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers;
+﻿namespace Paraminter.Recorders.Mappers;
 
 /// <summary>Handles creation of <see cref="IMappedArgumentExistenceRecorder{TRecord}"/> using <see langword="void"/>-returning delegates.</summary>
 public interface IVoidDelegateMappedArgumentExistenceRecorderFactory

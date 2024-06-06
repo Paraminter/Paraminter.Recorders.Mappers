@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers.ArgumentExistenceRecorderFactoryCases;
+﻿namespace Paraminter.Recorders.Mappers.ArgumentExistenceRecorderFactoryCases;
 
 using Xunit;
 

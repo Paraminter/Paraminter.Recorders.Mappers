@@ -1,4 +1,4 @@
-﻿namespace Paraminter.Mappers.VoidDelegateMappedArgumentExistenceRecorderFactoryCases;
+﻿namespace Paraminter.Recorders.Mappers.VoidDelegateMappedArgumentExistenceRecorderFactoryCases;
 
 internal interface IFactoryFixture
 {
