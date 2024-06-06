@@ -52,7 +52,7 @@ public sealed class TryRecordExistence
     {
         var fixture = RecorderFixtureFactory.Create<object, object>();
 
-        Mock<IMappedArgumentExistenceRecorder<object>> recorderMock = new();
+        Mock<IMappedArgumentExistenceRecorder<object>> recorderMock = new(MockBehavior.Strict);
 
         var parameter = Mock.Of<object>();
 

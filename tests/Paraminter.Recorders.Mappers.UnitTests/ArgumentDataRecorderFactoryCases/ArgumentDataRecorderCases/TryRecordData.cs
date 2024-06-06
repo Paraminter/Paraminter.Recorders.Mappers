@@ -66,7 +66,7 @@ public sealed class TryRecordData
     {
         var fixture = RecorderFixtureFactory.Create<object, object, object>();
 
-        Mock<IMappedArgumentDataRecorder<object, object>> recorderMock = new();
+        Mock<IMappedArgumentDataRecorder<object, object>> recorderMock = new(MockBehavior.Strict);
 
         var parameter = Mock.Of<object>();
         var argumentData = Mock.Of<object>();
