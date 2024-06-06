@@ -8,7 +8,7 @@ internal static class RecorderFixtureFactory
     {
         IVoidDelegateMappedArgumentDataRecorderFactory factory = new VoidDelegateMappedArgumentDataRecorderFactory();
 
-        Mock<DVoidArgumentDataRecorder<TRecord, TArgumentData>> recorderDelegateMock = new(MockBehavior.Strict);
+        Mock<DVoidArgumentDataRecorder<TRecord, TArgumentData>> recorderDelegateMock = new() { DefaultValue = DefaultValue.Mock };
 
         var sut = factory.Create(recorderDelegateMock.Object);
 
