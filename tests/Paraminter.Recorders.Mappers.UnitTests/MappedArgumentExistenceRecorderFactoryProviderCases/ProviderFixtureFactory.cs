@@ -6,8 +6,8 @@ internal static class ProviderFixtureFactory
 {
     public static IProviderFixture Create()
     {
-        Mock<IBoolDelegateMappedArgumentExistenceRecorderFactory> boolDelegateMock = new(MockBehavior.Strict);
-        Mock<IVoidDelegateMappedArgumentExistenceRecorderFactory> voidDelegateMock = new(MockBehavior.Strict);
+        Mock<IBoolDelegateMappedArgumentExistenceRecorderFactory> boolDelegateMock = new() { DefaultValue = DefaultValue.Mock };
+        Mock<IVoidDelegateMappedArgumentExistenceRecorderFactory> voidDelegateMock = new() { DefaultValue = DefaultValue.Mock };
 
         MappedArgumentExistenceRecorderFactoryProvider sut = new(boolDelegateMock.Object, voidDelegateMock.Object);
 

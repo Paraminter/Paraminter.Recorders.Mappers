@@ -9,8 +9,8 @@ internal static class RecorderFixtureFactory
     {
         IArgumentExistenceRecorderFactory factory = new ArgumentExistenceRecorderFactory();
 
-        Mock<IArgumentExistenceRecorderMapper<TParameter, TRecord>> mapperMock = new(MockBehavior.Strict);
-        Mock<TRecord> dataRecordMock = new(MockBehavior.Strict);
+        Mock<IArgumentExistenceRecorderMapper<TParameter, TRecord>> mapperMock = new() { DefaultValue = DefaultValue.Mock };
+        Mock<TRecord> dataRecordMock = new() { DefaultValue = DefaultValue.Mock };
 
         var sut = factory.Create(mapperMock.Object, dataRecordMock.Object);
 
