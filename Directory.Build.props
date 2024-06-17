@@ -3,6 +3,8 @@
     <PropertyGroup>
         <LangVersion>12</LangVersion>
 
+        <RootNamespace>Paraminter.Recorders.Mappers</RootNamespace>
+
         <Nullable>enable</Nullable>
         <AnalysisMode>all</AnalysisMode>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
