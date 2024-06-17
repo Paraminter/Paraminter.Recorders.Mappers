@@ -13,7 +13,6 @@
 
         <PackageVersion Include="Paraminter.Recorders.Core" Version="8.0.0-alpha.4" />
         <PackageVersion Include="Paraminter.Logo" Version="2.0.0-alpha.10" />
-        <PackageVersion Include="Paraminter.Tests.Common" Version="8.0.0-alpha.28" />
 
         <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.24.0.89429" />
 
