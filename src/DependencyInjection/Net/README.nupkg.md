@@ -1,4 +1,4 @@
-# Paraminter.Recorders.Mappers.DependencyInjection
+# Paraminter.Recorders.Mappers.DI.Net
 
 Allows the services provided by `Paraminter.Recorders.Mappers` to be registered with .NET DI-containers.
 
