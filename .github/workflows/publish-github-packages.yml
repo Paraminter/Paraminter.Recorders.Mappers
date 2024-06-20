@@ -9,6 +9,7 @@ jobs:
   publish-github-packages:
     name: Publish to GitHub Packages
     runs-on: ubuntu-latest
+    if: ${{ vars.PUBLISH_GH_PACKAGES == 'true' }}
 
     permissions:
       contents: read

@@ -9,6 +9,7 @@ jobs:
   publish-nuget:
     name: Publish to NuGet
     runs-on: ubuntu-latest
+    if: ${{ vars.PUBLISH_NUGET == 'true' }}
 
     permissions:
       contents: read
