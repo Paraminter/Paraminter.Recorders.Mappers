@@ -34,7 +34,7 @@ public sealed class AddParaminterRecorderMappers
     private static void Target(
         IServiceCollection services)
     {
-        Services.AddParaminterRecorderMappers(services);
+        RecorderMapperServices.AddParaminterRecorderMappers(services);
     }
 
     private static void ServiceCanBeResolved<TService>()

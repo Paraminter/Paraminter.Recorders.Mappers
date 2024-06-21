@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Implementation", "src\Imple
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net", "src\DependencyInjection\Net\Net.csproj", "{0EB65E1C-EAE5-4B62-B775-DD27CA02DA5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IT_Services", "tests\integration\DependencyInjection\Net\Services\IT_Services.csproj", "{9DC84336-9CA7-4368-8F78-A4ECC14EDA55}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IT_RecorderMapperServices", "tests\integration\DependencyInjection\Net\RecorderMapperServices\IT_RecorderMapperServices.csproj", "{9DC84336-9CA7-4368-8F78-A4ECC14EDA55}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit", "unit", "{306C3789-1357-47F1-8968-7FD61BC40AA8}"
 EndProject
@@ -53,7 +53,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DependencyInjection", "Depe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Net", "Net", "{3596A28C-2991-4D10-8E91-C816D6CA0A7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_Services", "tests\unit\DependencyInjection\Net\Services\UT_Services.csproj", "{8ACE083E-1FE7-4D7A-8279-A74C4C630538}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_RecorderMapperServices", "tests\unit\DependencyInjection\Net\RecorderMapperServices\UT_RecorderMapperServices.csproj", "{8ACE083E-1FE7-4D7A-8279-A74C4C630538}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_VoidMappedArgumentDataRecorderFactory", "tests\unit\VoidMappedArgumentDataRecorderFactory\UT_VoidMappedArgumentDataRecorderFactory.csproj", "{4D126212-E5C7-4B33-8115-E601C549B375}"
 EndProject
