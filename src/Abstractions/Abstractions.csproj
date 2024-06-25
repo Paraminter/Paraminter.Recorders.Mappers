@@ -4,7 +4,7 @@
         <AssemblyName>Paraminter.Recorders.Mappers.Abstractions</AssemblyName>
 
         <PackageId>Paraminter.Recorders.Mappers.Abstractions</PackageId>
-        <Description>Provides abstractions related to Paraminter mappers.</Description>
+        <Description>Provides abstractions of services related to Paraminter mappers.</Description>
     </PropertyGroup>
 
     <ItemGroup>
