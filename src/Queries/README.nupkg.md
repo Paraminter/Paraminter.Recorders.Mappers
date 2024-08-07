@@ -1,5 +1,5 @@
-# Paraminter.Recorders.Mappers
+# Paraminter.Recorders.Mappers.Queries
 
-Provides `Paraminter` recorder-mappers.
+Defines queries for `Paraminter` recorders.
 
 See [GitHub](https://github.com/Paraminter/Paraminter.Recorders.Mappers) for more information.

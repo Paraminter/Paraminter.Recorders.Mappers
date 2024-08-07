@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AssemblyName>Paraminter.Recorders.Mappers.Commands</AssemblyName>
+
+        <RootNamespace>Paraminter.Recorders.Mappers.Commands</RootNamespace>
+        
+        <PackageId>Paraminter.Recorders.Mappers.Commands</PackageId>
+        <Description>Defines commands for Paraminter recorder-mappers.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Paraminter.Arguments.Models" />
+        <PackageReference Include="Paraminter.Commands" />
+        <PackageReference Include="Paraminter.Commands.Handlers" />
+    </ItemGroup>
+
+</Project>
