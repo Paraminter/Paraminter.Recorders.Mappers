@@ -12,7 +12,6 @@
     <ItemGroup>
         <PackageReference Include="Paraminter.Arguments.Models" />
         <PackageReference Include="Paraminter.Commands" />
-        <PackageReference Include="Paraminter.Commands.Handlers" />
     </ItemGroup>
 
 </Project>
