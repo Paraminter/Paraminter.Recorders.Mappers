@@ -1,10 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <AssemblyName>Paraminter.Recorders.Mappers.Core</AssemblyName>
+        <AssemblyName>Paraminter.Recorders.Mappers</AssemblyName>
 
-        <PackageId>Paraminter.Recorders.Mappers.Core</PackageId>
-        <Description>Defines the core components of Paraminter mappers.</Description>
+        <PackageId>Paraminter.Recorders.Mappers</PackageId>
+        <Description>Provides Paraminter recorder-mappers.</Description>
     </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Paraminter.Queries.Handlers" />
+        <PackageReference Include="Paraminter.Recorders.Commands" />
+
+        <ProjectReference Include="$(SolutionDir)src\Commands\Commands.csproj" />
+        <ProjectReference Include="$(SolutionDir)src\Queries\Queries.csproj" />
+    </ItemGroup>
 
 </Project>
