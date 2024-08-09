@@ -1,7 +1,7 @@
 ﻿namespace Paraminter.Recorders.Mappers.Commands;
 
 using Paraminter.Arguments.Models;
-using Paraminter.Commands;
+using Paraminter.Cqs;
 
 /// <summary>Represents a command to record an association between an argument and some parameter.</summary>
 /// <typeparam name="TArgumentData">The type representing data about the arguments.</typeparam>

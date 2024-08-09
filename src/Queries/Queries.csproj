@@ -11,7 +11,7 @@
 
     <ItemGroup>
         <PackageReference Include="Paraminter.Arguments.Models" />
-        <PackageReference Include="Paraminter.Queries" />
+        <PackageReference Include="Paraminter.Cqs.Queries" />
     </ItemGroup>
 
 </Project>

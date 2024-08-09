@@ -1,7 +1,6 @@
-﻿namespace Paraminter.Recorders.Mappers.Common;
+﻿namespace Paraminter.Recorders.Mappers.Queries;
 
 using Paraminter.Parameters.Models;
-using Paraminter.Recorders.Mappers.Queries;
 
 internal static class GetMappedArgumentAssociationRecorderQueryFactory
 {
