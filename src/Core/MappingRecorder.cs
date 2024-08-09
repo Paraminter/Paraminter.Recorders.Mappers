@@ -1,12 +1,10 @@
 ﻿namespace Paraminter.Recorders.Mappers;
 
 using Paraminter.Arguments.Models;
-using Paraminter.Commands.Handlers;
+using Paraminter.Cqs.Handlers;
 using Paraminter.Parameters.Models;
-using Paraminter.Queries.Handlers;
 using Paraminter.Recorders.Commands;
 using Paraminter.Recorders.Mappers.Commands;
-using Paraminter.Recorders.Mappers.Common;
 using Paraminter.Recorders.Mappers.Queries;
 
 using System;

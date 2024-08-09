@@ -1,7 +1,6 @@
-﻿namespace Paraminter.Recorders.Mappers.Common;
+﻿namespace Paraminter.Recorders.Mappers.Commands;
 
 using Paraminter.Arguments.Models;
-using Paraminter.Recorders.Mappers.Commands;
 
 internal static class RecordMappedArgumentAssociationCommandFactory
 {
